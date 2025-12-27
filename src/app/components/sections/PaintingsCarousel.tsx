@@ -11,7 +11,7 @@ const carouselSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   centerMode: true,
-  centerPadding: '80px',
+  centerPadding: '20px',
   autoplay: true,
   autoplaySpeed: 3000,
   arrows: false,
@@ -19,7 +19,7 @@ const carouselSettings = {
     {
       breakpoint: 1024,
       settings: {
-        centerPadding: '40px',
+        centerPadding: '20px',
       }
     }
   ],
@@ -46,42 +46,67 @@ export function PaintingsCarousel() {
           opacity: 1;
           transform: scale(1);
         }
-        .paintings-carousel .slick-dots {
+        /* Hide all default slick dots styling */
+        .paintings-carousel .slick-dots,
+        .paintings-carousel ul.slick-dots {
           display: flex !important;
           gap: 8px;
           justify-content: center;
-          list-style: none;
-          padding: 0;
-          margin-top: 40px;
-          position: relative;
-          bottom: 0;
+          list-style: none !important;
+          padding: 0 !important;
+          margin: 40px 0 0 0 !important;
+          position: relative !important;
+          bottom: 0 !important;
+          width: 100% !important;
         }
-        .paintings-carousel .slick-dots li {
-          margin: 0;
-          padding: 0;
-          width: auto;
-          height: auto;
+        .paintings-carousel .slick-dots li,
+        .paintings-carousel ul.slick-dots li {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: auto !important;
+          height: auto !important;
+          position: relative !important;
         }
-        .paintings-carousel .slick-dots li button {
-          background-color: #6b7280;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          padding: 0;
-          border: none;
+        .paintings-carousel .slick-dots li button,
+        .paintings-carousel ul.slick-dots li button {
+          background-color: #6b7280 !important;
+          width: 8px !important;
+          height: 8px !important;
+          border-radius: 50% !important;
+          padding: 0 !important;
+          border: none !important;
           cursor: pointer;
           transition: all 0.3s ease;
-          font-size: 0;
-          line-height: 0;
-          color: transparent;
+          font-size: 0 !important;
+          line-height: 0 !important;
+          color: transparent !important;
+          text-indent: -9999px !important;
+          overflow: hidden !important;
         }
-        .paintings-carousel .slick-dots li button:hover {
-          background-color: #9ca3af;
+        .paintings-carousel .slick-dots li button:hover,
+        .paintings-carousel ul.slick-dots li button:hover {
+          background-color: #9ca3af !important;
         }
-        .paintings-carousel .slick-dots li.slick-active button {
-          background-color: #ffffff;
-          width: 8px;
-          height: 8px;
+        .paintings-carousel .slick-dots li.slick-active button,
+        .paintings-carousel ul.slick-dots li.slick-active button {
+          background-color: #ffffff !important;
+          width: 8px !important;
+          height: 8px !important;
+        }
+        /* Hide any duplicate dots from theme */
+        .paintings-carousel .slick-dots li button::before {
+          display: none !important;
+          content: none !important;
+        }
+        /* Ensure only one set of dots */
+        .paintings-carousel .slick-dots li button::after {
+          display: none !important;
+          content: none !important;
+        }
+        /* Override slick-theme.css completely */
+        .paintings-carousel .slick-dots li button:before {
+          display: none !important;
+          opacity: 0 !important;
         }
       `}</style>
       <div className="paintings-carousel">
@@ -89,7 +114,7 @@ export function PaintingsCarousel() {
           <Slider {...carouselSettings}>
             {paintings.map((painting, index) => (
               <div key={index}>
-                <div className="flex justify-center" style={{ margin: '0 8px' }}>
+                <div className="flex justify-center">
                   <img 
                     src={painting} 
                     alt={`Digital painting ${index + 1}`}
