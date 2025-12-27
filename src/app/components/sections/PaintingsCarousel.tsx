@@ -11,7 +11,7 @@ const carouselSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   centerMode: true,
-  centerPadding: '240px',
+  centerPadding: '80px',
   autoplay: true,
   autoplaySpeed: 3000,
   arrows: false,
@@ -19,15 +19,11 @@ const carouselSettings = {
     {
       breakpoint: 1024,
       settings: {
-        centerPadding: '60px',
+        centerPadding: '40px',
       }
     }
   ],
   beforeChange: (current: number, next: number) => {},
-  customPaging: (i: number) => (
-    <button className="w-2 h-2 rounded-full bg-[rgb(7,15,34)] hover:bg-white transition-all duration-300" />
-  ),
-  dotsClass: "slick-dots !flex !gap-1 !justify-center",
 };
 
 export function PaintingsCarousel() {
@@ -50,6 +46,22 @@ export function PaintingsCarousel() {
           opacity: 1;
           transform: scale(1);
         }
+        .paintings-carousel .slick-dots {
+          display: flex !important;
+          gap: 8px;
+          justify-content: center;
+          list-style: none;
+          padding: 0;
+          margin-top: 40px;
+          position: relative;
+          bottom: 0;
+        }
+        .paintings-carousel .slick-dots li {
+          margin: 0;
+          padding: 0;
+          width: auto;
+          height: auto;
+        }
         .paintings-carousel .slick-dots li button {
           background-color: #6b7280;
           width: 8px;
@@ -59,28 +71,17 @@ export function PaintingsCarousel() {
           border: none;
           cursor: pointer;
           transition: all 0.3s ease;
+          font-size: 0;
+          line-height: 0;
+          color: transparent;
         }
         .paintings-carousel .slick-dots li button:hover {
           background-color: #9ca3af;
         }
         .paintings-carousel .slick-dots li.slick-active button {
           background-color: #ffffff;
-          width: 10px;
-          height: 10px;
-        }
-        .paintings-carousel .slick-dots {
-          display: flex !important;
-          gap: 4px;
-          justify-content: center;
-          list-style: none;
-          padding: 0;
-          margin-top: 40px;
-        }
-        .paintings-carousel .slick-dots li {
-          margin: 0;
-          padding: 0;
-          width: auto;
-          height: auto;
+          width: 8px;
+          height: 8px;
         }
       `}</style>
       <div className="paintings-carousel">
@@ -88,7 +89,7 @@ export function PaintingsCarousel() {
           <Slider {...carouselSettings}>
             {paintings.map((painting, index) => (
               <div key={index}>
-                <div className="flex justify-center" style={{ margin: '0 15px' }}>
+                <div className="flex justify-center" style={{ margin: '0 8px' }}>
                   <img 
                     src={painting} 
                     alt={`Digital painting ${index + 1}`}
