@@ -1,0 +1,143 @@
+/* All fonts are loaded via links in index.html */
+/* Backup: Also import via CSS in case the link tags don't work */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400&family=Inter:wght@400;600&family=DM+Mono:wght@400&display=swap');
+
+/* Geist replaced with Inter - all Geist references now use Inter */
+
+/* Define fonts as CSS variables */
+:root {
+  --font-instrument-serif: 'Instrument Serif', serif;
+  --font-geist: 'Inter', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-dm-mono: 'DM Mono', monospace;
+}
+
+/* Utility classes for fonts */
+.font-instrument-serif {
+  font-family: 'Instrument Serif', serif !important;
+}
+.font-geist {
+  font-family: 'Inter', sans-serif !important;
+}
+.font-inter {
+  font-family: 'Inter', sans-serif !important;
+}
+.font-dm-mono {
+  font-family: 'DM Mono', monospace !important;
+}
+
+/* CRITICAL FIX: Handle Tailwind's arbitrary value syntax */
+/* Tailwind generates: font-family: 'Font_Name:Weight', sans-serif */
+/* But Google Fonts defines them with spaces: 'Font Name' */
+/* We need to map the underscore/colon versions to the space versions */
+@layer utilities {
+  /* Instrument Serif - handles 'Instrument_Serif:Regular' */
+  /* Match inline styles */
+  [style*="'Instrument_Serif"],
+  [style*='"Instrument_Serif'],
+  [style*="Instrument_Serif:Regular"],
+  [style*="Instrument_Serif"],
+  [style*="'Instrument.Serif"],
+  [style*='"Instrument.Serif'],
+  [style*="Instrument.Serif"],
+  /* Match Tailwind classes */
+  [class*="font-['Instrument"],
+  [class*='font-["Instrument'],
+  [class*="font-\[Instrument"],
+  /* Direct class matching for common patterns */
+  .font-\[Instrument_Serif\:Regular\'\,\ sans-serif\],
+  .font-\[Instrument_Serif\'\,\ sans-serif\] {
+    font-family: 'Instrument Serif', serif !important;
+  }
+  
+  /* Geist replaced with Inter - all Geist references now use Inter */
+  [style*="'Geist"],
+  [style*='"Geist'],
+  [style*="Geist:Medium"],
+  [style*="Geist:Bold"],
+  [style*="Geist"],
+  [class*="font-['Geist"],
+  [class*='font-["Geist'],
+  [class*="font-\[Geist"],
+  [class*="Geist:Medium"],
+  [class*="Geist:Bold"],
+  .font-\[Geist\:Medium\'\,\ sans-serif\],
+  .font-\[Geist\:Bold\'\,\ sans-serif\] {
+    font-family: 'Inter', sans-serif !important;
+  }
+  
+  /* Inter - handles 'Inter:Regular' */
+  [style*="'Inter"],
+  [style*='"Inter'],
+  [style*="Inter:Regular"],
+  [style*="Inter"],
+  [class*="font-['Inter"],
+  [class*='font-["Inter'],
+  [class*="font-\[Inter"],
+  .font-\[Inter\:Regular\'\,\ sans-serif\] {
+    font-family: 'Inter', sans-serif !important;
+  }
+  
+  /* DM Mono - handles 'DM_Mono:Regular' */
+  [style*="'DM_Mono"],
+  [style*='"DM_Mono'],
+  [style*="DM_Mono:Regular"],
+  [style*="DM_Mono"],
+  [style*="'DM.Mono"],
+  [style*='"DM.Mono'],
+  [style*="DM.Mono"],
+  [class*="font-['DM"],
+  [class*='font-["DM'],
+  [class*="font-\[DM"],
+  .font-\[DM_Mono\:Regular\'\,\ sans-serif\],
+  .font-\[DM_Mono\'\,\ sans-serif\] {
+    font-family: 'DM Mono', monospace !important;
+  }
+  
+  /* ABeeZee replaced with Inter */
+  [style*="'ABeeZee"],
+  [style*='"ABeeZee'],
+  [style*="ABeeZee"],
+  [class*="font-['ABeeZee"],
+  [class*='font-["ABeeZee'],
+  [class*="font-\[ABeeZee"],
+  .font-\[ABeeZee\] {
+    font-family: 'Inter', sans-serif !important;
+  }
+}
+
+/* More aggressive font matching - catch all variations */
+@layer base {
+  /* Instrument Serif - catch any variation */
+  [class*="Instrument_Serif"],
+  [class*="Instrument.Serif"],
+  [class*="Instrument Serif"] {
+    font-family: 'Instrument Serif', serif !important;
+  }
+  
+  /* Geist replaced with Inter - catch any variation */
+  [class*="Geist:Medium"],
+  [class*="Geist:Bold"],
+  [class*="Geist"] {
+    font-family: 'Inter', sans-serif !important;
+  }
+  
+  /* Inter - catch any variation */
+  [class*="Inter:Regular"],
+  [class*="Inter"] {
+    font-family: 'Inter', sans-serif !important;
+  }
+  
+  /* DM Mono - catch any variation */
+  [class*="DM_Mono"],
+  [class*="DM.Mono"],
+  [class*="DM Mono"] {
+    font-family: 'DM Mono', monospace !important;
+  }
+  
+  /* ABeeZee replaced with Inter - catch any variation */
+  [class*="ABeeZee"] {
+    font-family: 'Inter', sans-serif !important;
+  }
+}
+

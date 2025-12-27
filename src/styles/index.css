@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@source '../**/*.{js,ts,jsx,tsx}';
+@source '../../index.html';
+
+@import './fonts.css';
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';

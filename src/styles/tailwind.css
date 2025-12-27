@@ -1,0 +1,24 @@
+@import 'tailwindcss' source(none);
+@source '../**/*.{js,ts,jsx,tsx}';
+@source '../../index.html';
+
+@import 'tw-animate-css';
+
+@layer utilities {
+  .font-instrument-serif {
+    font-family: 'Instrument Serif', serif;
+  }
+  
+  /* Figma Make generated utility classes */
+  .content-stretch {
+    align-content: stretch;
+  }
+  
+  .min-h-px {
+    min-height: 1px;
+  }
+  
+  .min-w-px {
+    min-width: 1px;
+  }
+}
