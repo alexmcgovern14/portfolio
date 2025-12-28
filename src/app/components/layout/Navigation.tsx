@@ -20,7 +20,7 @@ export function Navigation() {
   }, []);
 
   return (
-    <nav className="hidden lg:flex fixed left-0 top-0 h-screen z-50 flex-col items-center gap-[50px] bg-[rgba(0,0,0,0)] px-[20px] py-[65px]">
+    <nav className="hidden lg:flex fixed left-0 top-0 h-screen z-50 flex-col items-center gap-[50px] bg-[rgba(0,0,0,0)] px-[20px] py-[65px]" role="navigation" aria-label="Main navigation">
       {/* Social Icons */}
       <div className="flex flex-col gap-[25px]">
         <a

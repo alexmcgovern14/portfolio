@@ -20,9 +20,12 @@ const projectsData: Record<string, Project> = {
     category: 'Personal project',
     imageUrl: ragWorkflowImg,
     overview:
-      '**Knowledge** is an AI-powered information retrieval system designed to store vectorised long-form text and surface relevant insights through chat interface, via high-precision semantic search.\n\nThe system uses a Retrieval-Augmented Generation (RAG) architecture to connect ideas across sources, domains and concepts.\n\nResponses are grounded in a controlled pair of relational vector databases, prioritising retrieval quality, traceability, and observability over latency and generative fluency.',
+      '_Knowledge_ is an **AI-powered information retrieval system** designed to store **vectorised long-form text and metadata** to surface relevant insights through a **chat-based interface** using high-precision **semantic search.**\n\nThe system uses a **Retrieval-Augmented Generation (RAG) architecture** to enable connections across sources, domains, and concepts. RAG was selected over MCP-style approaches, which primarily support structured or exact lookups rather than semantic similarity.\n\nResponses are grounded in a controlled pair of **relational vector databases**, prioritising retrieval quality, traceability, and observability over latency and generative fluency.\n\n**Product Requirements Document (PRD)** below describes all facets of system design, RAG architecture, database structure, model choice and more. PRD is available in markdown format optimised for LLMs.',
+
+
     skills:
-      'AI system design · Retrieval-Augmented Generation (RAG) · data transformation (Notion → Supabase) · vectorization/embeddings · SQL joins · workflow automation (n8n) · prompt & guardrail design · evaluation design · observability/debugging · model selection',
+
+      'AI system design · Retrieval-Augmented Generation (RAG) · semantic search & retrieval design · data modelling & information architecture · data transformation (Notion → Supabase) · vector embeddings · relational joins & provenance reconstruction · workflow automation (n8n) · prompt & guardrail design · observability & debugging · deterministic pipeline design · model selection',
     // githubUrl: 'https://github.com/yourusername/knowledge-rag', // Private repo
     n8nJson: `{
   "name": "knowledge-RAG Workflow",
@@ -111,237 +114,242 @@ const projectsData: Record<string, Project> = {
     }
   }
 }`,
-    prd: `# 1) User Need / Context
+    prd: `# 1. User need
 
-Users capture insights and information across long-form sources (books, articles, podcasts, videos) but struggle to retrieve them later in a meaningful way. Over time, previously captured knowledge becomes difficult to reference, particularly when connections are conceptual or cross-domain.
+User saves insights and information from various sources (books, articles, podcasts, videos) to aid connection of ideas and recall.
 
-Traditional keyword search is insufficient for this use case: it relies on exact phrasing, fails to surface semantically related content, and does not support conceptual linking across topics or disciplines.
+Traditional keyword search is insufficient for this use case: it relies on exact phrasing, fails to surface similar or related content, and does not facilitate conceptual linking across topics or disciplines.
 
-# 2) Why Retrieval-Augmented Generation (RAG)
+# 2. Why Retrieval-Augmented Generation (RAG)
 
-The system is designed around **Retrieval-Augmented Generation (RAG)** to ensure responses are grounded in a controlled knowledge base rather than relying on the language model's latent training data.
+System is designed around **Retrieval-Augmented Generation (RAG)** and chat-based user interface to ensure responses are always grounded in a controlled knowledge base. 
 
 RAG was selected for three primary reasons:
+1. **Grounded responses:** All outputs should be traceable to stored content, establishing a clear source of truth for what the system "knows."
+2. **Semantic retrieval over unstructured content:** Vector-based retrieval enables semantic and concept-level search across long-form text, outperforming keyword or MCP-based retrieval (which primarily supports structured or exact lookups rather than semantic similarity) in surfacing similar and connected content. 
+3. **Separation of concerns:** Retrieval quality, data structure, and provenance are handled by the system design, while the language model is used strictly for synthesis and explanation.
 
-1. **Grounded responses**  
-   All outputs should be traceable to stored sources and excerpts, establishing a clear source of truth for what the system "knows."
+Alternative approaches such as direct API access to a note-taking system (e.g. via MCP) were considered. While suitable for structured lookups or live data access, they do not provide the same level of semantic indexing, retrieval precision, or deterministic observability required.
 
-2. **Semantic retrieval over unstructured content**  
-   Vector-based retrieval enables concept-level search across long-form text, outperforming keyword or API-based retrieval for exploratory and cross-domain queries.
+# 3. Goals
 
-3. **Separation of concerns**  
-   Retrieval quality, data structure, and provenance are handled by the system design, while the language model is used strictly for synthesis and explanation.
+1. **High-precision semantic retrieval:** Retrieve the most relevant passages for a query based on meaning, not keywords, prioritising precision over recall.
+2. **Deterministic ingestion and retrieval:** Re-running ingestion or retrieval workflows should not introduce silent drift, duplication, or ambiguity.
+3. **Traceable answers with source grounding:** All generated responses must be attributable to specific stored data
+4. **Observable system behaviour:** It must be possible to inspect what data was ingested, what was retrieved, and why a given answer was produced.
 
-Alternative approaches such as direct API access to a note-taking system (e.g. via MCP) were considered. While suitable for structured lookups or live data access, they do not provide the same level of semantic indexing, retrieval precision, or deterministic observability required for this use case.
-
-**Terminology note:** This project implements a *RAG pipeline / RAG system*, not a "RAG model." The language model is a component, not the system itself.
-
-# 3) Goals
-
-The system is designed to meet the following goals:
-
-1. **High-precision semantic retrieval**  
-   Retrieve the most relevant passages for a query based on meaning, not keywords, prioritising precision over recall.
-
-2. **Deterministic ingestion and retrieval**  
-   Re-running ingestion or retrieval workflows should not introduce silent drift, duplication, or ambiguity in system state.
-
-3. **Traceable answers with source grounding**  
-   All generated responses must be attributable to specific stored excerpts and their parent sources.
-
-4. **Observable system behaviour**  
-   It must be possible to inspect what data was ingested, what was retrieved, and why a given answer was produced.
-
-# 4) System Overview
+# 4. System Overview
 
 ## High-level architecture
 
-- **Authoring layer:** Notion databases used to capture sources and excerpts  
-- **Indexing layer:** Supabase vector database for semantic retrieval  
-- **Orchestration:** n8n workflows for ingestion, embedding, and chat  
-- **Interface:** Chat-based entry point for querying the knowledge base (frontend TBD)
+- **Authoring layer:** 2x two-way relational databases used to capture data: \`Sources\` and \`Excerpts\`
+- **Indexing layer:** 2x Supabase vector databases for semantic retrieval  
+- **Orchestration:** 2x n8n workflows for ingestion, embedding, and chat: \`knowledge-RAG\` and \`knowledge-chat\` 
+- **Interface:** Chat UI for querying the knowledge base 
 
 # Workflows
 
 ## Workflow 1: \`knowledge-RAG\` (Ingestion & Vectorisation)
 
-1. Fetch selected fields from Notion Sources and Excerpts databases  
-2. Normalize and combine content with required metadata  
-3. Validate relational integrity between excerpts and sources  
-4. Generate embeddings for each excerpt  
-5. Write rows and vectors to Supabase  
-6. 
+1. API connection to fetch selected fields from Notion \`Sources\` and \`Excerpts\` databases  
+2. Normalise and shape content into required structure 
+3. Generate embeddings (LLM) 
+4. Write rows and vectors to Supabase database
+
+(insert image here)
+
 ## Workflow 2: \`knowledge-chat\` (Query & Synthesis)
 
-1. Receive a user query  
-2. Embed the query  
-3. Retrieve top-K relevant excerpts from Supabase  
-4. Join excerpts with parent source metadata  
+1. Receive user query  
+2. Embed the query: convert user input into a vector in the same semantic space as stored content
+3. Retrieve top-K relevant excerpts from Supabase   
+4. Join excerpts with parent source metadata 
 5. Generate a grounded response using retrieved context  
 
-# 5) Data Model
+(insert image here)
 
-> **Note:** Sample rows for each database will be added once provided.
+# 5. Data model
 
-## Notion — Sources
+Data initially stored in pair of two-way relational Notion databases, extracted, vectorised and written to pair of Supabase vector databases. Supabase rows entries are **chunks** (therefore one to many relationship between Notion and Supabase) and contain **vectors for semantic search, metadata** for ease of search (year, title, author etc.) and **long-form text** for retrieval. 
 
-Represents primary materials (books, articles, podcasts, videos).
+\`Sources\` represents primary source materials and high-level information: metadata and long-form text.
+\`Excerpts\` contains specific passages from source material and user's reflections
 
-Key fields:
-- title  
-- author / creator  
-- source type  
-- year (where applicable)  
-- summary  
-- reflections  
-- tags / topics  
-
-## Notion — Excerpts
-
-Represents the atomic retrieval unit.
-
-Key fields:
-- quoted passage  
-- reflective notes  
-- relation to parent source (required)  
-
-Excerpts are the **unit of retrieval**; sources provide provenance and context.
-
-# 6) Vector Database Design
-
-Each excerpt is stored in Supabase with:
-
-- embedding vector (semantic index)  
-- excerpt text (retrieval content)  
-- stable identifiers  
-- metadata (author, title, source type, etc.)  
-- reference to parent source  
-
-# Design rationale
+Design rationale
 
 - **Vector embeddings** enable semantic similarity search over meaning rather than phrasing.  
 - **Excerpt-level indexing** improves retrieval precision and context efficiency.  
 - **Metadata fields** support filtering, disambiguation, citation, and debugging.  
-- **Relational joins** reconstruct full provenance at query time.  
+- **Relational joins** use stable Notion IDs to link excerpt chunks back to their parent sources, enabling provenance reconstruction and source-level citation despite chunked storage.
 
-The language model does not access the database directly; it only receives retrieved excerpts and associated metadata.
+## Sources
 
-# 7) Model Usage
+### Notion 
+
+In Notion each source is represented as a single row containing rich descriptive metadata, summaries, and reflections. This format is optimised for human understanding and long-term knowledge curation.
+
+**Example (simplified):**
+- Title: *The Dawn of Everything: A New History of Humanity*
+- Author: David Graeber
+- Source type: Book
+- Year published: 2021
+- Topics: anthropology, politics, power structures, economics
+- Summary: *(high-level synthesis of the work)*
+- Reflections: *(thoughts and takeaways)*
+- Linked excerpts: multiple
+
+The Notion source acts as the **canonical reference** for provenance and context.
+
+### Supabase
+
+In Supabase source data is stored as structured metadata and vectors for retrieval content. Each row from Notion may become multiple rows due to chunking.
+
+**Example row (simplified and redacted):**
+
+\`\`\`json
+{
+  "notion_id": "1d376bf9-66a3-8133-a68a-ed1120f9a340",
+  "title": "The Dawn of Everything: A New History of Humanity",
+  "author": "David Graeber",
+  "source_type": "book",
+  "year_published": 2021,
+  "topics": ["anthropology", "politics", "power structures", "economics"],
+  "notion_url": "https://www.notion.so/..."
+}
+\`\`\`
+
+## Excerpts
+
+### Notion
+
+In Notion each excerpt represents a complete unit captured from a source. It contains the full quoted passage, reflections, and a required relationship to its parent source.
+
+**Example fields (simplified):**
+- Excerpt title: *Wendat freedom shocks Jesuit missionaries*
+- Quoted passage: *(full excerpt text)*
+- Reflections: *(author notes and interpretation)*
+- Linked source: \`1d376bf9-66a3-8133-a68a-ed1120f9a340\`
+- Created date: \`2025-12-09\`
+
+This format is optimised for **human authoring and review**, not retrieval.
+
+### Supabase (vectorised)
+
+In Supabase the same excerpt is transformed into one or more **chunked rows**, each representing a portion of the original text suitable for semantic retrieval.
+
+Each row contains:
+- Chunk of excerpt content
+- Vector embedding
+- Metadata required for retrieval and provenance
+- Reference to the parent Notion excerpt and source
+
+**Example row (simplified and redacted):**
+
+\`\`\`json
+{
+  "content": "In the considered opinion of the Montagnais-Naskapi...",
+  "excerpt_title": "Wendat freedom shocks Jesuit missionaries",
+  "notion_id": "2c476bf9-66a3-80cf-9974-c01f8994482b",
+  "notion_source_id": "1d376bf9-66a3-8133-a68a-ed1120f9a340",
+  "created_date": "2025-12-09T21:50:00.000Z",
+  "url": "https://www.notion.so/...",
+  "embedding": "[vector]"
+}
+\`\`\`
+
+# 7. Model choice
 
 ## Embeddings
 
-An embeddings model is used to convert excerpts and queries into vectors for similarity search.
-
-Rationale:
+OpenAI's [OpenAI text-embedding-3-small](https://platform.openai.com/docs/models/text-embedding-3-small) model used to 1) convert data into vectors for Supabase entry, and 2) convert queries into vectors for similarity search.
+[link: https://platform.openai.com/docs/models/text-embedding-3-small]
 - Optimised for semantic representation  
 - Cost-effective for batch processing  
 - Produces a stable retrieval space  
 
 ## Chat / Synthesis
 
-A general-purpose chat model is used to synthesize responses from retrieved context.
-
-Rationale:
+OpenAI's [OpenAI GPT-5](https://platform.openai.com/docs/models/gpt-5) model is used for chat interface and to synthesise responses from retrieved context.
+[link: https://platform.openai.com/docs/models/gpt-5]
 - Strong multi-document reasoning  
 - Reliable instruction following  
 - Capable of structured, grounded responses  
 
-*(Exact model names are implementation details and intentionally abstracted here.)*
+# 8. Retrieval Strategy & Constraints
 
-# 8) Retrieval Strategy & Constraints
+## Retrieval strategy 
 
-## Retrieval strategy
-
-1. Embed user query  
-2. Perform vector similarity search over excerpt embeddings  
-3. Retrieve top-K excerpts above a relevance threshold  
-4. Join with parent source metadata  
-5. Pass retrieved context to the chat model with grounding instructions  
+1. Embed user query: Converts text → vector so it can be compared to stored vectors.
+2. Vector similarity search: Computes distance between query vector and stored vectors.
+3. Top-K excerpts above threshold: Filters to the most relevant evidence; ignores weak matches.
+4. Join with parent source metadata: Adds title, author, source type for grounding and citation.
+5. Pass to chat model: GPT-5 does not retrieve — it only synthesises.
 
 ## Constraints
 
-- Limit K to prevent context dilution  
-- Exclude excerpts without valid source relationships  
+- Limit K to prevent context dilution, drowning out relevant signal
 - Prefer fewer, higher-signal passages over broad recall  
 - Do not generate answers when retrieval evidence is insufficient  
 
 These constraints exist to prioritise answer quality and trustworthiness over fluency.
 
-## 9) Model Behaviour & Guardrails
+# 9. Model Behaviour & Guardrails
 
 The model is constrained to:
 
 - Use only retrieved excerpts as evidence  
-- Cite sources for substantive claims  
-- Explicitly acknowledge insufficient information  
-- Avoid inventing sources, quotations, or provenance  
+- Cite sources provided via retrieval
+- Explicitly acknowledge if insufficient information  
+- Never invent sources or quotations not provided in databases
 
-The model is treated as a **synthesis component**, not a source of truth.
+# 10. Observability
 
-# 10) Failure Modes & Mitigations
+The system maintains an inspectable audit trail across both ingestion and chat so it's possible to understand system state, retrieval decisions, and answer provenance end-to-end.
 
-## Broken joins (orphan excerpts)
-- **Risk:** Ungrounded or unverifiable answers  
-- **Mitigation:** Enforce required source relationships; exclude invalid rows from retrieval  
+## Ingestion observability
 
-## Duplicate rows from ingestion
-- **Risk:** Noisy retrieval and silent drift  
-- **Mitigation:** Deterministic clear-and-rebuild ingestion for MVP  
+For each ingestion run, it is possible to inspect:
 
-## Stale embeddings
-- **Risk:** Retrieval mismatch after content edits  
-- **Mitigation:** Track update timestamps and re-embed modified rows  
+- **Run timestamp:** When the knowledge base was last rebuilt/updated.
+- **Processed record counts:** Number of sources and excerpts processed, chunked, embedded, and written.
+- **Join coverage:** Percentage of excerpt rows that successfully resolve to a valid parent source (\`notion_source_id\` present and joinable).
+- **Embedding configuration:** Which embeddings model/version was used for that run (to reproduce retrieval behaviour and detect drift).
 
-## Over-retrieval
-- **Risk:** Generic or averaged responses  
-- **Mitigation:** Similarity thresholds and conservative top-K values  
+## Chat observability
 
-# 11) Observability & Evaluation
+For each user query, it is possible to inspect:
 
-## Observability requirements
+- **Query text:** The original user prompt.
+- **Query embedding request:** The embedding configuration used for the query vector.
+- **Retrieval results:** Retrieved excerpt chunk IDs (\`notion_id\`) and similarity scores, including the selected top-K set.
+- **Applied constraints:** Any thresholds, limits (K), and filters applied during retrieval.
+- **Provenance reconstruction:** Joined parent source IDs (\`notion_source_id\`) and associated metadata used for grounding/citation.
+- **Final output:** The generated response plus citations that map back to retrieved excerpts/sources.
 
-For ingestion:
-- run timestamp  
-- row counts  
-- join coverage (% excerpts with valid sources)  
-- embedding model/version  
+# 11. Open Questions & Trade-offs
 
-For chat:
-- query text  
-- retrieved excerpt IDs and similarity scores  
-- applied filters  
-- joined source IDs  
-- generated response and citations  
-
-## Evaluation approach
-
-- Curated query set covering recall, synthesis, and cross-domain linking  
-- Manual relevance scoring of retrieved excerpts  
-- Citation coverage checks  
-- Consistency checks across repeated runs of identical queries  
-
-Observability is treated as a first-class product requirement.
-
-# 13) Open Questions & Trade-offs
-
-## Ingestion strategy
+## Ingestion strategy: 
 
 The current approach clears and rebuilds the vector database on each run to guarantee determinism and avoid silent duplication. This is acceptable at MVP scale.
 
-**Future approach:**
+Future approach:
 - Use stable IDs (e.g. Notion page IDs)  
 - Compare Notion \`last_edited_time\` with stored vectorisation timestamps  
 - Insert new rows, update modified rows, delete removed rows  
 
-## Additional open considerations
+## Re-ranking 
 
-- Hybrid retrieval (vector + keyword)  
-- Re-ranking strategies  
-- Versioning of knowledge snapshots  
-- Frontend affordances for citation inspection  
-- Long-term scalability limits`,
+Retrieve broadly then re-order results using:
+- cross-encoder
+- LLM relevance scoring
+- Heuristics (recency, source authority)
+
+## Frontend affordances for citation inspection 
+- Clickable citations
+- Expandable "why this was retrieved"
+- Source preview on hover`,
   },
-  'live-match-summary': {
+'live-match-summary': {
     slug: 'live-match-summary',
     title: 'Data-led live match updates',
     titleParts: [
@@ -385,20 +393,6 @@ Example scenarios:
 - User thinking about switching on the TV to watch, wants to know if worth watching or not
 * User interested in placing in-play bet, wants to understand momentum
 
-# Constraints 
-- **Speed:** LiveScore is all about pace, generation must be fast enough to stay in sync with live play. Generation time optimised to average of 5 seconds, with short wait periods after key updates (goals/red cards) handled gracefully with transitions to immediately remove out-of-date content.
-- **No hallucinations or speculation:** All outputs must be strictly grounded in provided data, with model prioritising recent key events and never stepping into assumptions or extrapolating data into speculation.
-- **One of the fans:** Tone of voice, British English and a _feeling_ of understanding the match through terminology and accurate narrative. 
-
-# Evaluations
-
-Evals ran through OpenAI platform, provided 0-10 guided scores and explanations, focused on:
-- **Factual accuracy** against input data
-- **Recency**, scored on emphasising recent momentum and events
-- **Structure and formatting**, including word counts and bolding rules
-- **Clarity and conciseness**, easily scannable with no fluff or repetition
-- **Tone** scored against brand guidelines and British football fan voice 
-
 # Challenges
 
 Iterating through guardrails, prompt engineering and evaluation loops raised a number of issues:
@@ -421,7 +415,20 @@ These decisions kept synthesis of match data and generation to an average of 5 s
 _____
 
 Reliability in GenAI systems comes from system design and constraints, not from picking a "smarter" model.`,
+    constraints: `# Constraints
+- **Speed:** LiveScore is all about pace, generation must be fast enough to stay in sync with live play. Generation time optimised to average of 5 seconds, with short wait periods after key updates (goals/red cards) handled gracefully with transitions to immediately remove out-of-date content.
+- **No hallucinations or speculation:** All outputs must be strictly grounded in provided data, with model prioritising recent key events and never stepping into assumptions or extrapolating data into speculation.
+- **One of the fans:** Tone of voice, British English and a _feeling_ of understanding the match through terminology and accurate narrative.`,
+    evaluations: `# Evaluations
+
+Evals ran through OpenAI platform, provided 0-10 guided scores and explanations, focused on:
+- **Factual accuracy** against input data
+- **Recency**, scored on emphasising recent momentum and events
+- **Structure and formatting**, including word counts and bolding rules
+- **Clarity and conciseness**, easily scannable with no fluff or repetition
+- **Tone** scored against brand guidelines and British football fan voice`,
   },
+
   'lineup-changes': {
     slug: 'lineup-changes',
     title: 'Feature: Line-up changes',
@@ -435,10 +442,11 @@ Reliability in GenAI systems comes from system design and constraints, not from 
     imageUrl: lineupChangesImg,
     overview: `LiveScore feature in production that **uses AI to generate insights** about what each team's manager has changed in team selection since last match — the key information users are looking for at a *peak-traffic moment*. 
 
+**Feature served as a strong AI product-building lesson on handling model limitations through system design; see 'Challenge' section below.**
+
 The system compares both teams' newly confirmed line-ups against their previous match, and generates a **grounded summary** of what changed.
 
-Five rounds of unmoderated user testing before development across a number of UI placements all showed extremely positive signal for the feature:  
-> "I think this is really cool! I've never seen any site offer anything like this"
+Five rounds of unmoderated user testing before development across a number of UI placements all showed extremely positive signal for the feature: "I think this is really cool! I've never seen any site offer anything like this."
 
 User sentiment tracked in production through a thumbs up/down poll, **consistently scoring above the 80% target.**
 
@@ -484,12 +492,11 @@ LiveScore feature in production that **uses AI to generate insights** about what
 
 The system compares both teams' newly confirmed line-ups against their previous match, and generates a **grounded summary** of what changed.
 
-Five rounds of unmoderated user testing before development across a number of UI placements all showed extremely positive signal for the feature:  
-> "I think this is really cool! I've never seen any site offer anything like this"
+Five rounds of unmoderated user testing before development across a number of UI placements all showed extremely positive signal for the feature: ***"I think this is really cool! I've never seen any site offer anything like this."***
 
 User sentiment tracked in production through a thumbs up/down poll, **consistently scoring above the 80% target.**
 
-[insert image of feature here, use placeholder for now]
+Feature served as a strong AI product-building lesson on handling model limitations through system design; see 'Challenges' section below.
 
 # Key info
 
@@ -541,7 +548,10 @@ In revisiting the original task ~six months later with newer models incl. GPT-5.
     description: 'Builds personalised playlists based on listening history',
     category: 'Personal project',
     imageUrl: artistRecommendationImg,
-    overview: 'Solving my own need for better recommendations on Spotify',
+    playlistImage: 'https://raw.githubusercontent.com/alexmcgovern14/spotify-recommended-artists-playlist-generator/main/recommended_artists.png',
+    overview: `Backend-first service that **generates personalised discovery playlists for Spotify users.** It aims to solve common user (and my) frustrations with new artist discovery on Spotify — where algorithmic recommendations like _Discover Weekly_ and _Daily Mix_ can feel repetitive or stale to listeners. 
+
+The service extracts a user's top artists via the Spotify API, sources similarity data from open music databases to find similar artists, and delivers a **ready-to-play playlist directly into the user's Spotify library.**`,
     githubUrl:
       'https://github.com/alexmcgovern14/spotify-recommended-artists-playlist-generator',
     prd: `# Vision
@@ -580,7 +590,6 @@ The output is a playlist titled  *"Recommended Artists 🎧"* that appears in th
 **Success criteria:**  
 Users can authenticate once and playlists are generated without further user input.
 
----
 
 ### **Top artists fetch**
 
@@ -590,7 +599,6 @@ Users can authenticate once and playlists are generated without further user inp
 **Success criteria:**  
 Top artists list accurately reflects recent listening behaviour.
 
----
 
 ### **Similar artists lookup**
 
@@ -600,7 +608,6 @@ Top artists list accurately reflects recent listening behaviour.
 **Success criteria:**  
 Generated artist list contains artists not already in the user's listening history.
 
----
 
 ### **Playlist creation**
 
@@ -610,18 +617,17 @@ Generated artist list contains artists not already in the user's listening histo
 **Success criteria:**  
 Playlist is visible in the Spotify app and tracks are playable immediately.
 
----
 
 
-## **Roadmap**
+# Roadmap
 
 - Add **genre or mood filtering** (e.g., only southern soul, only high-energy tracks).  
 - Expose a simple **API endpoint** to trigger playlist generation programmatically.  
 - Build a lightweight dashboard for configuring preferences (e.g., similarity strength, track popularity filters).
 - Support **recurring playlist refreshes** (e.g., weekly updates)?`,
   },
-  'e-commerce-platform': {
-    slug: 'e-commerce-platform',
+  'portfolio-website': {
+    slug: 'portfolio-website',
     title: 'This website: Full stack',
     titleParts: [
       { text: 'This website: ', gradient: false },
@@ -680,6 +686,6 @@ export const projects: Project[] = [
   projectsData['live-match-summary'],
   projectsData['lineup-changes'],
   projectsData['spotify-recommendation-engine'],
-  projectsData['e-commerce-platform'],
+  projectsData['portfolio-website'],
 ];
 

@@ -11,7 +11,7 @@ const carouselSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   centerMode: true,
-  centerPadding: '20px',
+  centerPadding: '240px', // Reduced padding to bring images closer together
   autoplay: true,
   autoplaySpeed: 3000,
   arrows: false,
@@ -19,7 +19,7 @@ const carouselSettings = {
     {
       breakpoint: 1024,
       settings: {
-        centerPadding: '20px',
+        centerPadding: '60px',
       }
     }
   ],
@@ -109,17 +109,19 @@ export function PaintingsCarousel() {
           opacity: 0 !important;
         }
       `}</style>
-      <div className="paintings-carousel">
+      <div className="paintings-carousel" role="region" aria-label="Digital paintings carousel">
         <Suspense fallback={<div className="flex justify-center items-center h-[480px]"><div className="text-white">Loading carousel...</div></div>}>
-          <Slider {...carouselSettings}>
+          <Slider {...carouselSettings} aria-label="Paintings carousel">
             {paintings.map((painting, index) => (
               <div key={index}>
                 <div className="flex justify-center">
                   <img 
                     src={painting} 
                     alt={`Digital painting ${index + 1}`}
-                    className="w-[480px] h-[480px] object-cover rounded-2xl shadow-2xl border-2 border-white/30"
+                    className="w-[520px] h-[520px] object-cover rounded-2xl shadow-2xl border-2 border-white/30"
                     loading="lazy"
+                    width="520"
+                    height="520"
                   />
                 </div>
               </div>

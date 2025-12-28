@@ -19,7 +19,14 @@ export function ProjectCard({ title, titleParts, description, category, imageUrl
     <Link to={`/project/${slug}`} className="block">
       <div className="relative rounded-[24px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] h-[400px] transition-transform hover:scale-[1.02] cursor-pointer border-2 border-white/30">
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none rounded-[24px]">
-          <img alt={title} className="absolute inset-0 w-full h-full object-cover object-top rounded-[24px]" src={imageUrl} loading="lazy" />
+          <img 
+            alt={title} 
+            className="absolute inset-0 w-full h-full object-cover object-top rounded-[24px]" 
+            src={imageUrl} 
+            loading="lazy"
+            width="600"
+            height="400"
+          />
           <div className="absolute inset-0 rounded-[24px]" style={{ backgroundImage: "linear-gradient(180.096deg, rgba(0, 0, 0, 0) 0.1354%, rgba(0, 0, 0, 0.5) 57.513%), linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%)" }} />
         </div>
         <div className="flex flex-col justify-end size-full">

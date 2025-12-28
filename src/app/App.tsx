@@ -4,6 +4,7 @@ import { ProjectCard } from './components/project/ProjectCard';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
+import { NotFound } from './components/shared/NotFound';
 import { Github } from 'lucide-react';
 import behanceLogo from '../assets/ab051b3dbc5f6e7836893dc943f2b4ba9e0379e6.png';
 import linkedinLogo from '../assets/5c61d28ae9cf4a84dc84ff7a5804e018486959ba.png';
@@ -11,9 +12,11 @@ import beyondProductPhoto from '../assets/b82f3fe63941c182cb0917cb0aae4da5b7fb97
 import { projects } from './data/projects';
 import { aboutMeSkills } from './data/skills';
 
-// Lazy load heavy components
-const MacBookAir = lazy(() => import('../imports/MacBookAir15'));
-const AboutMeLayout2 = lazy(() => import('./components/AboutMeLayout2').then(m => ({ default: m.AboutMeLayout2 })));
+// Import hero immediately (above the fold - no lazy loading)
+import MacBookAir from '../imports/MacBookAir15';
+import { AboutMeLayout2 } from './components/AboutMeLayout2';
+
+// Lazy load only heavy components that are below the fold or on separate routes
 const ProjectDetail = lazy(() => import('./components/ProjectDetailNew').then(m => ({ default: m.ProjectDetail })));
 const PaintingsCarousel = lazy(() => import('./components/sections/PaintingsCarousel').then(m => ({ default: m.PaintingsCarousel })));
 
@@ -29,18 +32,23 @@ const LoadingFallback = () => (
 
 function HomePage() {
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
+      {/* Skip to main content link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#00a1ff] focus:text-white focus:rounded-lg focus:font-medium"
+      >
+        Skip to main content
+      </a>
       <Navigation />
       
       {/* Hero Section */}
       <section className="h-screen w-full">
-        <Suspense fallback={<LoadingFallback />}>
-          <MacBookAir />
-        </Suspense>
+        <MacBookAir />
       </section>
 
       {/* Projects Section */}
-      <section className="min-h-screen py-10 md:py-20 px-4 md:px-8 lg:px-32 bg-[#5a5452]">
+      <section id="main-content" className="min-h-screen py-10 md:py-20 px-4 md:px-8 lg:px-32 bg-[#5a5452]">
         <div className="max-w-7xl mx-auto">
           <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
             Featured Projects
@@ -50,19 +58,17 @@ function HomePage() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
-              <MemoizedProjectCard key={project.slug || index} {...project} />
+              <MemoizedProjectCard key={project?.slug || index} {...project} />
             ))}
           </div>
         </div>
       </section>
 
       {/* About Me Section */}
-      <Suspense fallback={<div className="min-h-screen bg-[#7a7573]" />}>
-        <AboutMeLayout2 skills={aboutMeSkills} />
-      </Suspense>
+      <AboutMeLayout2 skills={aboutMeSkills} />
 
       {/* Digital Art Section */}
-      <section className="min-h-screen w-full bg-[#6d6765] py-10 md:py-20 px-4 md:px-8 lg:px-32">
+      <section className="min-h-screen w-full bg-[#6d6765] py-10 md:py-20 px-4 md:px-8 lg:px-32" aria-label="Digital art">
         <div className="max-w-7xl mx-auto">
           {/* Main Heading */}
           <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
@@ -89,7 +95,7 @@ function HomePage() {
             </a>
             
             {/* Paintings Carousel - Lazy loaded */}
-            <Suspense fallback={<div className="pb-16 flex justify-center items-center h-[480px]"><div className="text-white">Loading paintings...</div></div>}>
+            <Suspense fallback={<div className="pb-16 flex justify-center items-center h-[520px] bg-[#6d6765]"><div className="text-white">Loading paintings...</div></div>}>
               <PaintingsCarousel />
             </Suspense>
           </div>
@@ -163,7 +169,7 @@ function HomePage() {
       </section>
 
       {/* Beyond Product Section */}
-      <section className="min-h-screen w-full bg-[#5a5452] py-10 md:py-20 px-4 md:px-8 lg:px-32">
+      <section className="min-h-screen w-full bg-[#5a5452] py-10 md:py-20 px-4 md:px-8 lg:px-32" aria-label="Beyond product">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
             {/* Left side - Text and Spotify */}
@@ -199,6 +205,8 @@ function HomePage() {
                 alt="Alex McGovern" 
                 className="w-full max-w-[300px] lg:w-[300px] h-auto object-contain rounded-2xl shadow-2xl border-2 border-white/30"
                 loading="lazy"
+                width="300"
+                height="400"
               />
             </div>
           </div>
@@ -288,6 +296,7 @@ export default function App() {
               </Suspense>
             } 
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
       </Router>

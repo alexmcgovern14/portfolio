@@ -1,0 +1,108 @@
+import { Link } from 'react-router-dom';
+import { ArrowLeft, Github } from 'lucide-react';
+import type { Project } from '../../types/project';
+
+interface ProjectDetailHeaderProps {
+  project: Project;
+  slug: string;
+  isScrolled: boolean;
+}
+
+export function ProjectDetailHeader({ project, slug, isScrolled }: ProjectDetailHeaderProps) {
+  const getSubheading = () => {
+    switch (slug) {
+      case 'rag-ai-system':
+        return 'LLM semantic search through vectorised data';
+      case 'live-match-summary':
+        return 'Case study in building AI features: data-led live updates for football matches';
+      case 'lineup-changes':
+        return 'Case study in building with LLMs, model limitations and building effective systems.';
+      case 'portfolio-website':
+        return 'Full-stack design, development and deployment';
+      case 'spotify-recommendation-engine':
+        return 'Solving my own need for better recommendations on Spotify';
+      default:
+        return null;
+    }
+  };
+
+  const category = (slug === 'live-match-summary' || slug === 'lineup-changes') 
+    ? 'LiveScore feature' 
+    : 'Personal project';
+
+  return (
+    <header 
+      className={`sticky top-0 z-50 bg-[#2a2628]/95 backdrop-blur-sm transition-all duration-300 ${isScrolled ? 'shadow-lg' : ''}`} 
+      style={{ borderBottom: '1px solid rgba(108, 105, 106, 0.3)' }}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Top Navigation */}
+        <div className="py-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-[#b8b8b8] hover:text-[#00a1ff] transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span className="font-medium">Back</span>
+          </Link>
+        </div>
+
+        {/* Title and Metadata - Collapses on scroll */}
+        <div 
+          className={`transition-all duration-500 ease-in-out ${
+            isScrolled 
+              ? 'h-0 opacity-0' 
+              : 'h-auto opacity-100 pb-6'
+          }`}
+          style={{
+            overflow: 'hidden',
+          }}
+        >
+          <h1 className="font-['Instrument_Serif:Regular',sans-serif] text-5xl text-[rgb(255,255,255)] mb-4 leading-tight">
+            {project.title}
+          </h1>
+          
+          {getSubheading() && (
+            <p className="text-[#d4d4d4] text-xl mb-6 leading-relaxed">
+              {getSubheading()}
+            </p>
+          )}
+          
+          {/* Category pill and GitHub button */}
+          <div className="flex items-center gap-4">
+            <div 
+              className="backdrop-blur-[2px] rounded-[100px] inline-block shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]"
+              style={{
+                backgroundColor: 'rgba(255,255,255,0.15)',
+                border: '1px solid rgba(255,255,255,0.6)'
+              }}
+            >
+              <div className="flex flex-row items-center justify-center">
+                <div className="content-stretch flex items-center justify-center px-[12px] py-[8px] relative">
+                  <p className="font-['DM_Mono:Regular',sans-serif] leading-[normal] not-italic relative shrink-0 text-[14px] text-nowrap text-white">
+                    {category}
+                  </p>
+                </div>
+              </div>
+              <div className="absolute inset-[-0.25px] pointer-events-none shadow-[inset_0px_-4px_4px_0px_rgba(0,0,0,0.25),inset_0px_4px_4px_0px_rgba(255,255,255,0.1)] rounded-[100px]" />
+            </div>
+            
+            {project && 'githubUrl' in project && project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00a1ff] to-[#00ff6f] text-black hover:opacity-90 transition-opacity px-4 py-2 rounded-lg font-medium text-sm"
+              >
+                <Github className="w-4 h-4" />
+                <span>View on GitHub</span>
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+
