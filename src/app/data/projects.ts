@@ -3,9 +3,9 @@ import ragWorkflowImg from '../../assets/1ad9a175c9c9c9a0ec903e169c7782ddaf93783
 import liveMatchImg from '../../assets/e6c6e387a5ae6c02f2326f483ef3716f22548a1a.png';
 import lineupChangesImg from '../../assets/fc4929f386849887f0b522845ad0eeb4643222ec.png';
 import artistRecommendationImg from '../../assets/e6d257b084bd5c237a191cbdaae905a08a859319.png';
-import thisWebsiteImg from '../../assets/edc41436bf0b124f28a053a15d04921e43d086a5.png';
+import thisWebsiteImg from '../../assets/website-tool-workflow.png';
 import liveMatchConcepts from '../../assets/3ecaddebe46e909d183a56db9afa1a1dbe33ff00.png';
-import techStackWorkflow from '../../assets/7b8ec670f643305d755f75159ea0e007717528a6.png';
+
 
 // Full project data including detail page content
 const projectsData: Record<string, Project> = {
@@ -637,46 +637,85 @@ Playlist is visible in the Spotify app and tracks are playable immediately.
       'Design, development and deployment of portfolio website, across multiple tools',
     category: 'Product Strategy',
     imageUrl: thisWebsiteImg,
-    overview: `This portfolio was built as a **real product with AI-first thinking:** a space to clearly communicate my work, thinking, and approach to building.
+    overview: `This portfolio was built as a **real product with AI-native processes:** a space to clearly communicate my work, thinking, and approach to building with AI. 
 
-Setup offers full control across **design → development → deployment**. Allowing rapid exploration early on, while still converging on a maintainable, production-quality codebase.`,
+Detailed below is a workflow across multiple tools which offered full control across **design → development → deployment**. 
+
+The setup allows rapid exploration early on, fast iteration through generative prototyping in **Figma Make**, in collaboration with pixel-perfect design freedom through **Figma**, before progressing to a maintainable and iterative production-quality codebase through **Cursor.**`,
     githubUrl: 'https://github.com/alexmcgovern14/Portfoliowebsite',
     prd: `This portfolio was built as a **real product with AI-first thinking:** a space to clearly communicate my work, thinking, and approach to building.
 
 Setup offers full control across **design → development → deployment**. Allowing rapid exploration early on, while still converging on a maintainable, production-quality codebase.`,
     challenge: `# Sketching
 
-Low-fidelity ideation of overall structure, hierarchy, and narrative.  
-A moodboard was used to collect inspiration and establish early direction.
+Initial **low-fidelity ideation** of overall website structure, hierarchy and key page layouts. Inspiration collected on a moodboard to help **establish early direction.**
+
+Output: ideation, establish early preferences
 
 
-# Figma ↔ Figma Make loop
+# Hi-fi design: Figma ↔ Figma Make loop
 
-**Figma**  
-High-fidelity design exploration and colour decisions, used to define the visual language and key pages.
+## UI design: Figma
 
-**Figma Make**  
-Prototyping tool used for rapid iteration, site scaffolding and testing user journeys.
+High-fidelity design exploration; building towards a consistent visual language across colour schemes, page design, core components and key pages.
 
-**Loop**  
-Specific components were designed in Figma and then fed back into Figma Make, combining the specificity and detail of designing in Figma with the speed and scale of prototyping.
+
+## Prototyping: Figma Make
+
+Chosen on this project (over Lovable and others) for integration with Figma. **Designs were converted to a working prototype**, which was then used for **rapid iteration:** testing ideas and design treatments in context, building out lower-priority components quickly and testing user journeys. 
+
+This stage produced a fully working prototype, site scaffolding, and surfaced design and structural issues earlier than static designs alone.
+
+
+## Figma ↔ Figma Make loop
+
+During prototyping there are many cases where prompting alone will not accurately build particular components as desired, especially when the vision is not clear, and diving back into pixels is a faster and more precise way of developing design solutions. 
+
+**Specific components were therefore designed directly in Figma and fed back into Figma Make mid-build**. 
+
+This allowed the workflow to combine the precision of manual, pixel-perfect design with the speed and scale of generative prototyping.
+
+Output: **Fully working, pixel-perfect prototype**. A real product with code which is pushed to…
+
 
 # GitHub
 
-Source of truth for the codebase.  
-Once the product stabilised, the repository became the authoritative version of the site, with all changes flowing through GitHub.
+Source of truth for the codebase, with all changes flowing through the repository.
 
 
 # Cursor
 
-Codebase pulled into Cursor to refactor generated output into production-quality code.  
-Used to improve structure and maintainability, and to support ongoing development before pushing changes back to GitHub.
+Prototype codebase pulled into Cursor to **refactor generated output into production-quality code** that could be owned, iterated on and trusted. 
 
+The initial scaffold was useful for speed, but it wasn’t structured for long-term change. Large files mixed layout, data, and behaviour; patterns were inconsistent; and performance and accessibility concerns were largely accidental rather than deliberate.
+
+## Why refactoring was necessary
+
+The prototype code surfaced a few clear issues:
+
+- **Structure**: core pages were implemented as large, monolithic components that were hard to reason about or change safely  
+- **Consistency**: styling and layout decisions were repeated rather than enforced through shared patterns  
+- **Performance**: lazy loading and Suspense boundaries were applied indiscriminately, leading to visible loading artefacts  
+- **Accessibility**: semantic structure, focus management, and keyboard behaviour were incomplete  
+- **Ownership**: the code reflected how it was generated, not how it should be maintained
+
+## High-level examples of refactoring
+
+The refactor focused on a small number of deliberate improvements.
+
+- **Clear separation of concerns:**  Large components were broken down into focused, single-purpose components. Layout, content, navigation, and interaction logic were separated so that changes in one area didn’t create unintended side effects elsewhere.
+- **Intentional loading behaviour:**  Above-the-fold content was switched to load immediately, while lazy loading was kept only where it improved performance without harming user experience. Suspense fallbacks were designed to blend into the surrounding layout to avoid visible flashes.
+- **Systematic styling and layout:** Styling decisions were consolidated so that spacing, colour, and typography were applied consistently. This reduced duplication and made visual changes easier to reason about.
+- **Accessibility as a baseline:**  Semantic HTML, focus management, keyboard navigation, and ARIA labels were added where appropriate. These changes don’t alter how the site looks, but they significantly improve how it behaves.
+- **Codebase as a product asset:** The result is a codebase that’s easier to navigate, safer to change, and better aligned with how the site is intended to evolve over time.
+
+Output: **Refactoring shifted the site from a fast prototype to something production-ready that can be iterated on with confidence.**
+
+ 
 
 # Vercel
 
-Hosting and deployment.  
-The site is continuously deployed from the main branch, keeping it live and easy to evolve as the codebase changes.`,
+The site is hosted on Vercel with continuous deployment from the main branch, keeping it live and easy to evolve as the codebase changes.`,
   },
 };
 

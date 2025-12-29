@@ -4,7 +4,7 @@ import { Copy, Check, FileText, Code2, Workflow } from 'lucide-react';
 import type { Project } from '../../types/project';
 import workflowIngestion from '../../../assets/1dad7059420c1200f434ef05c34bb334b30cabd9.png';
 import workflowChat from '../../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
-import techStackWorkflow from '../../../assets/7b8ec670f643305d755f75159ea0e007717528a6.png';
+import techStackWorkflow from '../../../assets/website-tool-workflow.png';
 import { ConstraintsAndEvals } from './ConstraintsAndEvals';
 
 interface ProjectDetailContentProps {
