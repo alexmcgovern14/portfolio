@@ -1097,7 +1097,7 @@ export function ProjectDetailContent({
 
 
                     </button>
-
+                      }
 
 
                     <button
