@@ -69,7 +69,7 @@ export function PaintingsCarousel() {
         }
         .paintings-carousel .slick-dots li button,
         .paintings-carousel ul.slick-dots li button {
-          background-color: #6b7280 !important;
+          background-color: rgba(255, 255, 255, 0.3) !important;
           width: 8px !important;
           height: 8px !important;
           border-radius: 50% !important;
@@ -85,7 +85,7 @@ export function PaintingsCarousel() {
         }
         .paintings-carousel .slick-dots li button:hover,
         .paintings-carousel ul.slick-dots li button:hover {
-          background-color: #9ca3af !important;
+          background-color: rgba(255, 255, 255, 0.5) !important;
         }
         .paintings-carousel .slick-dots li.slick-active button,
         .paintings-carousel ul.slick-dots li.slick-active button {
