@@ -779,6 +779,13 @@ export function ProjectDetailContent({
 
 
         }}
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
+        </section>
         >
       {/* User Needs Section */}
 
