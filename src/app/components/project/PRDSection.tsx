@@ -116,7 +116,7 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
                       viewMode === 'text'
                         ? 'bg-[#8a8686] text-white'
                         : 'text-[#D6D6D6] hover:text-white'
-                    }`}}
+                    `}}
                   >
                     Formatted
                   </button>
