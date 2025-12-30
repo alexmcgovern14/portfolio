@@ -138,28 +138,28 @@ export function ProjectDetailContent({
             {slug === 'live-match-summary' && 'conceptImage' in project && (
               <div className="my-8">
                 <div className="rounded-[24px] p-[2px] overflow-hidden"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-        }
-      >
-        <div className="rounded-[22px] overflow-hidden">
-                  <img src={project.conceptImage} alt="Initial concept designs for live match summary feature" className="w-full h-auto block" loading="lazy" width="1200" height="675" />
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                  }}
+                >
+                  <div className="rounded-[22px] overflow-hidden">
+                    <img src={project.conceptImage} alt="Initial concept designs for live match summary feature" className="w-full h-auto block" loading="lazy" width="1200" height="675" />
+                  </div>
                 </div>
-              </div>
                 <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Initial concept designs</p>
               </div>
             )}
             {slug === 'spotify-recommendation-engine' && 'playlistImage' in project && project.playlistImage && (
               <div className="my-8">
                 <div className="rounded-[24px] p-[2px] overflow-hidden"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-        }
-      >
-        <div className="rounded-[22px] overflow-hidden">
-                  <img src={project.playlistImage} alt="Generated playlist seen on Spotify" className="w-full h-auto block" loading="lazy" width="1200" height="675" />
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                  }}
+                >
+                  <div className="rounded-[22px] overflow-hidden">
+                    <img src={project.playlistImage} alt="Generated playlist seen on Spotify" className="w-full h-auto block" loading="lazy" width="1200" height="675" />
+                  </div>
                 </div>
-              </div>
                 <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Generated playlist seen on Spotify</p>
               </div>
             )}
