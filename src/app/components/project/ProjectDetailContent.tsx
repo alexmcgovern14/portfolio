@@ -796,6 +796,11 @@ export function ProjectDetailContent({
 
 
 
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
         <section id="user-needs" className="scroll-mt-24">
 
 
@@ -935,12 +940,6 @@ export function ProjectDetailContent({
 
 
 
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
         </section>
 
 
