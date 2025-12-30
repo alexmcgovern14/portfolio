@@ -1086,11 +1086,10 @@ export function ProjectDetailContent({
 
 
 
-                          : 'text-[#D6D6D6] hover:text-white'
+                          : 'text-[#D6D6D6] hover:text-white' `}}
 
 
 
-                      `}}
         >
                       Formatted
 
