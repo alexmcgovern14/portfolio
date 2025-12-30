@@ -926,7 +926,6 @@ export function ProjectDetailContent({
 
 
 
-        </div>
         </section>
 
 
