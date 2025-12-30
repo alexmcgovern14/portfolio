@@ -1166,7 +1166,7 @@ export function ProjectDetailContent({
 
 
 
-                    }`}
+                    }`}}
 
 
 
