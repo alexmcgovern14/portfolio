@@ -33,7 +33,7 @@ export function ProjectDetailNavigation({
           className="rounded-[24px] p-[2px] shadow-xl"
         style={{
           background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-        }
+        }}
       >
         <div className="rounded-[22px] p-6 shadow-xl"
           style={{
@@ -60,8 +60,8 @@ export function ProjectDetailNavigation({
             ))}
           </nav>
         </div>
-        </div>
       </div>
+    </div>
     </aside>
   );
 }
