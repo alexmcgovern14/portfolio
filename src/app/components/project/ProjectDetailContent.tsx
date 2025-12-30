@@ -713,7 +713,7 @@ export function ProjectDetailContent({
         >
         <div className="rounded-[22px] p-8 shadow-xl"
           style={{
-            background: \'linear-gradient(to bottom, #6C696A, #4B4744)\',
+            background: 'linear-gradient(to bottom, #6C696A, #4B4744)\',
           }}
         >
           <div className="flex items-center gap-3 mb-6">
