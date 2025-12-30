@@ -750,7 +750,23 @@ export function ProjectDetailContent({
 
 
 
-        <div className="rounded-[22px] p-8 shadow-xl"            style={{              background: 'linear-gradient(to bottom, #6C696A, #4B4744)',            }}          >            <div className="flex items-center gap-3 mb-6">              <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">                <Workflow className="w-5 h-5 text-white" />              </div>              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">                System workflows              </h2>            </div>
+        <div className="rounded-[22px] p-8 shadow-xl"
+          style={
+            background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
+          }
+        >
+          <div className="flex items-center gap-3 mb-6">
+                          <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">
+                            <Workflow className="w-5 h-5 text-white" />
+                          
+          </div>
+            
+          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">
+                              System workflows              
+            </h2>
+                          </div>
+              
+
 
 
 
@@ -758,7 +774,15 @@ export function ProjectDetailContent({
 
 
 
-            <div className="space-y-6">              <div>                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">                  Workflow 1: Ingestion & Vectorisation                </h3>                <p className="text-[#D6D6D6] mb-4 leading-relaxed">                  Data pipeline that extracts content from Notion, generates embeddings, and stores vectors in Supabase for semantic search.                </p>                <div className="rounded-[24px] p-[2px] overflow-hidden"
+
+            <div className="space-y-6">
+                            <div>
+                              <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">
+                                Workflow 1: Ingestion & Vectorisation                </h3>
+                              <p className="text-[#D6D6D6] mb-4 leading-relaxed">
+                                Data pipeline that extracts content from Notion, generates embeddings, and stores vectors in Supabase for semantic search.                </p>
+                              <div className="rounded-[24px] p-[2px] overflow-hidden"
+
 
 
 
@@ -778,7 +802,16 @@ export function ProjectDetailContent({
 
 
 
-        <div className="rounded-[22px] overflow-hidden">                  <img                    src={workflowIngestion}                    alt="n8n workflow for data ingestion and vectorization"                    className="w-full h-auto"                    loading="lazy"                    width="1200"                    height="800"                  />                </div>              </div>              <div>                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">                  Workflow 2: Query & Synthesis                </h3>                <p className="text-[#D6D6D6] mb-4 leading-relaxed">                  Chat interface that embeds user queries, retrieves relevant excerpts, and generates grounded responses with full source traceability.                </p>                <div className="rounded-[24px] p-[2px] overflow-hidden"
+        <div className="rounded-[22px] overflow-hidden">
+          <img
+            src={workflowIngestion}                    alt="n8n workflow for data ingestion and vectorization"                    className="w-full h-auto"                    loading="lazy"                    width="1200"                    height="800"                  
+            className="w-full h-auto"
+            loading="lazy"
+            width="1200"
+            height="800"
+          />
+        </div>
+</div>              <div>                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">                  Workflow 2: Query & Synthesis                </h3>                <p className="text-[#D6D6D6] mb-4 leading-relaxed">                  Chat interface that embeds user queries, retrieves relevant excerpts, and generates grounded responses with full source traceability.                </p>                <div className="rounded-[24px] p-[2px] overflow-hidden"
 
 
 
