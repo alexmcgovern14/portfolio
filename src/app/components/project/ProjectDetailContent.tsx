@@ -780,7 +780,6 @@ export function ProjectDetailContent({
 
         }}
         >
-        </section>
       {/* User Needs Section */}
 
 
