@@ -116,7 +116,7 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
                       viewMode === 'text'
                         ? 'bg-[#8a8686] text-white'
                         : 'text-[#D6D6D6] hover:text-white'
-                    `}}
+                    }`}
                   >
                     Formatted
                   </button>
@@ -126,7 +126,7 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
                       viewMode === 'markdown'
                         ? 'bg-[#8a8686] text-white'
                         : 'text-[#D6D6D6] hover:text-white'
-                    }`}}
+                    }`}
                   >
                     Markdown
                   </button>
@@ -138,8 +138,7 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
                     copied
                       ? 'bg-gradient-to-r from-[#00a1ff] to-[#00ff6f] text-black'
                       : 'bg-[#4a4647] text-white hover:text-[#D6D6D6]'
-                  }`}}
-                  style={!copied ? { border: '1px solid #8a8686' } : {}}
+                  }`}                  style={!copied ? { border: '1px solid #8a8686' } : {}}
                 >
                   {copied ? (
                     <>
