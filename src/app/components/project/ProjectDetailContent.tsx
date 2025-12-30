@@ -1286,6 +1286,8 @@ export function ProjectDetailContent({
 
 
             </div>
+        </div>
+          </div>
         </section>
 
 
