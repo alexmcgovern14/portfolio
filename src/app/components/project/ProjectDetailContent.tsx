@@ -114,7 +114,7 @@ const markdownComponents = {
 
 
 
-    <h2 className="text-2xl font-['Instrument_Serif:Regular',sans-serif] text-white mb-4 mt-12 pb-2" style={{ borderBottom: '1px solid #8a8686' }}>
+    <h2 className="text-2xl font-['Instrument_Serif:Regular',sans-serif] text-white mb-4 mt-12 pb-2" style={{{ borderBottom: '1px solid #8a8686' }}>
 
 
 
@@ -274,7 +274,7 @@ const markdownComponents = {
 
 
 
-    <hr className="my-8" style={{ borderColor: '#8a8686' }} />
+    <hr className="my-8" style={{{ borderColor: '#8a8686' }} />
 
 
 
@@ -326,7 +326,7 @@ const markdownComponents = {
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -334,14 +334,8 @@ const markdownComponents = {
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <span className="block rounded-[22px] overflow-hidden">
 
 
@@ -462,7 +456,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -470,19 +464,13 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] p-8 shadow-xl"
 
 
 
-          style={{
+          style={{{
 
 
 
@@ -490,14 +478,8 @@ export function ProjectDetailContent({
 
 
 
-          }}
-
-
-
+          }}}
         >
-
-
-
           <div className="flex items-center gap-3 mb-6">
 
 
@@ -558,7 +540,7 @@ export function ProjectDetailContent({
 
 
 
-                  style={{
+                  style={{{
 
 
 
@@ -566,14 +548,8 @@ export function ProjectDetailContent({
 
 
 
-                  }}
-
-
-
-                >
-
-
-
+                  }}}
+        >
                   <div className="rounded-[22px] overflow-hidden">
 
 
@@ -614,7 +590,7 @@ export function ProjectDetailContent({
 
 
 
-                  style={{
+                  style={{{
 
 
 
@@ -622,14 +598,8 @@ export function ProjectDetailContent({
 
 
 
-                  }}
-
-
-
-                >
-
-
-
+                  }}}
+        >
                   <div className="rounded-[22px] overflow-hidden">
 
 
@@ -687,7 +657,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -695,18 +665,12 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] p-8 shadow-xl"
-          style={{
+          style={{{
             background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
-          }}
+          }}}
         >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">
@@ -733,14 +697,11 @@ export function ProjectDetailContent({
 <section id="workflows" className="scroll-mt-24">
           <div
             className="rounded-[24px] p-[2px] shadow-xl"
-          style={{
+          style={{{
             background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-          }}
+          }}}
         >
-
-
-
-        style={{
+        style={{{
 
 
 
@@ -748,18 +709,12 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] p-8 shadow-xl"
-          style={
-            background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
-          }
+          style={{{
+            background: \'linear-gradient(to bottom, #6C696A, #4B4744)\',
+          }}}
         >
           <div className="flex items-center gap-3 mb-6">
                           <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">
@@ -792,7 +747,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -800,14 +755,8 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] overflow-hidden">
           <img
             src={workflowIngestion}                    alt="n8n workflow for data ingestion and vectorization"                    className="w-full h-auto"                    loading="lazy"                    width="1200"                    height="800"                  
@@ -829,7 +778,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -837,17 +786,8 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
-
-
-
+        }}}
+        >
       {/* User Needs Section */}
 
 
@@ -868,7 +808,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -876,19 +816,13 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] p-8 shadow-xl"
 
 
 
-            style={{
+            style={{{
 
 
 
@@ -896,14 +830,8 @@ export function ProjectDetailContent({
 
 
 
-            }}
-
-
-
-          >
-
-
-
+            }}}
+        >
             <div className="flex items-center gap-3 mb-6">
 
 
@@ -1075,7 +1003,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -1083,19 +1011,13 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] shadow-xl overflow-hidden"
 
 
 
-            style={{
+            style={{{
 
 
 
@@ -1103,15 +1025,9 @@ export function ProjectDetailContent({
 
 
 
-            }}
-
-
-
-          >
-
-
-
-            <div className="px-8 py-6" style={{ borderBottom: '1px solid #8a8686' }}>
+            }}}
+        >
+            <div className="px-8 py-6" style={{{ borderBottom: '1px solid #8a8686' }}>
 
 
 
@@ -1155,7 +1071,7 @@ export function ProjectDetailContent({
 
 
 
-                  <div className="inline-flex rounded-lg p-0.5 bg-[#4a4647]" style={{ border: '1px solid #8a8686' }}>
+                  <div className="inline-flex rounded-lg p-0.5 bg-[#4a4647]" style={{{ border: '1px solid #8a8686' }}>
 
 
 
@@ -1183,14 +1099,8 @@ export function ProjectDetailContent({
 
 
 
-                      }`}
-
-
-
-                    >
-
-
-
+                      }`}}
+        >
                       Formatted
 
 
@@ -1223,14 +1133,8 @@ export function ProjectDetailContent({
 
 
 
-                      }`}
-
-
-
-                    >
-
-
-
+                      }`}}
+        >
                       Markdown
 
 
@@ -1275,14 +1179,8 @@ export function ProjectDetailContent({
 
 
 
-                    style={!copied ? { border: '1px solid #8a8686' } : {}}
-
-
-
-                  >
-
-
-
+                    style={{!copied ? { border: '1px solid #8a8686' } : {}}}
+        >
                     {copied ? (
 
 
@@ -1447,7 +1345,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -1455,19 +1353,13 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] p-8 shadow-xl"
 
 
 
-            style={{
+            style={{{
 
 
 
@@ -1475,14 +1367,8 @@ export function ProjectDetailContent({
 
 
 
-            }}
-
-
-
-          >
-
-
-
+            }}}
+        >
             <div className="flex items-center gap-3 mb-6">
 
 
@@ -1582,7 +1468,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -1590,19 +1476,13 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] p-8 shadow-xl"
 
 
 
-            style={{
+            style={{{
 
 
 
@@ -1610,14 +1490,8 @@ export function ProjectDetailContent({
 
 
 
-            }}
-
-
-
-          >
-
-
-
+            }}}
+        >
             <div className="flex items-center gap-3 mb-6">
 
 
@@ -1722,14 +1596,8 @@ export function ProjectDetailContent({
 
 
 
-                }}
-
-
-
-              >
-
-
-
+                }}}
+        >
                 {project.prd.split('# Challenges')[1].replace(/^[\s\n]*/, '')}
 
 
@@ -1786,7 +1654,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -1794,19 +1662,13 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] p-8 shadow-xl"
 
 
 
-            style={{
+            style={{{
 
 
 
@@ -1814,14 +1676,8 @@ export function ProjectDetailContent({
 
 
 
-            }}
-
-
-
-          >
-
-
-
+            }}}
+        >
             <div className="flex items-center gap-3 mb-6">
 
 
@@ -1922,7 +1778,7 @@ export function ProjectDetailContent({
 
 
 
-        style={{
+        style={{{
 
 
 
@@ -1930,19 +1786,13 @@ export function ProjectDetailContent({
 
 
 
-        }}
-
-
-
-      >
-
-
-
+        }}}
+        >
         <div className="rounded-[22px] p-8 shadow-xl"
 
 
 
-            style={{
+            style={{{
 
 
 
@@ -1950,14 +1800,8 @@ export function ProjectDetailContent({
 
 
 
-            }}
-
-
-
-          >
-
-
-
+            }}}
+        >
             <div className="flex items-center gap-3 mb-6">
 
 
@@ -2078,14 +1922,8 @@ export function ProjectDetailContent({
 
 
 
-                }}
-
-
-
-              >
-
-
-
+                }}}
+        >
                 {project.challenge}
 
 
