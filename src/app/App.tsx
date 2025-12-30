@@ -53,7 +53,7 @@ function HomePage() {
           <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
             Featured Projects
           </h2>
-          <p className="text-[#c2c2c2] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
+          <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
             Selection of features in production at LiveScore and personal projects. Mostly featuring LLMs in product or built in AI-native process.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -74,8 +74,8 @@ function HomePage() {
           <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
             Digital art
           </h2>
-          <p className="text-[#c2c2c2] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
-            Design and creative background influence product thinking.
+          <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
+            <><strong className="text-white">Design</strong> and <strong className="text-white">creative</strong> background influence product thinking.</>
           </p>
 
           {/* Paintings Section */}
@@ -89,7 +89,7 @@ function HomePage() {
               <div className="bg-[#8b8b8b] group-hover:bg-[#f16521] transition-colors size-[40px] flex items-center justify-center rounded-lg flex-shrink-0">
                 <span className="text-white font-serif">E</span>
               </div>
-              <p className="text-[#c2c2c2] font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed group-hover:text-white transition-colors">
+              <p className="text-[#D6D6D6] font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed group-hover:text-white transition-colors">
                 <strong className="text-white">Paintings</strong> available on Etsy
               </p>
             </a>
@@ -116,7 +116,7 @@ function HomePage() {
                   style={{ filter: 'brightness(0) invert(1)' }}
                 />
               </div>
-              <p className="text-[#c2c2c2] font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed group-hover:text-white transition-colors">
+              <p className="text-[#D6D6D6] font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed group-hover:text-white transition-colors">
                 Former <strong className="text-white">motion designer</strong> and content <strong className="text-white">strategy & production manager</strong>
               </p>
             </a>
@@ -127,38 +127,54 @@ function HomePage() {
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 {/* Behance embed - left, wider */}
                 <div className="flex-1 flex justify-center items-start w-full">
-                  <div className="rounded-2xl overflow-hidden shadow-2xl bg-gray-900 w-full border-2 border-white/30" style={{ maxWidth: '700px' }}>
-                    <iframe 
-                      src="https://www.behance.net/embed/project/151280181?ilo0=1" 
-                      width="100%"
-                      height="550"
-                      allowFullScreen 
-                      loading="lazy" 
-                      frameBorder="0" 
-                      allow="clipboard-write" 
-                      referrerPolicy="strict-origin-when-cross-origin"
-                    />
+                  <div 
+                    className="rounded-[24px] p-[2px] shadow-2xl"
+                    style={{
+                      background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                      width: '100%',
+                      maxWidth: '700px'
+                    }}
+                  >
+                    <div className="rounded-[22px] overflow-hidden bg-gray-900 w-full">
+                      <iframe 
+                        src="https://www.behance.net/embed/project/151280181?ilo0=1" 
+                        width="100%"
+                        height="550"
+                        allowFullScreen 
+                        loading="lazy" 
+                        frameBorder="0" 
+                        allow="clipboard-write" 
+                        referrerPolicy="strict-origin-when-cross-origin"
+                      />
+                    </div>
                   </div>
                 </div>
 
                 {/* Instagram embed - right, smaller */}
                 <div className="flex-shrink-0 flex justify-center items-start w-full md:w-auto">
-                  <div className="rounded-2xl overflow-hidden shadow-2xl w-full md:w-[380px] border-2 border-white/30">
-                    <iframe
-                      src="https://www.instagram.com/p/CEzAI5JgMJZ/embed/"
-                      width="380"
-                      height="550"
-                      frameBorder="0"
-                      scrolling="no"
-                      allowtransparency="true"
-                      style={{ 
-                        border: 'none', 
-                        overflow: 'hidden',
-                        width: '100%',
-                        minHeight: '550px'
-                      }}
-                      title="Instagram post by @amgdgn"
-                    />
+                  <div 
+                    className="rounded-[24px] p-[2px] shadow-2xl"
+                    style={{
+                      background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                    }}
+                  >
+                    <div className="rounded-[22px] overflow-hidden w-full md:w-[380px]">
+                      <iframe
+                        src="https://www.instagram.com/p/CEzAI5JgMJZ/embed/"
+                        width="380"
+                        height="550"
+                        frameBorder="0"
+                        scrolling="no"
+                        allowtransparency="true"
+                        style={{ 
+                          border: 'none', 
+                          overflow: 'hidden',
+                          width: '100%',
+                          minHeight: '550px'
+                        }}
+                        title="Instagram post by @amgdgn"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -177,11 +193,11 @@ function HomePage() {
               <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
                 Beyond product
               </h2>
-              <p className="text-[#c2c2c2] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
-                Creative pursuits, vibe coding, politics, history, culture, football and music — from rock, country and blues to hip-hop and soul.
+              <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
+                Creative pursuits, history, politics, culture, football and music — from rock, country and blues to hip-hop and soul.
               </p>
               
-              <p className="text-[#c2c2c2] mb-6 font-['Inter:Regular',sans-serif]">
+              <p className="text-[#c2c2c2] mb-8 md:mb-16 font-[ABeeZee] text-base md:text-xl leading-relaxed">
                 Currently listening to:
               </p>
               
@@ -273,7 +289,7 @@ function HomePage() {
           </div>
           
           {/* Credit */}
-          <p className="text-[#c2c2c2] text-center mt-6 md:mt-8 font-['Inter:Regular',sans-serif] text-sm md:text-base">
+          <p className="text-[#D6D6D6] text-center mt-6 md:mt-8 font-['Inter:Regular',sans-serif] text-sm md:text-base">
             Updated: Dec. 2025 | Designed and built by Alex McGovern
           </p>
         </div>

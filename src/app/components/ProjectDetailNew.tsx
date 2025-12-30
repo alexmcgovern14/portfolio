@@ -55,7 +55,11 @@ export function ProjectDetail() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 100;
+      // Account for sticky header height (expanded ~200px, collapsed ~80px) plus padding
+      // Using dynamic calculation to ensure header and section top are visible
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.getBoundingClientRect().height : 80;
+      const offset = headerHeight + 40; // 40px padding for visual spacing
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
         top: elementPosition - offset,

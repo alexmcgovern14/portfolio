@@ -40,7 +40,7 @@ export function ProjectDetailHeader({ project, slug, isScrolled }: ProjectDetail
         <div className="py-4">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-[#b8b8b8] hover:text-[#00a1ff] transition-colors"
+            className="inline-flex items-center gap-2 text-[#D6D6D6] hover:text-[#00a1ff] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back</span>
@@ -63,7 +63,7 @@ export function ProjectDetailHeader({ project, slug, isScrolled }: ProjectDetail
           </h1>
           
           {getSubheading() && (
-            <p className="text-[#d4d4d4] text-xl mb-6 leading-relaxed">
+            <p className="text-[#D6D6D6] text-xl mb-6 leading-relaxed">
               {getSubheading()}
             </p>
           )}

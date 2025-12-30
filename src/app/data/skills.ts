@@ -35,24 +35,24 @@ export const skills: Skill[] = [
 
 export const aboutMeSkills: Skill[] = [
   {
-    title: 'Building with AI',
+    title: 'AI features',
     description:
-      'Integrating LLMs into user-facing products; defining data input, evals, guardrails, observability.',
+      'Integrating LLMs into **user-facing products**; defining data input, evals, guardrails, observability.',
   },
   {
     title: '0 → 1',
     description:
-      'Full-stack proof of concepts to develop ideas, validate feasibility and design systems.',
+      'Building **full-stack proof of concepts** to develop ideas, validate feasibility and design systems _before_ moving to Engineering',
   },
   {
     title: 'Product leadership',
     description:
-      'Leading AI strategy and execution, driving adoption and upskilling.',
+      'Leading product **AI strategy** and **delivery**, driving adoption and upskilling.',
   },
   {
     title: 'Internal systems',
     description:
-      'Delivering internal tooling, agents, platforms, workflows and standards.',
+      'Delivering **internal tooling**, agents, platforms, workflows and standards.',
   },
 ];
 

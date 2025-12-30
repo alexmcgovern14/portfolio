@@ -28,9 +28,14 @@ export function ProjectDetailNavigation({
 
   return (
     <aside className="lg:col-span-1">
-      <div className="lg:sticky lg:top-24">
+      <div className="lg:sticky lg:top-28">
         <div 
-          className="rounded-2xl p-6 shadow-xl border-2 border-white/30"
+          className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-6 shadow-xl"
           style={{
             background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
           }}
@@ -54,6 +59,7 @@ export function ProjectDetailNavigation({
               </button>
             ))}
           </nav>
+        </div>
         </div>
       </div>
     </aside>

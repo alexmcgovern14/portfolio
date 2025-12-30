@@ -37,27 +37,27 @@ const markdownComponents = {
     </h3>
   ),
   p: ({ children }: { children: React.ReactNode }) => (
-    <p className="text-[#d4d4d4] leading-relaxed mb-4">
+    <p className="text-[#D6D6D6] leading-relaxed mb-4">
       {children}
     </p>
   ),
   ul: ({ children }: { children: React.ReactNode }) => (
-    <ul className="my-4 space-y-2 list-disc pl-6 text-[#d4d4d4]">
+    <ul className="my-4 space-y-2 list-disc pl-6 text-[#D6D6D6]">
       {children}
     </ul>
   ),
   ol: ({ children }: { children: React.ReactNode }) => (
-    <ol className="my-4 space-y-2 list-decimal pl-6 text-[#d4d4d4]">
+    <ol className="my-4 space-y-2 list-decimal pl-6 text-[#D6D6D6]">
       {children}
     </ol>
   ),
   li: ({ children }: { children: React.ReactNode }) => (
-    <li className="text-[#d4d4d4] leading-relaxed pl-2">
+    <li className="text-[#D6D6D6] leading-relaxed pl-2">
       {children}
     </li>
   ),
   blockquote: ({ children }: { children: React.ReactNode }) => (
-    <blockquote className="border-l-4 border-[#00a1ff] pl-6 pr-4 italic my-6 bg-[#3a3638] py-5 rounded-r-lg text-[#e8e8e8] text-lg">
+    <blockquote className="border-l-4 border-[#00a1ff] pl-6 pr-4 italic my-6 bg-[#3a3638] py-5 rounded-r-lg text-[#D6D6D6] text-lg">
       {children}
     </blockquote>
   ),
@@ -79,7 +79,12 @@ const markdownComponents = {
   ),
   img: ({ src, alt }: { src?: string; alt?: string }) => (
     <span className="block my-8">
-      <span className="block rounded-xl overflow-hidden border-2 border-white/30">
+      <span className="block rounded-[24px] p-[2px] overflow-hidden"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <span className="block rounded-[22px] overflow-hidden">
         <img src={src} alt={alt || ''} className="w-full h-auto block" loading="lazy" width="1200" height="675" />
       </span>
     </span>
@@ -107,7 +112,12 @@ export function ProjectDetailContent({
       {/* Overview Card */}
       <section id="overview" className="scroll-mt-24">
         <div 
-          className="rounded-2xl p-8 shadow-xl border-2 border-white/30"
+          className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"
           style={{
             background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
           }}
@@ -126,36 +136,75 @@ export function ProjectDetailContent({
             </ReactMarkdown>
             {slug === 'live-match-summary' && 'conceptImage' in project && (
               <div className="my-8">
-                <div className="rounded-xl overflow-hidden border-2 border-white/30 p-0">
+                <div className="rounded-[24px] p-[2px] overflow-hidden"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] overflow-hidden">
                   <img src={project.conceptImage} alt="Initial concept designs for live match summary feature" className="w-full h-auto block" loading="lazy" width="1200" height="675" />
                 </div>
-                <p className="text-[#b8b8b8] text-sm italic text-center mt-2">Initial concept designs</p>
+              </div>
+                <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Initial concept designs</p>
               </div>
             )}
             {slug === 'spotify-recommendation-engine' && 'playlistImage' in project && project.playlistImage && (
               <div className="my-8">
-                <div className="rounded-xl overflow-hidden border-2 border-white/30 p-0">
+                <div className="rounded-[24px] p-[2px] overflow-hidden"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] overflow-hidden">
                   <img src={project.playlistImage} alt="Generated playlist seen on Spotify" className="w-full h-auto block" loading="lazy" width="1200" height="675" />
                 </div>
-                <p className="text-[#b8b8b8] text-sm italic text-center mt-2">Generated playlist seen on Spotify</p>
+              </div>
+                <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Generated playlist seen on Spotify</p>
               </div>
             )}
           </div>
+        </div>
+        </div>
         </div>
       </section>
 
       {/* Skills Card */}
       {project && 'skills' in project && (
-        <section id="skills" className="scroll-mt-24">          <div             className="rounded-2xl p-8 shadow-xl border-2 border-white/30"            style={{              background: 'linear-gradient(to bottom, #6C696A, #4B4744)',            }}          >            <div className="flex items-center gap-3 mb-6">              <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">                <Code2 className="w-5 h-5 text-white" />              </div>              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">                Skills used              </h2>            </div>            <p className="text-[#d4d4d4] text-lg leading-relaxed">              {project.skills}            </p>          </div>        </section>      )}            {/* Workflows Section */}
+        <section id="skills" className="scroll-mt-24">          <div             className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"            style={{              background: 'linear-gradient(to bottom, #6C696A, #4B4744)',            }}          >            <div className="flex items-center gap-3 mb-6">              <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">                <Code2 className="w-5 h-5 text-white" />              </div>              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">                Skills used              </h2>            </div>            <p className="text-[#D6D6D6] text-lg leading-relaxed">              {project.skills}            </p>          </div>        </section>      )}            {/* Workflows Section */}
       {slug === 'rag-ai-system' && (
-        <section id="workflows" className="scroll-mt-24">          <div             className="rounded-2xl p-8 shadow-xl border-2 border-white/30"            style={{              background: 'linear-gradient(to bottom, #6C696A, #4B4744)',            }}          >            <div className="flex items-center gap-3 mb-6">              <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">                <Workflow className="w-5 h-5 text-white" />              </div>              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">                System workflows              </h2>            </div>
+        <section id="workflows" className="scroll-mt-24">          <div             className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"            style={{              background: 'linear-gradient(to bottom, #6C696A, #4B4744)',            }}          >            <div className="flex items-center gap-3 mb-6">              <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">                <Workflow className="w-5 h-5 text-white" />              </div>              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">                System workflows              </h2>            </div>
             
-            <div className="space-y-6">              <div>                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">                  Workflow 1: Ingestion & Vectorisation                </h3>                <p className="text-[#d4d4d4] mb-4 leading-relaxed">                  Data pipeline that extracts content from Notion, generates embeddings, and stores vectors in Supabase for semantic search.                </p>                <div className="rounded-xl overflow-hidden border-2 border-white/30">                  <img                    src={workflowIngestion}                    alt="n8n workflow for data ingestion and vectorization"                    className="w-full h-auto"                    loading="lazy"                    width="1200"                    height="800"                  />                </div>              </div>              <div>                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">                  Workflow 2: Query & Synthesis                </h3>                <p className="text-[#d4d4d4] mb-4 leading-relaxed">                  Chat interface that embeds user queries, retrieves relevant excerpts, and generates grounded responses with full source traceability.                </p>                <div className="rounded-xl overflow-hidden border-2 border-white/30">                  <img                    src={workflowChat}                    alt="n8n workflow for chat and retrieval"                    className="w-full h-auto"                    loading="lazy"                    width="1200"                    height="800"                  />                </div>              </div>            </div>          </div>        </section>      )}
+            <div className="space-y-6">              <div>                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">                  Workflow 1: Ingestion & Vectorisation                </h3>                <p className="text-[#D6D6D6] mb-4 leading-relaxed">                  Data pipeline that extracts content from Notion, generates embeddings, and stores vectors in Supabase for semantic search.                </p>                <div className="rounded-[24px] p-[2px] overflow-hidden"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] overflow-hidden">                  <img                    src={workflowIngestion}                    alt="n8n workflow for data ingestion and vectorization"                    className="w-full h-auto"                    loading="lazy"                    width="1200"                    height="800"                  />                </div>              </div>              <div>                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">                  Workflow 2: Query & Synthesis                </h3>                <p className="text-[#D6D6D6] mb-4 leading-relaxed">                  Chat interface that embeds user queries, retrieves relevant excerpts, and generates grounded responses with full source traceability.                </p>                <div className="rounded-[24px] p-[2px] overflow-hidden"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] overflow-hidden">                  <img                    src={workflowChat}                    alt="n8n workflow for chat and retrieval"                    className="w-full h-auto"                    loading="lazy"                    width="1200"                    height="800"                  />                </div>              </div>            </div>          </div>        </section>      )}
       {/* User Needs Section */}
       {slug === 'live-match-summary' && (
         <section id="user-needs" className="scroll-mt-24">
           <div 
-            className="rounded-2xl p-8 shadow-xl border-2 border-white/30"
+            className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"
             style={{
               background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
             }}
@@ -170,13 +219,13 @@ export function ProjectDetailContent({
             </div>
             
             <div className="space-y-4">
-              <p className="text-[#d4d4d4] text-lg leading-relaxed">
+              <p className="text-[#D6D6D6] text-lg leading-relaxed">
                 Live sports has an old, universal user need: quickly understand the match narrative right now. Pure data lacks narrative, and traditional commentary feeds lack detail.
               </p>
               
               <div>
-                <p className="text-[#d4d4d4] text-lg font-semibold mb-2">Example scenarios:</p>
-                <ul className="space-y-2 text-[#d4d4d4] text-lg leading-relaxed list-disc pl-6">
+                <p className="text-[#D6D6D6] text-lg font-semibold mb-2">Example scenarios:</p>
+                <ul className="space-y-2 text-[#D6D6D6] text-lg leading-relaxed list-disc pl-6">
                   <li className="pl-2">User can't watch the game, wants to quickly get up to speed on what's happening</li>
                   <li className="pl-2">User thinking about switching on the TV to watch, wants to know if worth watching or not</li>
                   <li className="pl-2">User interested in placing in-play bet, wants to understand momentum</li>
@@ -184,6 +233,8 @@ export function ProjectDetailContent({
               </div>
             </div>
           </div>
+        </div>
+        </div>
         </section>
       )}
 
@@ -200,7 +251,12 @@ export function ProjectDetailContent({
       {project && 'prd' in project && slug !== 'live-match-summary' && slug !== 'lineup-changes' && slug !== 'portfolio-website' && (
         <section id="prd" className="scroll-mt-24">
           <div 
-            className="rounded-2xl shadow-xl overflow-hidden border-2 border-white/30"
+            className="rounded-[24px] p-[2px] shadow-xl overflow-hidden"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] shadow-xl overflow-hidden"
             style={{
               background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
             }}
@@ -222,7 +278,7 @@ export function ProjectDetailContent({
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                         viewMode === 'text'
                           ? 'bg-[#8a8686] text-white'
-                          : 'text-[#b8b8b8] hover:text-white'
+                          : 'text-[#D6D6D6] hover:text-white'
                       }`}
                     >
                       Formatted
@@ -232,7 +288,7 @@ export function ProjectDetailContent({
                       className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                         viewMode === 'markdown'
                           ? 'bg-[#8a8686] text-white'
-                          : 'text-[#b8b8b8] hover:text-white'
+                          : 'text-[#D6D6D6] hover:text-white'
                       }`}
                     >
                       Markdown
@@ -244,7 +300,7 @@ export function ProjectDetailContent({
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                       copied
                         ? 'bg-gradient-to-r from-[#00a1ff] to-[#00ff6f] text-black'
-                        : 'bg-[#4a4647] text-white hover:text-[#d4d4d4]'
+                        : 'bg-[#4a4647] text-white hover:text-[#D6D6D6]'
                     }`}
                     style={!copied ? { border: '1px solid #8a8686' } : {}}
                   >
@@ -272,12 +328,14 @@ export function ProjectDetailContent({
                   </ReactMarkdown>
                 </div>
               ) : (
-                <pre className="whitespace-pre-wrap font-mono text-sm text-[#d4d4d4] bg-[#1a1a1a] p-6 rounded-lg overflow-x-auto">
+                <pre className="whitespace-pre-wrap font-mono text-sm text-[#D6D6D6] bg-[#1a1a1a] p-6 rounded-lg overflow-x-auto">
                   {project.prd}
                 </pre>
               )}
             </div>
           </div>
+        </div>
+        </div>
         </section>
       )}
 
@@ -286,7 +344,12 @@ export function ProjectDetailContent({
       {slug === 'lineup-changes' && project && 'keyInfo' in project && (
         <section id="key-info" className="scroll-mt-24">
           <div 
-            className="rounded-2xl p-8 shadow-xl border-2 border-white/30"
+            className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"
             style={{
               background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
             }}
@@ -306,6 +369,8 @@ export function ProjectDetailContent({
               </ReactMarkdown>
             </div>
           </div>
+        </div>
+        </div>
         </section>
       )}
 
@@ -313,7 +378,12 @@ export function ProjectDetailContent({
       {slug === 'live-match-summary' && (
         <section id="output-challenges" className="scroll-mt-24">
           <div 
-            className="rounded-2xl p-8 shadow-xl border-2 border-white/30"
+            className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"
             style={{
               background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
             }}
@@ -337,12 +407,12 @@ export function ProjectDetailContent({
                     </h2>
                   ),
                   blockquote: ({ children }: { children: React.ReactNode }) => (
-                    <blockquote className="border-l-4 border-[#00a1ff] pl-6 pr-4 italic my-6 bg-[#00a1ff]/10 py-4 rounded-r-lg text-[#d4d4d4]">
+                    <blockquote className="border-l-4 border-[#00a1ff] pl-6 pr-4 italic my-6 bg-[#00a1ff]/10 py-4 rounded-r-lg text-[#D6D6D6]">
                       {children}
                     </blockquote>
                   ),
                   em: ({ children }: { children: React.ReactNode }) => (
-                    <em className="italic text-[#d4d4d4]">{children}</em>
+                    <em className="italic text-[#D6D6D6]">{children}</em>
                   ),
                 }}
               >
@@ -350,6 +420,8 @@ export function ProjectDetailContent({
               </ReactMarkdown>
             </div>
           </div>
+        </div>
+        </div>
         </section>
       )}
 
@@ -357,7 +429,12 @@ export function ProjectDetailContent({
       {slug === 'lineup-changes' && project && 'challenge' in project && (
         <section id="lineup-challenge" className="scroll-mt-24">
           <div 
-            className="rounded-2xl p-8 shadow-xl border-2 border-white/30"
+            className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"
             style={{
               background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
             }}
@@ -377,6 +454,8 @@ export function ProjectDetailContent({
               </ReactMarkdown>
             </div>
           </div>
+        </div>
+        </div>
         </section>
       )}
 
@@ -384,7 +463,12 @@ export function ProjectDetailContent({
       {slug === 'portfolio-website' && project && 'challenge' in project && (
         <section id="tech-stack" className="scroll-mt-24">
           <div 
-            className="rounded-2xl p-8 shadow-xl border-2 border-white/30"
+            className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"
             style={{
               background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
             }}
@@ -399,7 +483,7 @@ export function ProjectDetailContent({
             </div>
             
             <div className="mb-8">
-              <p className="text-[#d4d4d4] leading-relaxed mb-4">
+              <p className="text-[#D6D6D6] leading-relaxed mb-4">
                 Diagram shows end-to-end tooling for each stage:
               </p>
               <img 
@@ -425,6 +509,8 @@ export function ProjectDetailContent({
               </ReactMarkdown>
             </div>
           </div>
+        </div>
+        </div>
         </section>
       )}
     </main>

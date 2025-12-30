@@ -20,17 +20,17 @@ const markdownComponents = {
     </h2>
   ),
   p: ({ children }: { children: React.ReactNode }) => (
-    <p className="text-[#d4d4d4] leading-relaxed mb-4">
+    <p className="text-[#D6D6D6] leading-relaxed mb-4">
       {children}
     </p>
   ),
   ul: ({ children }: { children: React.ReactNode }) => (
-    <ul className="my-4 space-y-2 list-disc pl-6 text-[#d4d4d4]">
+    <ul className="my-4 space-y-2 list-disc pl-6 text-[#D6D6D6]">
       {children}
     </ul>
   ),
   li: ({ children }: { children: React.ReactNode }) => (
-    <li className="text-[#d4d4d4] leading-relaxed pl-2">
+    <li className="text-[#D6D6D6] leading-relaxed pl-2">
       {children}
     </li>
   ),
@@ -48,7 +48,12 @@ export function ConstraintsAndEvals({ constraints, evaluations }: ConstraintsAnd
   return (
     <section id="constraints-and-evals" className="scroll-mt-24">
       <div 
-        className="rounded-2xl p-8 shadow-xl border-2 border-white/30"
+        className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }
+      >
+        <div className="rounded-[22px] p-8 shadow-xl"
         style={{
           background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
         }}
@@ -72,6 +77,7 @@ export function ConstraintsAndEvals({ constraints, evaluations }: ConstraintsAnd
           </ReactMarkdown>
         </div>
       </div>
+        </div>
     </section>
   );
 }

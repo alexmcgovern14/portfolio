@@ -18,28 +18,64 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
         <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
           AI product management
         </h2>
-        <p className="text-[#c2c2c2] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
+        <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
           Leading AI product development from concept to shipping
         </p>
         
-        {/* Layout 2: 4 skill cards on top, large photo below */}
+        {/* New Layout: Job overview card + Speaking photo (row 1) → 4 skill cards (row 2) */}
         <div className="space-y-8">
-          {/* 4 Skills on Top Row */}
+          {/* Row 1: Job Overview Card + Speaking Photo */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Job Overview Card */}
+            <div 
+              className="rounded-[24px] p-[2px] shadow-xl"
+              style={{
+                background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+              }}
+            >
+              <div className="bg-gradient-to-b from-[#4C4845] to-[#302D2B] rounded-[22px] p-8 h-full">
+              <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white mb-2">
+                Senior Product Manager, LiveScore
+              </h3>
+              <p className="text-[#D6D6D6] text-lg mb-6 italic">
+                London, UK
+              </p>
+              <div className="text-[#D6D6D6] text-base leading-relaxed space-y-4">
+                <p>
+                  Leading product strategy, delivery, and adoption of <strong className="text-white">Artificial Intelligence</strong> at LiveScore.
+                </p>
+                <p>
+                  I focus on building <strong className="text-white">engaging user experiences</strong> and have led the development of some of LiveScore's <strong className="text-white">most innovative</strong> and <strong className="text-white">high-retention</strong> features.
+                </p>
+                <p>
+                  Passionate about emerging technologies, industry trends and multidisciplinary design, with a belief in <strong className="text-white">continuous learning.</strong>
+                </p>
+              </div>
+              </div>
+            </div>
+
+            {/* Speaking Photo */}
+            <div 
+              className="rounded-[24px] p-[2px] shadow-xl overflow-hidden"
+              style={{
+                background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+              }}
+            >
+              <div className="rounded-[22px] overflow-hidden">
+                <img 
+                src={speakingPhoto}
+                alt="Speaking at an event"
+                className="w-full h-auto object-cover"
+              />
+              </div>
+            </div>
+          </div>
+          
+          {/* Row 2: 4 Skill Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {displaySkills.map((skill, index) => (
               <SkillCard key={index} {...skill} />
             ))}
-          </div>
-          
-          {/* Large Photo Below */}
-          <div 
-            className="overflow-hidden rounded-xl shadow-xl border-2 border-white/30"
-          >
-            <img 
-              src={speakingPhoto}
-              alt="Speaking at an event"
-              className="w-full h-auto object-cover"
-            />
           </div>
         </div>
       </div>

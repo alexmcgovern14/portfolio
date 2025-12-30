@@ -115,14 +115,21 @@ export function PaintingsCarousel() {
             {paintings.map((painting, index) => (
               <div key={index}>
                 <div className="flex justify-center">
-                  <img 
-                    src={painting} 
-                    alt={`Digital painting ${index + 1}`}
-                    className="w-[520px] h-[520px] object-cover rounded-2xl shadow-2xl border-2 border-white/30"
-                    loading="lazy"
-                    width="520"
-                    height="520"
-                  />
+                  <div className="rounded-[24px] p-[2px] shadow-2xl" style={{
+                    background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                  }}
+                  >
+                    <div className="rounded-[22px] overflow-hidden">
+                      <img
+                        src={painting}
+                        alt={`Digital painting ${index + 1}`}
+                        className="w-[520px] h-[520px] object-cover rounded-[22px] shadow-2xl"
+                        loading="lazy"
+                        width="520"
+                        height="520"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

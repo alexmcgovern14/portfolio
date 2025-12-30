@@ -11,7 +11,7 @@ export function NotFound() {
         <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-2xl md:text-4xl text-white mb-4">
           Page Not Found
         </h2>
-        <p className="text-[#c2c2c2] mb-8 font-['Inter:Regular',sans-serif] text-base md:text-lg leading-relaxed">
+        <p className="text-[#D6D6D6] mb-8 font-['Inter:Regular',sans-serif] text-base md:text-lg leading-relaxed">
           The page you're looking for doesn't exist or has been moved.
         </p>
         <Link

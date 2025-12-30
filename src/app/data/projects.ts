@@ -721,10 +721,10 @@ The site is hosted on Vercel with continuous deployment from the main branch, ke
 
 // Simplified project list for homepage (without full detail data)
 export const projects: Project[] = [
-  projectsData['rag-ai-system'],
+  projectsData['portfolio-website'],
   projectsData['live-match-summary'],
+  projectsData['rag-ai-system'],
   projectsData['lineup-changes'],
   projectsData['spotify-recommendation-engine'],
-  projectsData['portfolio-website'],
 ];
 
