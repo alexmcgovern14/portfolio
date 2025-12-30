@@ -1295,7 +1295,6 @@ export function ProjectDetailContent({
 
 
 
-      )}
 
 
 
@@ -1411,11 +1410,9 @@ export function ProjectDetailContent({
 
 
 
-        </div>
 
 
 
-        </section>
 
 
 
