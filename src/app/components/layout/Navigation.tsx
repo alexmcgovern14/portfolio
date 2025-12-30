@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Github } from 'lucide-react';
+import { Github, Mail } from 'lucide-react';
 import linkedinLogo from '../../../assets/5c61d28ae9cf4a84dc84ff7a5804e018486959ba.png';
 
 export function Navigation() {
@@ -36,6 +36,13 @@ export function Navigation() {
             className="size-5"
             style={{ filter: 'brightness(0) invert(1)' }}
           />
+        </a>
+        <a
+          href="mailto:alex.mcgovern.contact@gmail.com"
+          className="bg-[#8b8b8b] hover:bg-[#ea4335] transition-colors size-[40px] flex items-center justify-center rounded-lg"
+          aria-label="Email"
+        >
+          <Mail className="size-5 text-white" strokeWidth={2} />
         </a>
         <a
           href="https://github.com/alexmcgovern14"

@@ -1,20 +1,22 @@
-import { Suspense, lazy, memo } from 'react';
+import { Suspense, lazy, memo, useState } from 'react';
 import { Navigation } from './components/layout/Navigation';
 import { ProjectCard } from './components/project/ProjectCard';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Toaster } from 'sonner';
+import { Toaster, toast } from 'sonner';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
 import { NotFound } from './components/shared/NotFound';
-import { Github } from 'lucide-react';
+import { Github, Mail, Copy, Check } from 'lucide-react';
 import behanceLogo from '../assets/ab051b3dbc5f6e7836893dc943f2b4ba9e0379e6.png';
 import linkedinLogo from '../assets/5c61d28ae9cf4a84dc84ff7a5804e018486959ba.png';
 import beyondProductPhoto from '../assets/b82f3fe63941c182cb0917cb0aae4da5b7fb9718.png';
 import { projects } from './data/projects';
 import { aboutMeSkills } from './data/skills';
+import { trackExternalLink } from './utils/analytics';
 
 // Import hero immediately (above the fold - no lazy loading)
 import MacBookAir from '../imports/MacBookAir15';
 import { AboutMeLayout2 } from './components/AboutMeLayout2';
+import { PageViewTracker } from './components/shared/PageViewTracker';
 
 // Lazy load only heavy components that are below the fold or on separate routes
 const ProjectDetail = lazy(() => import('./components/ProjectDetailNew').then(m => ({ default: m.ProjectDetail })));
@@ -23,12 +25,70 @@ const PaintingsCarousel = lazy(() => import('./components/sections/PaintingsCaro
 // Memoized ProjectCard to prevent unnecessary re-renders
 const MemoizedProjectCard = memo(ProjectCard);
 
-// Loading fallback component
-const LoadingFallback = () => (
-  <div className="flex items-center justify-center min-h-[400px]">
-    <div className="text-white">Loading...</div>
-  </div>
-);
+
+// Get current date in "MMM. YYYY" format
+function getCurrentDateString() {
+  const now = new Date();
+  const months = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
+  const month = months[now.getMonth()];
+  const year = now.getFullYear();
+  return `${month} ${year}`;
+}
+
+// Email Copy Component
+function EmailCopyLine() {
+  const [copied, setCopied] = useState(false);
+  const email = 'alex.mcgovern.contact@gmail.com';
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      toast.success('Email copied to clipboard!');
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast.error('Failed to copy email');
+    }
+  };
+
+  return (
+    <div className="flex justify-center mt-6 md:mt-8">
+      <div 
+        className="rounded-[24px] p-[2px] shadow-xl"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }}
+      >
+        <div 
+          className="rounded-[22px]"
+          style={{ 
+            paddingLeft: '24px', 
+            paddingRight: '24px', 
+            paddingTop: '6px', 
+            paddingBottom: '6px',
+            backgroundColor: '#8A8A8A',
+            display: 'block'
+          }}
+        >
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-white font-['Inter:Regular',sans-serif] text-sm md:text-base">{email}</span>
+            <button
+              onClick={handleCopy}
+              className="flex items-center justify-center p-1.5 text-white hover:text-white/80 transition-colors rounded"
+              aria-label="Copy email address"
+            >
+              {copied ? (
+                <Check className="size-4 md:size-5" />
+              ) : (
+                <Copy className="size-4 md:size-5" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function HomePage() {
   return (
@@ -41,7 +101,6 @@ function HomePage() {
         Skip to main content
       </a>
       <Navigation />
-      
       {/* Hero Section */}
       <section className="h-screen w-full">
         <MacBookAir />
@@ -84,6 +143,7 @@ function HomePage() {
               href="https://www.etsy.com/uk/shop/AlexMcGovernDesign" 
               target="_blank" 
               rel="noopener noreferrer"
+              onClick={() => trackExternalLink("https://www.etsy.com/uk/shop/AlexMcGovernDesign", "Etsy Shop")}
               className="inline-flex items-center gap-4 mb-10 group"
             >
               <div className="bg-[#8b8b8b] group-hover:bg-[#f16521] transition-colors size-[40px] flex items-center justify-center rounded-lg flex-shrink-0">
@@ -93,7 +153,6 @@ function HomePage() {
                 <strong className="text-white">Paintings</strong> available on Etsy
               </p>
             </a>
-            
             {/* Paintings Carousel - Lazy loaded */}
             <Suspense fallback={<div className="pb-16 flex justify-center items-center h-[520px] bg-[#6d6765]"><div className="text-white">Loading paintings...</div></div>}>
               <PaintingsCarousel />
@@ -106,6 +165,7 @@ function HomePage() {
               href="https://www.behance.net/alex-mcgovern" 
               target="_blank" 
               rel="noopener noreferrer"
+              onClick={() => trackExternalLink("https://www.behance.net/alex-mcgovern", "Behance")}
               className="inline-flex items-center gap-4 mb-10 group"
             >
               <div className="bg-[#8b8b8b] group-hover:bg-[#1769ff] transition-colors size-[40px] flex items-center justify-center rounded-lg flex-shrink-0">
@@ -120,7 +180,6 @@ function HomePage() {
                 Former <strong className="text-white">motion designer</strong> and content <strong className="text-white">strategy & production manager</strong>
               </p>
             </a>
-            
             {/* Embeds Grid */}
             <div className="grid grid-cols-1 gap-8">
               {/* Behance and Instagram Row */}
@@ -169,7 +228,6 @@ function HomePage() {
                         style={{ 
                           border: 'none', 
                           overflow: 'hidden',
-                          width: '100%',
                           minHeight: '550px'
                         }}
                         title="Instagram post by @amgdgn"
@@ -196,11 +254,9 @@ function HomePage() {
               <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
                 Creative pursuits, history, politics, culture, football and music — from rock, country and blues to hip-hop and soul.
               </p>
-              
               <p className="text-[#c2c2c2] mb-8 md:mb-16 font-[ABeeZee] text-base md:text-xl leading-relaxed">
                 Currently listening to:
               </p>
-              
               {/* Spotify Embed */}
               <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-white/30">
                 <iframe 
@@ -213,7 +269,6 @@ function HomePage() {
                 ></iframe>
               </div>
             </div>
-            
             {/* Right side - Photo */}
             <div className="flex-shrink-0 w-full lg:w-auto flex justify-center">
               <img 
@@ -237,6 +292,7 @@ function HomePage() {
             <a
               href="https://uk.linkedin.com/in/alex-mcgovern-531a6576"
               target="_blank"
+              onClick={() => trackExternalLink("https://uk.linkedin.com/in/alex-mcgovern-531a6576", "LinkedIn")}
               rel="noopener noreferrer"
               className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#0077b5] transition-colors rounded-lg group"
               aria-label="LinkedIn"
@@ -249,10 +305,20 @@ function HomePage() {
               />
             </a>
 
+            {/* Email */}
+            <a
+              href="mailto:alex.mcgovern.contact@gmail.com"
+              className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#ea4335] transition-colors rounded-lg group"
+              aria-label="Email"
+            >
+              <Mail className="size-5 md:size-6 text-white" />
+            </a>
+
             {/* GitHub */}
             <a
               href="https://github.com/alexmcgovern14"
               target="_blank"
+              onClick={() => trackExternalLink("https://github.com/alexmcgovern14", "GitHub")}
               rel="noopener noreferrer"
               className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#333] transition-colors rounded-lg group"
               aria-label="GitHub"
@@ -264,6 +330,7 @@ function HomePage() {
             <a
               href="https://www.etsy.com/uk/shop/AlexMcGovernDesign"
               target="_blank"
+              onClick={() => trackExternalLink("https://www.etsy.com/uk/shop/AlexMcGovernDesign", "Etsy Shop")}
               rel="noopener noreferrer"
               className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#f16521] transition-colors rounded-lg group"
               aria-label="Etsy"
@@ -287,10 +354,11 @@ function HomePage() {
               />
             </a>
           </div>
-          
+          {/* Email Address with Copy */}
+          <EmailCopyLine />
           {/* Credit */}
           <p className="text-[#D6D6D6] text-center mt-6 md:mt-8 font-['Inter:Regular',sans-serif] text-sm md:text-base">
-            Updated: Dec. 2025 | Designed and built by Alex McGovern
+            Updated: {getCurrentDateString()} | Designed and built by Alex McGovern
           </p>
         </div>
       </footer>
@@ -302,6 +370,7 @@ export default function App() {
   return (
     <ErrorBoundary>
       <Router>
+        <PageViewTracker />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route 

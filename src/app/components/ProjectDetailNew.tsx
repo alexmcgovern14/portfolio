@@ -9,6 +9,7 @@ import { ProjectDetailHeader } from './project/ProjectDetailHeader';
 import { ProjectDetailNavigation } from './project/ProjectDetailNavigation';
 import { ProjectDetailContent } from './project/ProjectDetailContent';
 import { ProjectDetailModal } from './project/ProjectDetailModal';
+import { trackProjectView, trackCopy, trackSectionNavigation } from '../utils/analytics';
 
 export function ProjectDetail() {
   const params = useParams<{ slug: string }>();
@@ -49,10 +50,15 @@ export function ProjectDetail() {
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    // Track project view
+    if (project) {
+      trackProjectView(slug, project.title);
+    }
+  }, [slug, project]);
 
 
   const scrollToSection = (sectionId: string) => {
+    trackSectionNavigation(sectionId, slug);
     const element = document.getElementById(sectionId);
     if (element) {
       // Account for sticky header height (expanded ~200px, collapsed ~80px) plus padding
