@@ -1290,10 +1290,10 @@ export function ProjectDetailContent({
         </div>
         </div>
         </section>
+        )}
 
 
 
-          </div>
 
 
 
