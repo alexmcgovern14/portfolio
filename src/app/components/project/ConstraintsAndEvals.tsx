@@ -77,7 +77,6 @@ export function ConstraintsAndEvals({ constraints, evaluations }: ConstraintsAnd
           </ReactMarkdown>
         </div>
       </div>
-        </div>
     </section>
   );
 }
