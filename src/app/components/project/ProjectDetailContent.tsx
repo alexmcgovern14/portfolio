@@ -751,7 +751,6 @@ export function ProjectDetailContent({
         >
         <div className="rounded-[22px] overflow-hidden">
           <img
-            <img
               src={workflowIngestion}
               alt="n8n workflow for data ingestion and vectorization"
             className="w-full h-auto"
