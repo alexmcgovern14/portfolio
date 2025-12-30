@@ -1098,6 +1098,7 @@ export function ProjectDetailContent({
                     </button>
                        <button
 
+                      }
 
 
                       onClick={() => onViewModeChange('markdown')}
