@@ -701,16 +701,7 @@ export function ProjectDetailContent({
             background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
           }}
         >
-        style={{
-
-
-
-          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-
-
-
-        }}
-        >
+        
         <div className="rounded-[22px] p-8 shadow-xl"
           style={{
             background: 'linear-gradient(to bottom, #6C696A, #4B4744)\',
