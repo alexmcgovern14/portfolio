@@ -82,10 +82,11 @@ const markdownComponents = {
       <span className="block rounded-[24px] p-[2px] overflow-hidden"
         style={{
           background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-        }
+        }}
       >
         <span className="block rounded-[22px] overflow-hidden">
-        <img src={src} alt={alt || ''} className="w-full h-auto block" loading="lazy" width="1200" height="675" />
+          <img src={src} alt={alt || ''} className="w-full h-auto block" loading="lazy" width="1200" height="675" />
+        </span>
       </span>
     </span>
   ),
