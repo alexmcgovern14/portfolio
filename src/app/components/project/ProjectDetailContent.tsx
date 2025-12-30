@@ -663,6 +663,7 @@ export function ProjectDetailContent({
 
 
         </div>
+        </div>
 
 
 
@@ -702,7 +703,26 @@ export function ProjectDetailContent({
 
 
 
-        <div className="rounded-[22px] p-8 shadow-xl"            style={{              background: 'linear-gradient(to bottom, #6C696A, #4B4744)',            }}          >            <div className="flex items-center gap-3 mb-6">              <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">                <Code2 className="w-5 h-5 text-white" />              </div>              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">                Skills used              </h2>            </div>            <p className="text-[#D6D6D6] text-lg leading-relaxed">              {project.skills}            </p>          </div>        </section>      )}            {/* Workflows Section */}
+        <div className="rounded-[22px] p-8 shadow-xl"
+          style={{
+            background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
+          }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">
+              <Code2 className="w-5 h-5 text-white" />
+            </div>
+            <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">
+              Skills used
+            </h2>
+          </div>
+          <p className="text-[#D6D6D6] text-lg leading-relaxed">
+            {project.skills}
+          </p>
+        </div>
+        </div>
+      </section>
+      )}
 
 
 
@@ -778,7 +798,6 @@ export function ProjectDetailContent({
 
 
 
-        <div className="rounded-[22px] overflow-hidden">                  <img                    src={workflowChat}                    alt="n8n workflow for chat and retrieval"                    className="w-full h-auto"                    loading="lazy"                    width="1200"                    height="800"                  />                </div>              </div>            </div>          </div>        </section>      )}
 
 
 
@@ -938,7 +957,6 @@ export function ProjectDetailContent({
 
 
 
-        </div>
 
 
 
@@ -1482,7 +1500,6 @@ export function ProjectDetailContent({
 
 
 
-        </div>
 
 
 
@@ -2042,7 +2059,6 @@ export function ProjectDetailContent({
 
 
 
-        </div>
 
 
 
