@@ -642,6 +642,10 @@ export function ProjectDetailContent({
 
 
 
+                  </div>
+
+                </div>
+
                 <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Generated playlist seen on Spotify</p>
 
 
