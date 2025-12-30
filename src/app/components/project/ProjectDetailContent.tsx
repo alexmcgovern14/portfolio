@@ -811,7 +811,15 @@ export function ProjectDetailContent({
             height="800"
           />
         </div>
-</div>              <div>                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">                  Workflow 2: Query & Synthesis                </h3>                <p className="text-[#D6D6D6] mb-4 leading-relaxed">                  Chat interface that embeds user queries, retrieves relevant excerpts, and generates grounded responses with full source traceability.                </p>                <div className="rounded-[24px] p-[2px] overflow-hidden"
+              
+              </div>
+                              <div>
+                                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">
+                                  Workflow 2: Query & Synthesis                </h3>
+                                <p className="text-[#D6D6D6] mb-4 leading-relaxed">
+                                  Chat interface that embeds user queries, retrieves relevant excerpts, and generates grounded responses with full source traceability.                </p>
+                                <div className="rounded-[24px] p-[2px] overflow-hidden"
+
 
 
 
