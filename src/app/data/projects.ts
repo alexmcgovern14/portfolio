@@ -5,6 +5,8 @@ import lineupChangesImg from '../../assets/fc4929f386849887f0b522845ad0eeb464322
 import artistRecommendationImg from '../../assets/e6d257b084bd5c237a191cbdaae905a08a859319.png';
 import thisWebsiteImg from '../../assets/website-tool-workflow.png';
 import liveMatchConcepts from '../../assets/3ecaddebe46e909d183a56db9afa1a1dbe33ff00.png';
+import liveMatchSummaryImg from '../../assets/Live match summary examples.png';
+import lineupInsightsImg from '../../assets/line-up insight examples.png';
 
 
 // Full project data including detail page content
@@ -361,6 +363,7 @@ Retrieve broadly then re-order results using:
     category: 'LiveScore feature',
     imageUrl: liveMatchImg,
     conceptImage: liveMatchConcepts,
+    productionImage: liveMatchSummaryImg,
     overview:
       'Production GenAI feature that gives LiveScore users a live update on the state of play of a game, bringing them up to speed in a few sentences.\n\nA USP for LiveScore, built before any competitors, it offers a new solution to the oldest user need — _what\'s happening in this match?_ — unlocked by the possibilities of Generative AI.\n\nIt adds significant value at the *most important time for engagement* (live match) on *second most viewed page*, for *all users.*\n\nThe solution leverages natural language capabilities of GenAI to convert structured match data into a short narrative, telling the user what they need to know at speed.\n\n# Ownership\nOriginated concept, proved technical opportunity through prototyping and drove feature through to production:\n- Defined user value, where feature should live in experience and what good looks like\n- Prototyped to validate opportunity and explore output formats & discover potential limitations\n- Set system constraints: grounded in reliable data, speed, no speculation or reliance on historical knowledge, consistency across updates\n- Owned decisions on data inputs, guardrails, iteration through prompt engineering and evals loop',
     prd: `# Live match summary
@@ -429,17 +432,18 @@ Evals ran through OpenAI platform, provided 0-10 guided scores and explanations,
 - **Tone** scored against brand guidelines and British football fan voice`,
   },
 
-  'lineup-changes': {
-    slug: 'lineup-changes',
-    title: 'Feature: Line-up changes',
+  'lineup-insights': {
+    slug: 'lineup-insights',
+    title: 'Feature: Line-up insights',
     titleParts: [
       { text: 'Feature: ', gradient: false },
-      { text: 'Line-up changes', gradient: true },
+      { text: 'Line-up insights', gradient: true },
     ],
     description:
-      'Case study in recognising model limitations and building effective systems',
+      'Case study in building with LLMs, model limitations and designing effective systems',
     category: 'LiveScore feature',
     imageUrl: lineupChangesImg,
+    productionImage: lineupInsightsImg,
     overview: `LiveScore feature in production that **uses AI to generate insights** about what each team's manager has changed in team selection since last match — the key information users are looking for at a *peak-traffic moment*. 
 
 **Feature served as a strong AI product-building lesson on handling model limitations through system design; see 'Challenge' section below.**
@@ -724,7 +728,7 @@ export const projects: Project[] = [
   projectsData['portfolio-website'],
   projectsData['live-match-summary'],
   projectsData['rag-ai-system'],
-  projectsData['lineup-changes'],
+  projectsData['lineup-insights'],
   projectsData['spotify-recommendation-engine'],
 ];
 

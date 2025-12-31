@@ -8,20 +8,64 @@ import { SEO } from './shared/SEO';
 import { ProjectDetailHeader } from './project/ProjectDetailHeader';
 import { ProjectDetailNavigation } from './project/ProjectDetailNavigation';
 import { ProjectDetailContent } from './project/ProjectDetailContent';
-import { ProjectDetailModal } from './project/ProjectDetailModal';
+import { FullScreenImageOverlay } from './project/FullScreenImageOverlay';
+import { extractProjectImages } from '../utils/extractProjectImages';
+import techStackWorkflow from '../../assets/website-tool-workflow.png';
+import workflowIngestion from '../../assets/1dad7059420c1200f434ef05c34bb334b30cabd9.png';
+import workflowChat from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
 import { trackProjectView, trackCopy, trackSectionNavigation } from '../utils/analytics';
 
 export function ProjectDetail() {
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
   
-  const [expandedImage, setExpandedImage] = useState(false);
+  const [overlayOpen, setOverlayOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const project = projects.find(p => p.slug === slug);
+  
+  // Calculate next and previous projects based on main page order (cycling)
+  const currentIndex = projects.findIndex(p => p.slug === slug);
+  const nextIndex = currentIndex >= 0 && currentIndex < projects.length - 1 
+    ? currentIndex + 1 
+    : currentIndex >= 0 && projects.length > 0 
+    ? 0 
+    : -1;
+  const prevIndex = currentIndex > 0 
+    ? currentIndex - 1 
+    : currentIndex >= 0 && projects.length > 0 
+    ? projects.length - 1 
+    : -1;
+  
+  const nextProject = nextIndex >= 0 && nextIndex < projects.length
+    ? { slug: projects[nextIndex].slug, title: projects[nextIndex].title }
+    : null;
+  const prevProject = prevIndex >= 0 && prevIndex < projects.length
+    ? { slug: projects[prevIndex].slug, title: projects[prevIndex].title }
+    : null;
+  
   const [viewMode, setViewMode] = useState<'text' | 'markdown'>('text');
 
   const { copied, copyToClipboard: handleCopyToClipboard } = useClipboard();
   const { copied: copiedJson, copyToClipboard: handleCopyJsonToClipboard } = useClipboard();
+
+  // Extract all images from project
+  let projectImages = project ? extractProjectImages(project, slug || '') : [];
+  
+  // Add tech stack workflow image for portfolio-website
+  if (slug === 'portfolio-website' && !projectImages.includes(techStackWorkflow)) {
+    projectImages.push(techStackWorkflow);
+  }
+
+  // Add workflow images for rag-ai-system
+  if (slug === 'rag-ai-system') {
+    if (!projectImages.includes(workflowIngestion)) {
+      projectImages.push(workflowIngestion);
+    }
+    if (!projectImages.includes(workflowChat)) {
+      projectImages.push(workflowChat);
+    }
+  }
 
   const { activeSection, isScrolled } = useScrollSpy(
     ['overview', 'skills', 'workflows', 'user-needs', 'key-info', 'requirements', 'output-challenges', 'lineup-challenge', 'tech-stack']
@@ -81,6 +125,19 @@ export function ProjectDetail() {
     handleCopyToClipboard(project.prd, 'PRD copied to clipboard!');
   };
 
+  const handleImageClick = (imageSrc: string) => {
+    const index = projectImages.indexOf(imageSrc);
+    if (index !== -1) {
+      setCurrentImageIndex(index);
+      setOverlayOpen(true);
+    }
+  };
+
+  const handleImageIndexClick = (index: number) => {
+    setCurrentImageIndex(index);
+    setOverlayOpen(true);
+  };
+
   const handleCopyN8nJson = () => {
     if (project && 'n8nJson' in project && project.n8nJson) {
       handleCopyJsonToClipboard(project.n8nJson, 'n8n JSON copied to clipboard!');
@@ -135,16 +192,20 @@ export function ProjectDetail() {
         project={project}
         slug={slug}
         isScrolled={isScrolled}
+        nextProject={nextProject}
+        prevProject={prevProject}
       />
 
       {/* Main Content Grid */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-4 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <ProjectDetailNavigation
             project={project}
             slug={slug}
             activeSection={activeSection}
             scrollToSection={scrollToSection}
+            images={projectImages}
+            onImageClick={handleImageIndexClick}
           />
 
           <ProjectDetailContent
@@ -156,15 +217,18 @@ export function ProjectDetail() {
             onCopyPRD={handleCopyPRD}
             onCopyN8nJson={handleCopyN8nJson}
             onViewModeChange={setViewMode}
-            onExpandImage={() => setExpandedImage(true)}
+            onImageClick={handleImageClick}
           />
 
         </div>
       </div>
 
-      <ProjectDetailModal 
-        isOpen={expandedImage}
-        onClose={() => setExpandedImage(false)}
+      <FullScreenImageOverlay
+        images={projectImages}
+        currentIndex={currentImageIndex}
+        isOpen={overlayOpen}
+        onClose={() => setOverlayOpen(false)}
+        onNavigate={setCurrentImageIndex}
       />
     </div>
   );
