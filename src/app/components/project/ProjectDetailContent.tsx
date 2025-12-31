@@ -510,7 +510,7 @@ import type { Project } from '../../types/project';
 
 
 
-import workflowIngestion from '../../../assets/1dad7059420c1200f434ef05c34bb334b30cabd9.png';
+import workflowIngestion from '../../assets/1dad7059420c1200f434ef05c34bb334b30cabd9.png';
 
 
 
@@ -542,7 +542,7 @@ import workflowIngestion from '../../../assets/1dad7059420c1200f434ef05c34bb334b
 
 
 
-import liveMatchSummaryImg from '../../../assets/Live match summary examples.png';
+import liveMatchSummaryImg from '../../assets/Live match summary examples.png';
 
 
 
@@ -574,7 +574,7 @@ import liveMatchSummaryImg from '../../../assets/Live match summary examples.png
 
 
 
-import lineupInsightsImg from '../../../assets/line-up insight examples.png';
+import lineupInsightsImg from '../../assets/line-up insight examples.png';
 
 
 
@@ -702,7 +702,7 @@ import lineupInsightsImg from '../../../assets/line-up insight examples.png';
 
 
 
-import workflowChat from '../../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
+import workflowChat from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
 
 
 
@@ -830,7 +830,7 @@ import workflowChat from '../../../assets/f69fa785f0984779afcf647e0664899405374b
 
 
 
-import techStackWorkflow from '../../../assets/website-tool-workflow.png';
+import techStackWorkflow from '../../assets/website-tool-workflow.png';
 
 
 

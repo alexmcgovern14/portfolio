@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import techStackWorkflow from '../../../assets/7b8ec670f643305d755f75159ea0e007717528a6.png';
+import techStackWorkflow from '../../assets/7b8ec670f643305d755f75159ea0e007717528a6.png';
 
 interface ProjectDetailModalProps {
   isOpen: boolean;
