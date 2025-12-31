@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Github, Mail } from 'lucide-react';
-import linkedinLogo from '../../assets/5c61d28ae9cf4a84dc84ff7a5804e018486959ba.png';
+import linkedinLogo from '../../../assets/5c61d28ae9cf4a84dc84ff7a5804e018486959ba.png';
 
 export function Navigation() {
   const [scrollProgress, setScrollProgress] = useState(0);
