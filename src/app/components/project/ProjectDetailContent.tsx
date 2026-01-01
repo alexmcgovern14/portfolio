@@ -28,6 +28,7 @@ import techStackWorkflow from '../../../assets/website-tool-workflow.png';
 
 import { ConstraintsAndEvals } from './ConstraintsAndEvals';
 import { PRDSection } from './PRDSection';
+import { SECTION_CONTAINER } from './sectionStyles';
 
 
 
@@ -445,7 +446,7 @@ export function ProjectDetailContent({
 
 
 
-      <section id="overview" className="scroll-mt-24">
+      <section id="overview" className="">
 
 
 
@@ -467,7 +468,7 @@ export function ProjectDetailContent({
 
         }}
         >
-        <div className="rounded-[22px] p-8 shadow-xl"
+        <div className={`${SECTION_CONTAINER.inner}`}
 
 
 
@@ -501,7 +502,7 @@ export function ProjectDetailContent({
 
 
 
-              Product Overview
+              Product overview
 
 
 
@@ -627,6 +628,21 @@ export function ProjectDetailContent({
 
             )}
 
+            {slug === 'lineup-changes' && 'productionImage' in project && project.productionImage && (
+              <div className="my-8">
+                <div className="rounded-[24px] p-[2px] overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                  }}
+        >
+                  <div className="rounded-[22px] overflow-hidden">
+                    <img src={project.productionImage} alt="Line-up insight examples" className="w-full h-auto block" loading="lazy" width="1200" height="675" />
+                  </div>
+                </div>
+                <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Line-up insight examples</p>
+              </div>
+            )}
+
 
 
           </div>
@@ -654,7 +670,7 @@ export function ProjectDetailContent({
 
 
 
-        <section id="skills" className="scroll-mt-24">          <div             className="rounded-[24px] p-[2px] shadow-xl"
+        <section id="skills" className="">          <div             className="rounded-[24px] p-[2px] shadow-xl"
 
 
 
@@ -668,7 +684,7 @@ export function ProjectDetailContent({
 
         }}
         >
-        <div className="rounded-[22px] p-8 shadow-xl"
+        <div className={`${SECTION_CONTAINER.inner}`}
           style={{
             background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
           }}
@@ -691,104 +707,6 @@ export function ProjectDetailContent({
 
 
 
-      {slug === 'rag-ai-system' && (
-
-
-
-<section id="workflows" className="scroll-mt-24">
-          <div
-            className="rounded-[24px] p-[2px] shadow-xl"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-          }}
-        >
-        
-        <div className="rounded-[22px] p-8 shadow-xl"
-          style={{
-            background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
-          }}
-        >
-          <div className="flex items-center gap-3 mb-6">
-                          <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">
-                            <Workflow className="w-5 h-5 text-white" />
-                          
-          </div>
-            
-          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">
-                              System workflows              
-            </h2>
-                          </div>
-              
-
-
-
-
-            
-
-
-
-
-            <div className="space-y-6">
-                            <div>
-                              <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">
-                                Workflow 1: Ingestion & Vectorisation                </h3>
-                              <p className="text-[#D6D6D6] mb-4 leading-relaxed">
-                                Data pipeline that extracts content from Notion, generates embeddings, and stores vectors in Supabase for semantic search.                </p>
-                              <div className="rounded-[24px] p-[2px] overflow-hidden"
-
-
-
-
-        style={{
-
-
-
-          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-
-
-
-        }}
-        >
-        <div className="rounded-[22px] overflow-hidden">
-          <img
-              src={workflowIngestion}
-              alt="n8n workflow for data ingestion and vectorization"
-            className="w-full h-auto"
-            loading="lazy"
-            width="1200"
-            height="800"
-          />
-        </div>
-              
-              </div>
-                              <div>
-                                <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-xl text-white mb-3">
-                                  Workflow 2: Query & Synthesis                </h3>
-                                <p className="text-[#D6D6D6] mb-4 leading-relaxed">
-                                  Chat interface that embeds user queries, retrieves relevant excerpts, and generates grounded responses with full source traceability.                </p>
-                                <div className="rounded-[24px] p-[2px] overflow-hidden"
-
-
-
-
-        style={{
-
-
-
-          background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-
-
-
-        }}
-        >
-              </div>
-              </div>
-                            </div>
-            </div>
-        </div>
-        </div>
-        </section>
-        )}
       {/* User Needs Section */}
 
 
@@ -797,7 +715,7 @@ export function ProjectDetailContent({
 
 
 
-        <section id="user-needs" className="scroll-mt-24">
+        <section id="user-needs" className="">
 
 
 
@@ -819,7 +737,7 @@ export function ProjectDetailContent({
 
         }}
         >
-        <div className="rounded-[22px] p-8 shadow-xl"
+        <div className={`${SECTION_CONTAINER.inner}`}
 
 
 
@@ -1014,7 +932,7 @@ export function ProjectDetailContent({
 
 
 
-        <section id="key-info" className="scroll-mt-24">
+        <section id="key-info" className="">
 
 
 
@@ -1036,7 +954,7 @@ export function ProjectDetailContent({
 
         }}
         >
-        <div className="rounded-[22px] p-8 shadow-xl"
+        <div className={`${SECTION_CONTAINER.inner}`}
 
 
 
@@ -1137,7 +1055,7 @@ export function ProjectDetailContent({
 
 
 
-        <section id="output-challenges" className="scroll-mt-24">
+        <section id="output-challenges" className="">
 
 
 
@@ -1159,7 +1077,7 @@ export function ProjectDetailContent({
 
         }}
         >
-        <div className="rounded-[22px] p-8 shadow-xl"
+        <div className={`${SECTION_CONTAINER.inner}`}
 
 
 
@@ -1322,7 +1240,7 @@ export function ProjectDetailContent({
 
 
 
-        <section id="lineup-challenge" className="scroll-mt-24">
+        <section id="lineup-challenge" className="">
 
 
 
@@ -1344,7 +1262,7 @@ export function ProjectDetailContent({
 
         }}
         >
-        <div className="rounded-[22px] p-8 shadow-xl"
+        <div className={`${SECTION_CONTAINER.inner}`}
 
 
 
@@ -1437,7 +1355,7 @@ export function ProjectDetailContent({
 
 
 
-      {/* Tech Stack Section for portfolio-website */}
+      {/* Tech stack Section for portfolio-website */}
 
 
 
@@ -1445,7 +1363,7 @@ export function ProjectDetailContent({
 
 
 
-        <section id="tech-stack" className="scroll-mt-24">
+        <section id="tech-stack" className="">
 
 
 
@@ -1467,7 +1385,7 @@ export function ProjectDetailContent({
 
         }}
         >
-        <div className="rounded-[22px] p-8 shadow-xl"
+        <div className={`${SECTION_CONTAINER.inner}`}
 
 
 
@@ -1501,7 +1419,7 @@ export function ProjectDetailContent({
 
 
 
-                Tech Stack
+                Tech stack
 
 
 
@@ -1643,6 +1561,7 @@ export function ProjectDetailContent({
 
 
 }
+
 
 
 

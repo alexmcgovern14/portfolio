@@ -5,6 +5,11 @@ import lineupChangesImg from '../../assets/fc4929f386849887f0b522845ad0eeb464322
 import artistRecommendationImg from '../../assets/e6d257b084bd5c237a191cbdaae905a08a859319.png';
 import thisWebsiteImg from '../../assets/website-tool-workflow.png';
 import liveMatchConcepts from '../../assets/3ecaddebe46e909d183a56db9afa1a1dbe33ff00.png';
+import liveMatchSummaryImg from '../../assets/Live match summary examples.png';
+import lineupInsightsImg from '../../assets/line-up insight examples.png';
+import workflowIngestionImg from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
+import workflowChatImg from '../../assets/1ad9a175c9c9c9a0ec903e169c7782ddaf937831.png';
+
 
 
 // Full project data including detail page content
@@ -18,7 +23,7 @@ const projectsData: Record<string, Project> = {
     ],
     description: 'LLM semantic search through vectorised data',
     category: 'Personal project',
-    imageUrl: ragWorkflowImg,
+    imageUrl: workflowChatImg,
     overview:
       '_Knowledge_ is an **AI-powered information retrieval system** designed to store **vectorised long-form text and metadata** to surface relevant insights through a **chat-based interface** using high-precision **semantic search.**\n\nThe system uses a **Retrieval-Augmented Generation (RAG) architecture** to enable connections across sources, domains, and concepts. RAG was selected over MCP-style approaches, which primarily support structured or exact lookups rather than semantic similarity.\n\nResponses are grounded in a controlled pair of **relational vector databases**, prioritising retrieval quality, traceability, and observability over latency and generative fluency.\n\n**Product Requirements Document (PRD)** below describes all facets of system design, RAG architecture, database structure, model choice and more. PRD is available in markdown format optimised for LLMs.',
 
@@ -151,14 +156,18 @@ Alternative approaches such as direct API access to a note-taking system (e.g. v
 
 ## Workflow 1: \`knowledge-RAG\` (Ingestion & Vectorisation)
 
+Data pipeline that extracts content from Notion, generates embeddings, and stores vectors in Supabase for semantic search.
+
 1. API connection to fetch selected fields from Notion \`Sources\` and \`Excerpts\` databases  
 2. Normalise and shape content into required structure 
 3. Generate embeddings (LLM) 
 4. Write rows and vectors to Supabase database
 
-(insert image here)
+![Workflow 1: Ingestion & Vectorisation](${workflowChatImg})
 
 ## Workflow 2: \`knowledge-chat\` (Query & Synthesis)
+
+Chat interface that embeds user queries, retrieves relevant excerpts, and generates grounded responses with full source traceability.
 
 1. Receive user query  
 2. Embed the query: convert user input into a vector in the same semantic space as stored content
@@ -166,7 +175,7 @@ Alternative approaches such as direct API access to a note-taking system (e.g. v
 4. Join excerpts with parent source metadata 
 5. Generate a grounded response using retrieved context  
 
-(insert image here)
+![Workflow 2: Query & Synthesis](${workflowIngestionImg})
 
 # 5. Data model
 
@@ -440,6 +449,7 @@ Evals ran through OpenAI platform, provided 0-10 guided scores and explanations,
       'Case study in recognising model limitations and building effective systems',
     category: 'LiveScore feature',
     imageUrl: lineupChangesImg,
+    productionImage: lineupInsightsImg,
     overview: `LiveScore feature in production that **uses AI to generate insights** about what each team's manager has changed in team selection since last match — the key information users are looking for at a *peak-traffic moment*. 
 
 **Feature served as a strong AI product-building lesson on handling model limitations through system design; see 'Challenge' section below.**
@@ -719,12 +729,38 @@ The site is hosted on Vercel with continuous deployment from the main branch, ke
   },
 };
 
+
+
+// Process PRD strings to replace image placeholders with actual URLs
+const processedProjectsData: Record<string, Project> = {};
+for (const key in projectsData) {
+  processedProjectsData[key] = { ...projectsData[key] };
+}
+
+if (processedProjectsData['rag-ai-system']?.prd) {
+  const originalPRD = processedProjectsData['rag-ai-system'].prd;
+  let processedPRD = originalPRD;
+  
+  // Replace template literals with actual image URLs
+  processedPRD = processedPRD.replace(/\$\{workflowIngestionImg\}/g, String(workflowIngestionImg));
+  processedPRD = processedPRD.replace(/\$\{workflowChatImg\}/g, String(workflowChatImg));
+  
+  // Update the PRD with processed version
+  processedProjectsData['rag-ai-system'] = {
+    ...processedProjectsData['rag-ai-system'],
+    prd: processedPRD
+  };
+}
+
 // Simplified project list for homepage (without full detail data)
 export const projects: Project[] = [
-  projectsData['portfolio-website'],
-  projectsData['live-match-summary'],
-  projectsData['rag-ai-system'],
-  projectsData['lineup-changes'],
-  projectsData['spotify-recommendation-engine'],
+  processedProjectsData['portfolio-website'],
+  processedProjectsData['live-match-summary'],
+  processedProjectsData['rag-ai-system'],
+  processedProjectsData['lineup-changes'],
+  processedProjectsData['spotify-recommendation-engine'],
 ];
+
+// Export the processed data
+export { processedProjectsData as projectsData };
 

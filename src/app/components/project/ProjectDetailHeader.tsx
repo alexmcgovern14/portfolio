@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Github } from 'lucide-react';
+import { ArrowLeft, Github, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Project } from '../../types/project';
 
 interface ProjectDetailHeaderProps {
   project: Project;
   slug: string;
   isScrolled: boolean;
+  nextProject?: { slug: string; title: string } | null;
+  prevProject?: { slug: string; title: string } | null;
 }
 
-export function ProjectDetailHeader({ project, slug, isScrolled }: ProjectDetailHeaderProps) {
+export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, prevProject }: ProjectDetailHeaderProps) {
   const getSubheading = () => {
     switch (slug) {
       case 'rag-ai-system':
@@ -32,27 +34,52 @@ export function ProjectDetailHeader({ project, slug, isScrolled }: ProjectDetail
 
   return (
     <header 
-      className={`sticky top-0 z-50 bg-[#2a2628]/95 backdrop-blur-sm transition-all duration-300 ${isScrolled ? 'shadow-lg' : ''}`} 
+      className={`sticky top-0 z-50 bg-[#2a2628]/95 backdrop-blur-sm transition-all duration-500 ease-in-out ${isScrolled ? 'shadow-lg' : ''}`} 
       style={{ borderBottom: '1px solid rgba(108, 105, 106, 0.3)' }}
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Top Navigation */}
-        <div className="py-4">
+        <div className="py-4 flex items-center justify-between">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-[#D6D6D6] hover:text-[#00a1ff] transition-colors"
+            className="inline-flex items-center gap-2 text-white hover:text-[#00a1ff] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back</span>
           </Link>
+          
+          {/* Project Navigation Arrows */}
+          <div className="flex items-center gap-2">
+            {prevProject ? (
+              <Link
+                to={`/featured/${prevProject.slug}`}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+                title={`Previous: ${prevProject.title}`}
+              >
+                <ChevronLeft className="w-5 h-5" />
+                <span className="hidden sm:inline text-sm font-medium"><strong>Previous:</strong> {prevProject.title}</span>
+              </Link>
+            ) : null}
+            
+            {nextProject ? (
+              <Link
+                to={`/featured/${nextProject.slug}`}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+                title={`Next: ${nextProject.title}`}
+              >
+                <span className="hidden sm:inline text-sm font-medium"><strong>Next:</strong> {nextProject.title}</span>
+                <ChevronRight className="w-5 h-5" />
+              </Link>
+            ) : null}
+          </div>
         </div>
 
         {/* Title and Metadata - Collapses on scroll */}
         <div 
           className={`transition-all duration-500 ease-in-out ${
             isScrolled 
-              ? 'h-0 opacity-0' 
-              : 'h-auto opacity-100 pb-6'
+              ? 'max-h-0 opacity-0 -translate-y-2' 
+              : 'max-h-[500px] opacity-100 translate-y-0 pb-6'
           }`}
           style={{
             overflow: 'hidden',
@@ -63,7 +90,7 @@ export function ProjectDetailHeader({ project, slug, isScrolled }: ProjectDetail
           </h1>
           
           {getSubheading() && (
-            <p className="text-[#D6D6D6] text-xl mb-6 leading-relaxed">
+            <p className="text-[#D6D6D6] text-base lg:text-xl mb-6 leading-relaxed">
               {getSubheading()}
             </p>
           )}
@@ -104,5 +131,6 @@ export function ProjectDetailHeader({ project, slug, isScrolled }: ProjectDetail
     </header>
   );
 }
+
 
 

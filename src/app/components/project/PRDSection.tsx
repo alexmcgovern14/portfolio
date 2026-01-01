@@ -2,6 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Copy, Check, FileText } from 'lucide-react';
 import type { Project } from '../../types/project';
+import { SECTION_CONTAINER, SECTION_PADDING } from './sectionStyles';
 
 interface PRDSectionProps {
   project: Project;
@@ -88,7 +89,7 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
   return (
     <section id="prd" className="scroll-mt-24">
       <div 
-        className="rounded-[24px] p-[2px] shadow-xl overflow-hidden"
+        className={`${SECTION_CONTAINER.outer} overflow-hidden`}
         style={{
           background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
         }}
@@ -98,10 +99,10 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
             background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
           }}
         >
-          <div className="px-8 py-6" style={{ borderBottom: '1px solid #8a8686' }}>
-            <div className="flex items-center justify-between">
+          <div className="px-4 md:px-8 pt-4 md:pt-8 pb-4 md:pb-6" style={{ borderBottom: '1px solid #8a8686' }}>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-white/40 flex items-center justify-center">
+                <div className="w-10 h-10 flex-shrink-0 rounded-lg bg-white/40 flex items-center justify-center">
                   <FileText className="w-5 h-5 text-white" />
                 </div>
                 <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white">
@@ -134,7 +135,7 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
                 
                 <button
                   onClick={onCopyPRD}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                  className={`flex items-center justify-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                     copied
                       ? 'bg-gradient-to-r from-[#00a1ff] to-[#00ff6f] text-black'
                       : 'bg-[#4a4647] text-white hover:text-[#D6D6D6]'
@@ -143,12 +144,10 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
                   {copied ? (
                     <>
                       <Check className="w-4 h-4" />
-                      Copied PRD
                     </>
                   ) : (
                     <>
                       <Copy className="w-4 h-4" />
-                      Copy PRD
                     </>
                   )}
                 </button>
@@ -156,7 +155,7 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
             </div>
           </div>
           
-          <div className="p-8">
+          <div className={`${SECTION_PADDING.content}`}>
             {viewMode === 'text' ? (
               <div className="prose prose-lg max-w-none prose-invert">
                 <ReactMarkdown components={markdownComponents}>

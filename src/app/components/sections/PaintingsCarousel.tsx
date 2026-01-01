@@ -10,8 +10,8 @@ const carouselSettings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  centerMode: true,
-  centerPadding: '240px', // Reduced padding to bring images closer together
+  centerMode: true, // Enabled by default for desktop
+  centerPadding: '192px', // Desktop padding (reduced by 20%)
   autoplay: true,
   autoplaySpeed: 3000,
   arrows: false,
@@ -19,7 +19,15 @@ const carouselSettings = {
     {
       breakpoint: 1024,
       settings: {
-        centerPadding: '60px',
+        centerMode: true,
+        centerPadding: '48px',
+      }
+    },
+    {
+      breakpoint: 640,
+      settings: {
+        centerMode: false,
+        centerPadding: '0px',
       }
     }
   ],
@@ -42,6 +50,11 @@ export function PaintingsCarousel() {
           transition: opacity 0.3s ease, transform 0.3s ease;
           transform: scale(0.85);
         }
+        @media (min-width: 1280px) {
+          .paintings-carousel .slick-slide:not(.slick-active) {
+            margin: 0 48px !important; /* 96px total gap between slides */
+          }
+        }
         .paintings-carousel .slick-slide.slick-active {
           opacity: 1;
           transform: scale(1);
@@ -54,7 +67,7 @@ export function PaintingsCarousel() {
           justify-content: center;
           list-style: none !important;
           padding: 0 !important;
-          margin: 40px 0 0 0 !important;
+          margin: 20px 0 0 0 !important;
           position: relative !important;
           bottom: 0 !important;
           width: 100% !important;
@@ -111,22 +124,23 @@ export function PaintingsCarousel() {
       `}</style>
       <div className="paintings-carousel" role="region" aria-label="Digital paintings carousel">
         <Suspense fallback={<div className="flex justify-center items-center h-[480px]"><div className="text-white">Loading carousel...</div></div>}>
-          <Slider {...carouselSettings} aria-label="Paintings carousel">
+          <Slider key="paintings-carousel-desktop" {...carouselSettings} aria-label="Paintings carousel">
             {paintings.map((painting, index) => (
               <div key={index}>
-                <div className="flex justify-center">
-                  <div className="rounded-[24px] p-[2px] shadow-2xl" style={{
+                <div className="flex justify-center w-full md:w-auto">
+                  <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%] md:w-auto md:inline-block" style={{
                     background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
                   }}
                   >
-                    <div className="rounded-[22px] overflow-hidden">
+                    <div className="rounded-[22px] overflow-hidden w-full">
                       <img
                         src={painting}
                         alt={`Digital painting ${index + 1}`}
-                        className="w-[520px] h-[520px] object-cover rounded-[22px] shadow-2xl"
+                        className="w-[90%] h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
                         loading="lazy"
-                        width="520"
-                        height="520"
+                        width="530"
+                        height="585"
+                        style={{ maxWidth: "90vw" }}
                       />
                     </div>
                   </div>

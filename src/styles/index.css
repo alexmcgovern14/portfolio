@@ -42,3 +42,26 @@ html, body {
   clip: auto;
   white-space: normal;
 }
+
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+
+/* Desktop-only sticky positioning for Contents section - JavaScript handles positioning */
+@media (min-width: 1024px) {
+  aside.contents-sticky {
+    display: block !important;
+    align-self: start !important;
+    z-index: 10 !important;
+    height: fit-content !important;
+    overflow: visible !important;
+  }
+}

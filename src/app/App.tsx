@@ -110,7 +110,7 @@ function HomePage() {
       <section id="main-content" className="min-h-screen py-10 md:py-20 px-4 md:px-8 lg:px-32 bg-[#5a5452]">
         <div className="max-w-7xl mx-auto">
           <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
-            Featured Projects
+            Featured products
           </h2>
           <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
             Selection of features in production at LiveScore and personal projects. Mostly featuring LLMs in product or built in AI-native process.
@@ -138,7 +138,7 @@ function HomePage() {
           </p>
 
           {/* Paintings Section */}
-          <div className="mb-20">
+          <div>
             <a 
               href="https://www.etsy.com/uk/shop/AlexMcGovernDesign" 
               target="_blank" 
@@ -374,7 +374,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route 
-            path="/project/:slug" 
+            path="/featured/:slug" 
             element={
               <Suspense fallback={<div className="min-h-screen bg-[#2a2628] flex items-center justify-center"><div className="text-white">Loading project...</div></div>}>
                 <ProjectDetail />

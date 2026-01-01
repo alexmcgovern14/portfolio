@@ -17,10 +17,12 @@ export interface Project {
   n8nJson?: string;
   conceptImage?: string;
   playlistImage?: string;
+  productionImage?: string;
   keyInfo?: string;
   challenge?: string;
   constraints?: string;
   evaluations?: string;
 }
+
 
 
