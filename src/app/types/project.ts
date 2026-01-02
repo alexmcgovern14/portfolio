@@ -13,6 +13,7 @@ export interface Project {
   overview?: string;
   skills?: string;
   githubUrl?: string;
+  substackUrl?: string;
   prd?: string;
   n8nJson?: string;
   conceptImage?: string;

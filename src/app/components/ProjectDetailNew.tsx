@@ -152,10 +152,30 @@ export function ProjectDetail() {
   };
 
   const handleImageClick = (imageSrc: string) => {
-    const index = projectImages.indexOf(imageSrc);
+    // Extract filename from path (handle Vite-processed paths with query strings)
+    const getFilename = (path: string) => {
+      const url = new URL(path, window.location.origin);
+      return url.pathname.split('/').pop() || path.split('/').pop()?.split('?')[0] || path;
+    };
+    
+    const clickedFilename = getFilename(imageSrc);
+    
+    // Find matching image in projectImages by filename
+    const index = projectImages.findIndex(img => {
+      const imgFilename = getFilename(img);
+      return imgFilename === clickedFilename || img.includes(clickedFilename) || imageSrc.includes(imgFilename);
+    });
+    
     if (index !== -1) {
       setCurrentImageIndex(index);
       setOverlayOpen(true);
+    } else {
+      // Fallback: try exact match
+      const exactIndex = projectImages.indexOf(imageSrc);
+      if (exactIndex !== -1) {
+        setCurrentImageIndex(exactIndex);
+        setOverlayOpen(true);
+      }
     }
   };
 

@@ -40,7 +40,7 @@ const markdownComponents = {
     </strong>
   ),
   em: ({ children }: { children: React.ReactNode }) => (
-    <em className="not-italic font-semibold text-white">{children}</em>
+    <em className="italic text-[#D6D6D6]">{children}</em>
   ),
 };
 

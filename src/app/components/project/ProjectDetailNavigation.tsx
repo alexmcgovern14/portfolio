@@ -28,6 +28,7 @@ export function ProjectDetailNavigation({
     { id: 'output-challenges', label: 'Challenges', show: slug === 'live-match-summary' },
     { id: 'key-info', label: 'Key info', show: slug === 'lineup-changes' },
     { id: 'lineup-challenge', label: 'Challenge', show: slug === 'lineup-changes' },
+    { id: 'tech-stack', label: 'Tech stack', show: slug === 'portfolio-website' },
     { id: 'prd', label: 'PRD', show: project && 'prd' in project && slug !== 'live-match-summary' && slug !== 'lineup-changes' && slug !== 'portfolio-website' },
   ].filter(item => item.show);
 

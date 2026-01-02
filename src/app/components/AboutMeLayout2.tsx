@@ -15,7 +15,7 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
   return (
     <section className="min-h-screen py-10 md:py-20 px-4 md:px-8 lg:px-32 bg-[#7a7573]">
       <div className="max-w-7xl mx-auto">
-        <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
+        <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px]">
           AI product management
         </h2>
         <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
@@ -33,7 +33,7 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
                 background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
               }}
             >
-              <div className="bg-gradient-to-b from-[#4C4845] to-[#302D2B] rounded-[22px] p-8 h-full">
+              <div className="bg-[#5a5452] rounded-[22px] p-8 h-full">
               <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white mb-2">
                 Senior Product Manager, LiveScore
               </h3>

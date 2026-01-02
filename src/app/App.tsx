@@ -8,6 +8,7 @@ import { NotFound } from './components/shared/NotFound';
 import { Github, Mail, Copy, Check } from 'lucide-react';
 import behanceLogo from '../assets/ab051b3dbc5f6e7836893dc943f2b4ba9e0379e6.png';
 import linkedinLogo from '../assets/5c61d28ae9cf4a84dc84ff7a5804e018486959ba.png';
+import substackLogo from '../assets/substack-logo.png';
 import beyondProductPhoto from '../assets/b82f3fe63941c182cb0917cb0aae4da5b7fb9718.png';
 import { projects } from './data/projects';
 import { aboutMeSkills } from './data/skills';
@@ -109,7 +110,7 @@ function HomePage() {
       {/* Projects Section */}
       <section id="main-content" className="min-h-screen py-10 md:py-20 px-4 md:px-8 lg:px-32 bg-[#5a5452]">
         <div className="max-w-7xl mx-auto">
-          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
+          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px]">
             Featured products
           </h2>
           <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
@@ -130,7 +131,7 @@ function HomePage() {
       <section className="min-h-screen w-full bg-[#6d6765] py-10 md:py-20 px-4 md:px-8 lg:px-32" aria-label="Digital art">
         <div className="max-w-7xl mx-auto">
           {/* Main Heading */}
-          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
+          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px]">
             Digital art
           </h2>
           <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
@@ -138,7 +139,7 @@ function HomePage() {
           </p>
 
           {/* Paintings Section */}
-          <div>
+          <div className="pb-10">
             <a 
               href="https://www.etsy.com/uk/shop/AlexMcGovernDesign" 
               target="_blank" 
@@ -245,16 +246,16 @@ function HomePage() {
       {/* Beyond Product Section */}
       <section className="min-h-screen w-full bg-[#5a5452] py-10 md:py-20 px-4 md:px-8 lg:px-32" aria-label="Beyond product">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
             {/* Left side - Text and Spotify */}
             <div className="flex-1 w-full">
-              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-4">
+              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px]">
                 Beyond product
               </h2>
               <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
                 Creative pursuits, history, politics, culture, football and music — from rock, country and blues to hip-hop and soul.
               </p>
-              <p className="text-[#c2c2c2] mb-8 md:mb-16 font-[ABeeZee] text-base md:text-xl leading-relaxed">
+              <p className="text-[#c2c2c2] mb-4 md:mb-6 font-[ABeeZee] text-base md:text-xl leading-relaxed">
                 Currently listening to:
               </p>
               {/* Spotify Embed */}
@@ -287,20 +288,20 @@ function HomePage() {
       {/* Footer */}
       <footer className="bg-[#4a4442] py-8 md:py-16 px-4 md:px-8 lg:px-32">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center items-center gap-4 md:gap-8">
+                    <div className="flex justify-center items-center gap-4 md:gap-8">
             {/* LinkedIn */}
             <a
               href="https://uk.linkedin.com/in/alex-mcgovern-531a6576"
               target="_blank"
               onClick={() => trackExternalLink("https://uk.linkedin.com/in/alex-mcgovern-531a6576", "LinkedIn")}
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#0077b5] transition-colors rounded-lg group"
+              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#0077b5] transition-colors rounded-lg group"
               aria-label="LinkedIn"
             >
               <img 
                 src={linkedinLogo} 
                 alt="LinkedIn"
-                className="size-5 md:size-6"
+                className="w-full h-full"
                 style={{ filter: 'brightness(0) invert(1)' }}
               />
             </a>
@@ -308,10 +309,10 @@ function HomePage() {
             {/* Email */}
             <a
               href="mailto:alex.mcgovern.contact@gmail.com"
-              className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#ea4335] transition-colors rounded-lg group"
+              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#ea4335] transition-colors rounded-lg group"
               aria-label="Email"
             >
-              <Mail className="size-5 md:size-6 text-white" />
+              <Mail className="w-full h-full text-white" />
             </a>
 
             {/* GitHub */}
@@ -320,10 +321,27 @@ function HomePage() {
               target="_blank"
               onClick={() => trackExternalLink("https://github.com/alexmcgovern14", "GitHub")}
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#333] transition-colors rounded-lg group"
+              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#333] transition-colors rounded-lg group"
               aria-label="GitHub"
             >
-              <Github className="size-5 md:size-6 text-white" />
+              <Github className="w-full h-full text-white" />
+            </a>
+
+            {/* Substack */}
+            <a
+              href="https://substack.com/@alexmcgovern"
+              target="_blank"
+              onClick={() => trackExternalLink("https://substack.com/@alexmcgovern", "Substack")}
+              rel="noopener noreferrer"
+              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#FF6719] transition-colors rounded-lg group"
+              aria-label="Substack"
+            >
+                            <img 
+                src={substackLogo} 
+                alt="Substack"
+                className="w-full h-full"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
             </a>
 
             {/* Etsy */}
@@ -332,10 +350,10 @@ function HomePage() {
               target="_blank"
               onClick={() => trackExternalLink("https://www.etsy.com/uk/shop/AlexMcGovernDesign", "Etsy Shop")}
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#f16521] transition-colors rounded-lg group"
+              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#f16521] transition-colors rounded-lg group"
               aria-label="Etsy"
             >
-              <span className="text-white text-xl md:text-2xl font-serif">E</span>
+              <span className="text-white text-2xl md:text-3xl font-serif leading-none">E</span>
             </a>
 
             {/* Behance */}
@@ -343,13 +361,13 @@ function HomePage() {
               href="https://www.behance.net/alex-mcgovern"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 bg-[#8b8b8b] hover:bg-[#1769ff] transition-colors rounded-lg group"
+              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#1769ff] transition-colors rounded-lg group"
               aria-label="Behance"
             >
               <img 
                 src={behanceLogo} 
                 alt="Behance"
-                className="size-5 md:size-6"
+                className="w-full h-full"
                 style={{ filter: 'brightness(0) invert(1)' }}
               />
             </a>

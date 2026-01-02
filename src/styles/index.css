@@ -10,6 +10,7 @@
 html, body {
   overflow-x: hidden;
   width: 100%;
+  background-color: #2a2628;
 }
 
 /* Accessibility: Focus visible styles */

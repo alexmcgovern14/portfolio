@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Github, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { Project } from '../../types/project';
+import substackLogo from '../../../assets/substack-logo.png';
 
 interface ProjectDetailHeaderProps {
   project: Project;
@@ -20,7 +21,7 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
       case 'lineup-changes':
         return 'Case study in building with LLMs, model limitations and building effective systems.';
       case 'portfolio-website':
-        return 'Full-stack design, development and deployment';
+        return 'Design, development and deployment of portfolio website in AI-native workflow';
       case 'spotify-recommendation-engine':
         return 'Solving my own need for better recommendations on Spotify';
       default:
@@ -122,7 +123,18 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00a1ff] to-[#00ff6f] text-black hover:opacity-90 transition-opacity px-4 py-2 rounded-lg font-medium text-sm"
               >
                 <Github className="w-4 h-4" />
-                <span>View on GitHub</span>
+                <span>GitHub</span>
+              </a>
+            )}
+            {project && 'substackUrl' in project && project.substackUrl && (
+              <a
+                href={project.substackUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00a1ff] to-[#00ff6f] text-black hover:opacity-90 transition-opacity px-4 py-2 rounded-lg font-medium text-sm"
+              >
+                <img src={substackLogo} alt="Substack" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
+                <span>Substack</span>
               </a>
             )}
           </div>

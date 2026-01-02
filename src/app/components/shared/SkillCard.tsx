@@ -16,7 +16,7 @@ export function SkillCard({
         background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
       }}
     >
-      <div className="bg-gradient-to-b from-[#4C4845] to-[#302D2B] rounded-[22px] p-6 h-full">
+      <div className="bg-[#5a5452] rounded-[22px] p-6 h-full">
         <h3 className="text-xl font-['Inter:Regular',sans-serif] font-semibold text-white mb-3">
           {title}
         </h3>

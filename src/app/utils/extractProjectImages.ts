@@ -56,7 +56,7 @@ export function extractProjectImages(project: Project, slug: string): string[] {
   }
 
   // Extract from PRD (for workflow images in rag-ai-system)
-  if (slug === 'rag-ai-system' && project.prd) {
+  if ((slug === 'rag-ai-system' || slug === 'portfolio-website') && project.prd) {
     const prdImages = extractFromMarkdown(project.prd);
     images.push(...prdImages);
   }
