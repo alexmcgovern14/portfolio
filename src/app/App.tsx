@@ -150,9 +150,7 @@ function HomePage() {
               onClick={() => trackExternalLink("https://www.etsy.com/uk/shop/AlexMcGovernDesign", "Etsy Shop")}
               className="inline-flex items-center gap-4 mb-10 group"
             >
-              <div className="bg-[#8b8b8b] group-hover:bg-[#f16521] transition-colors size-[40px] flex items-center justify-center rounded-lg flex-shrink-0">
-                <span className="text-white font-serif">E</span>
-              </div>
+              <img src={etsyLogo} alt="Etsy" className="w-[50px] h-[50px] flex-shrink-0" />
               <p className="text-[#D6D6D6] font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed group-hover:text-white transition-colors">
                 <strong className="text-white">Paintings</strong> available on Etsy
               </p>
@@ -172,14 +170,7 @@ function HomePage() {
               onClick={() => trackExternalLink("https://www.behance.net/alex-mcgovern", "Behance")}
               className="inline-flex items-center gap-4 mb-10 group"
             >
-              <div className="bg-[#8b8b8b] group-hover:bg-[#1769ff] transition-colors size-[40px] flex items-center justify-center rounded-lg flex-shrink-0">
-                <img 
-                  src={behanceLogo} 
-                  alt="Behance"
-                  className="size-6"
-                  style={{ filter: 'brightness(0) invert(1)' }}
-                />
-              </div>
+              <img src={behanceLogo} alt="Behance" className="w-[50px] h-[50px] flex-shrink-0" />
               <p className="text-[#D6D6D6] font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed group-hover:text-white transition-colors">
                 Former <strong className="text-white">motion designer</strong> and content <strong className="text-white">strategy & production manager</strong>
               </p>
@@ -255,14 +246,15 @@ function HomePage() {
               <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px] px-3 md:px-0">
                 Beyond product
               </h2>
-              <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
-                Creative pursuits, history, politics, culture, football and music — from rock, country and blues to hip-hop and soul.
-              </p>
-              <p className="text-[#c2c2c2] mb-4 md:mb-6 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
-                Currently listening to:
-              </p>
-              {/* Spotify Embed */}
-              <div className="w-full md:w-[65%] overflow-hidden mb-10">
+              <div className="w-full md:w-[75%]">
+                <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
+                  Creative pursuits, history, politics, culture, football and music — from rock, country and blues to hip-hop and soul.
+                </p>
+                <p className="text-[#c2c2c2] mb-4 md:mb-6 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
+                  Currently listening to:
+                </p>
+                {/* Spotify Embed */}
+                <div className="w-full overflow-hidden mb-10 pt-0 md:pt-5">
                 <iframe 
                   src="https://open.spotify.com/embed/playlist/37i9dQZF1Epy0FHcD7AQ0o?utm_source=generator&theme=0" 
                   className="w-full h-[150px] md:h-[300px]" 
@@ -270,6 +262,7 @@ function HomePage() {
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                   loading="lazy"
                 ></iframe>
+                </div>
               </div>
             </div>
             {/* Right side - Photo */}
@@ -290,8 +283,6 @@ function HomePage() {
       {/* Footer */}
       <footer className="bg-[#4a4442] py-8 md:py-16 px-4 md:px-8 lg:px-32">
         <div className="max-w-7xl mx-auto">
-          {/* Email Address with Copy */}
-          <EmailCopyLine />
                     <div className="flex justify-center items-center gap-4 md:gap-8">
             {/* LinkedIn */}
             <a
@@ -355,6 +346,8 @@ function HomePage() {
               <img src={behanceLogo} alt="Behance" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
             </a>
           </div>
+          {/* Email Address with Copy */}
+          <EmailCopyLine />
           {/* Credit */}
           <p className="text-[#D6D6D6] text-center mt-6 md:mt-8 font-['Inter:Regular',sans-serif] text-sm md:text-base">
             Updated: {getCurrentDateString()} | Designed and built by Alex McGovern
