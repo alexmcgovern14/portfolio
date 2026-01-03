@@ -32,11 +32,11 @@ export default {
         },
         // Accent colors
         accent: {
-          primary: '#00a1ff',
-          secondary: '#00ff6f',
+          primary: '#7ACAFF',
+          secondary: '#67FFC2',
           gradient: {
-            from: '#00a1ff',
-            to: '#00ff6f',
+            from: '#7ACAFF',
+            to: '#67FFC2',
           },
         },
         // Social colors

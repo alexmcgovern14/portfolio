@@ -22,55 +22,75 @@ export function Navigation() {
   }, []);
 
   return (
-    <nav className="hidden lg:flex fixed left-0 top-0 h-screen z-50 flex-col items-center gap-[40px] bg-[rgba(0,0,0,0)] px-[20px] py-[40px]" role="navigation" aria-label="Main navigation">
+    <nav className="hidden lg:flex fixed left-0 top-0 h-screen z-50 flex-col items-center gap-[40px] bg-[rgba(0,0,0,0)] px-[20px] py-[40px] overflow-visible" role="navigation" aria-label="Main navigation">
       {/* Social Icons */}
       <div className="flex flex-col gap-[25px]">
-                {/* LinkedIn */}
+                        {/* LinkedIn */}
         <a
           href="https://uk.linkedin.com/in/alex-mcgovern-531a6576"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
+          className="group relative"
         >
-          <img src={linkedinLogo} alt="LinkedIn" className="w-[50px] h-[50px]" />
+                    <div className="w-[45px] h-[45px] rounded-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+            <div className="absolute inset-0 bg-[#0077b5] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+            <img src={linkedinLogo} alt="LinkedIn" className="w-[45px] h-[45px] relative z-10" />
+          </div>
         </a>
-                {/* Email */}
+                        {/* Email */}
         <a
           href="mailto:alex.mcgovern.contact@gmail.com"
           aria-label="Email"
+          className="group relative"
         >
-          <img src={emailLogo} alt="Email" className="w-[50px] h-[50px]" />
+                    <div className="w-[45px] h-[45px] rounded-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+            <div className="absolute inset-0 bg-[#c73e3e] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+            <img src={emailLogo} alt="Email" className="w-[45px] h-[45px] relative z-10" />
+          </div>
         </a>
-                {/* GitHub */}
+                        {/* GitHub */}
         <a
           href="https://github.com/alexmcgovern14"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
+          className="group relative"
         >
-          <img src={githubLogo} alt="GitHub" className="w-[50px] h-[50px]" />
+                    <div className="w-[45px] h-[45px] rounded-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+            <div className="absolute inset-0 bg-[#333] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+            <img src={githubLogo} alt="GitHub" className="w-[45px] h-[45px] relative z-10" />
+          </div>
         </a>
-                {/* Substack */}
+                        {/* Substack */}
         <a
           href="https://substack.com/@alexmcgovern"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Substack"
+          className="group relative"
         >
-          <img src={substackLogo} alt="Substack" className="w-[50px] h-[50px]" />
+                    <div className="w-[45px] h-[45px] rounded-lg relative overflow-hidden">
+            <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+            <div className="absolute inset-0 bg-[#ff6719] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+            <img src={substackLogo} alt="Substack" className="w-[45px] h-[45px] relative z-10" />
+          </div>
         </a>
       </div>
 
       {/* Scroll Progress Line and Indicator */}
-      <div className="relative w-[2px]" style={{ height: "calc(100vh - 380px)", marginBottom: "20px" }}>
+      <div className="relative w-[2px] overflow-visible" style={{ height: "calc(100vh - 380px)", marginBottom: "20px" }}>
         {/* Vertical Line with arrow at the end */}
         <svg 
           className="absolute inset-0 w-[12px] h-full left-1/2 -translate-x-1/2"
-          style={{ height: 'calc(100% + 16px)' }}
+          style={{ height: 'calc(100% + 24px)' }}
           viewBox="0 0 12 100"
           preserveAspectRatio="none"
         >
-          {/* Main vertical line - stretches to fill height */}
+          {/* Main vertical line - extends to meet arrow meeting point */}
           <line 
             x1="6" 
             y1="0" 
@@ -78,14 +98,15 @@ export function Navigation() {
             y2="100" 
             stroke="rgba(196,196,196,0.8)" 
             strokeWidth="2"
+            strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
           />
         </svg>
         
         {/* Arrow at the very bottom of the line */}
         <svg 
-          className="absolute left-1/2 -translate-x-1/2 w-5 h-5"
-          style={{ bottom: '-20px' }}
+          className="absolute left-1/2 -translate-x-1/2 w-6 h-6"
+          style={{ bottom: '-24px', overflow: 'visible' }}
           viewBox="0 0 20 20"
           fill="none"
         >
@@ -95,8 +116,8 @@ export function Navigation() {
         
         {/* Moving Circle */}
         <div 
-          className="absolute left-1/2 -translate-x-1/2 size-3 bg-[#c4c4c4] rounded-full transition-all duration-200 ease-out z-10 border-2 border-white/50"
-          style={{ top: `${scrollProgress}%` }}
+          className="absolute left-1/2 -translate-x-1/2 size-3 bg-[#c4c4c4] rounded-full transition-all duration-200 ease-out z-10 border-2 border-white/50 shadow-lg"
+          style={{ top: `${scrollProgress}%`, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)' }}
         />
       </div>
     </nav>

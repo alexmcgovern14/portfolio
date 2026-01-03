@@ -43,7 +43,7 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
         <div className="py-4 flex items-center justify-between">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-white hover:text-[#00a1ff] transition-colors"
+            className="inline-flex items-center gap-2 text-white hover:text-[#7ACAFF] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="font-medium">Back</span>
@@ -87,7 +87,19 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
           }}
         >
           <h1 className="font-['Instrument_Serif:Regular',sans-serif] text-5xl text-[rgb(255,255,255)] mb-4 leading-tight">
-            {project.title}
+            {project.titleParts ? (
+              project.titleParts.map((part, index) => (
+                <span 
+                  key={index}
+                  className={part.gradient ? "bg-clip-text bg-gradient-to-r from-[#7ACAFF] to-[#67FFC2]" : "text-white"}
+                  style={part.gradient ? { WebkitTextFillColor: "transparent" } : {}}
+                >
+                  {part.text}
+                </span>
+              ))
+            ) : (
+              <span className="text-white">{project.title}</span>
+            )}
           </h1>
           
           {getSubheading() && (
@@ -120,7 +132,7 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00a1ff] to-[#00ff6f] text-black hover:opacity-90 transition-opacity px-4 py-2 rounded-lg font-medium text-sm"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#7ACAFF] to-[#67FFC2] text-black hover:opacity-90 transition-opacity px-4 py-2 rounded-lg font-medium text-sm"
               >
                 <Github className="w-4 h-4" />
                 <span>GitHub</span>
@@ -131,7 +143,7 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
                 href={project.substackUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#00a1ff] to-[#00ff6f] text-black hover:opacity-90 transition-opacity px-4 py-2 rounded-lg font-medium text-sm"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#7ACAFF] to-[#67FFC2] text-black hover:opacity-90 transition-opacity px-4 py-2 rounded-lg font-medium text-sm"
               >
                 <img src={substackLogo} alt="Substack" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
                 <span>Substack</span>

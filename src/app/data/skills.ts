@@ -42,7 +42,7 @@ export const aboutMeSkills: Skill[] = [
   {
     title: '0 → 1',
     description:
-      'Building **full-stack proof of concepts** to develop ideas, validate feasibility and design systems _before_ moving to Engineering',
+      'Building **full-stack proof of concepts** to develop ideas, validate feasibility and design systems.',
   },
   {
     title: 'Product leadership',

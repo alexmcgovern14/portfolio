@@ -81,14 +81,14 @@ export function ProjectCard({ title, titleParts, description, category, imageUrl
                   titleParts.map((part, index) => (
                     <span 
                       key={index}
-                      className={part.gradient ? "bg-clip-text bg-gradient-to-r from-[#00a1ff] to-[#00ff6f]" : "text-white"}
+                      className={part.gradient ? "bg-clip-text bg-gradient-to-r from-[#7ACAFF] to-[#67FFC2]" : "text-white"}
                       style={part.gradient ? { WebkitTextFillColor: "transparent" } : {}}
                     >
                       {part.text}
                     </span>
                   ))
                 ) : (
-                  <span className="bg-clip-text bg-gradient-to-r from-[#00a1ff] to-[#00ff6f]" style={{ WebkitTextFillColor: "transparent" }}>{title}</span>
+                  <span className="bg-clip-text bg-gradient-to-r from-[#7ACAFF] to-[#67FFC2]" style={{ WebkitTextFillColor: "transparent" }}>{title}</span>
                 )}
               </p>
               <p className="font-['Inter:Regular',sans-serif] font-normal min-w-full relative shrink-0 text-[18px] text-white w-[min-content]">{description}</p>

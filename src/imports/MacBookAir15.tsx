@@ -66,7 +66,7 @@ function Frame2() {
   return (
     <div className="h-[329px] leading-[0] relative shrink-0 text-nowrap w-[421px]">
       <p className="absolute font-['Inter:Regular',sans-serif] font-semibold leading-[normal] left-[5px] text-[#152630] text-[30px] top-[290px]">
-        <span className="bg-clip-text bg-gradient-to-r font-['Inter:Regular',sans-serif] font-bold from-[#00a1ff] to-[#00ff6f]" style={{ WebkitTextFillColor: "transparent" }}>
+        <span className="bg-clip-text bg-gradient-to-r font-['Inter:Regular',sans-serif] font-bold from-[#7ACAFF] to-[#67FFC2]" style={{ WebkitTextFillColor: "transparent" }}>
           AI product
         </span>{" "}
         <span className="text-[#c2c2c2] font-['Inter:Regular',sans-serif] font-normal">manager</span>.
@@ -99,7 +99,7 @@ function Frame4() {
           
           {/* AI product manager */}
           <p className="font-['Inter:Regular',sans-serif] font-semibold text-[24px] text-center">
-            <span className="bg-clip-text bg-gradient-to-r font-['Inter:Regular',sans-serif] font-bold from-[#00a1ff] to-[#00ff6f]" style={{ WebkitTextFillColor: "transparent" }}>
+            <span className="bg-clip-text bg-gradient-to-r font-['Inter:Regular',sans-serif] font-bold from-[#7ACAFF] to-[#67FFC2]" style={{ WebkitTextFillColor: "transparent" }}>
               AI product
             </span>{" "}
             <span className="text-[#c2c2c2] font-['Inter:Regular',sans-serif] font-normal">manager</span>.

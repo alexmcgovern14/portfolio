@@ -1,4 +1,5 @@
 import { SkillCard } from './shared/SkillCard';
+import { useRef, useEffect, useState } from 'react';
 import speakingPhoto from '../../assets/cd4d8a7e0af8ec1d891cf525a50981ef1d4a3940.png';
 
 interface AboutMeLayout2Props {
@@ -11,6 +12,24 @@ interface AboutMeLayout2Props {
 export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
   // Use first 4 skills for this layout
   const displaySkills = skills.slice(0, 4);
+  
+  // Refs to match image height to job card height
+  const jobCardRef = useRef<HTMLDivElement>(null);
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const [imageHeight, setImageHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const updateImageHeight = () => {
+      if (jobCardRef.current && imageContainerRef.current) {
+        const jobCardHeight = jobCardRef.current.offsetHeight;
+        setImageHeight(jobCardHeight);
+      }
+    };
+
+    updateImageHeight();
+    window.addEventListener('resize', updateImageHeight);
+    return () => window.removeEventListener('resize', updateImageHeight);
+  }, []);
 
   return (
     <section className="min-h-screen py-10 md:py-20 px-4 md:px-8 lg:px-32 bg-[#7a7573]">
@@ -28,19 +47,21 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Job Overview Card */}
             <div 
-              className="rounded-[24px] p-[2px] shadow-xl"
+              ref={jobCardRef}
+              className="rounded-[24px] shadow-xl relative flex flex-col"
               style={{
-                background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                background: 'linear-gradient(to bottom right, rgba(122, 202, 255, 1), rgba(103, 255, 194, 0))',
+                padding: '2px',
               }}
             >
-              <div className="bg-[#5a5452] rounded-[22px] p-8 h-full">
-              <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white mb-4">
+              <div className="bg-[#5a5452] rounded-[22px] p-8 relative z-10">
+              <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl md:text-[40px] text-white mb-4">
                 Senior product manager, LiveScore
               </h3>
               <p className="text-[#D6D6D6] mb-6" style={{ fontFamily: 'Inter, sans-serif', fontSize: '20px' }}>
                 London, UK
               </p>
-              <div className="text-[#D6D6D6] text-base md:text-[18px] leading-relaxed space-y-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <div className="text-[#D6D6D6] text-base md:text-[16px] leading-relaxed space-y-4" style={{ fontFamily: 'Inter, sans-serif' }}>
                 <p>
                   Leading product strategy, delivery, and adoption of <strong className="text-white">Artificial Intelligence</strong> at LiveScore.
                 </p>
@@ -56,18 +77,18 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
 
             {/* Speaking Photo */}
             <div 
-              className="rounded-[24px] p-[2px] shadow-xl overflow-hidden"
+              ref={imageContainerRef}
+              className="rounded-[24px] shadow-xl overflow-hidden flex"
               style={{
-                background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                border: '2px solid rgba(255, 255, 255, 0.3)',
+                height: imageHeight ? `${imageHeight}px` : 'auto',
               }}
             >
-              <div className="rounded-[22px] overflow-hidden">
-                <img 
+              <img 
                 src={speakingPhoto}
                 alt="Speaking at an event"
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-cover rounded-[22px]"
               />
-              </div>
             </div>
           </div>
           

@@ -58,9 +58,15 @@ function EmailCopyLine() {
   return (
     <div className="flex justify-center mt-6 md:mt-8">
       <div 
-        className="rounded-[24px] p-[2px] shadow-xl"
+        className="rounded-[24px] p-[2px] shadow-xl group transition-all duration-300"
         style={{
           background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = 'linear-gradient(to right, rgba(122, 202, 255, 1), rgba(103, 255, 194, 1))';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))';
         }}
       >
         <div 
@@ -78,7 +84,7 @@ function EmailCopyLine() {
             <span className="text-white font-['Inter:Regular',sans-serif] text-sm md:text-base">{email}</span>
             <button
               onClick={handleCopy}
-              className="flex items-center justify-center p-1.5 text-white hover:text-white/80 transition-colors rounded"
+              className="flex items-center justify-center p-1.5 text-white hover:text-white/80 transition-colors rounded cursor-pointer"
               aria-label="Copy email address"
             >
               {copied ? (
@@ -150,7 +156,11 @@ function HomePage() {
               onClick={() => trackExternalLink("https://www.etsy.com/uk/shop/AlexMcGovernDesign", "Etsy Shop")}
               className="inline-flex items-center gap-4 mb-10 group"
             >
-              <img src={etsyLogo} alt="Etsy" className="w-[50px] h-[50px] flex-shrink-0" />
+              <div className="w-[50px] h-[50px] rounded-lg relative overflow-hidden flex-shrink-0">
+                <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+                <div className="absolute inset-0 bg-[#F45800] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                <img src={etsyLogo} alt="Etsy" className="w-[50px] h-[50px] relative z-10" />
+              </div>
               <p className="text-[#D6D6D6] font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed group-hover:text-white transition-colors">
                 <strong className="text-white">Paintings</strong> available on Etsy
               </p>
@@ -170,62 +180,70 @@ function HomePage() {
               onClick={() => trackExternalLink("https://www.behance.net/alex-mcgovern", "Behance")}
               className="inline-flex items-center gap-4 mb-10 group"
             >
-              <img src={behanceLogo} alt="Behance" className="w-[50px] h-[50px] flex-shrink-0" />
+              <div className="w-[50px] h-[50px] rounded-lg relative overflow-hidden flex-shrink-0">
+                <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+                <div className="absolute inset-0 bg-[#1769FF] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                <img src={behanceLogo} alt="Behance" className="w-[50px] h-[50px] relative z-10" />
+              </div>
               <p className="text-[#D6D6D6] font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed group-hover:text-white transition-colors">
                 Former <strong className="text-white">motion designer</strong> and content <strong className="text-white">strategy & production manager</strong>
               </p>
             </a>
             {/* Embeds Grid */}
             <div className="grid grid-cols-1 gap-8">
-              {/* Behance and Instagram Row */}
+              {/* Behance and YouTube Row */}
               <div className="flex flex-col md:flex-row gap-8 items-start">
-                {/* Behance embed - left, wider */}
+                {/* Behance embed - left, equal size */}
                 <div className="flex-1 flex justify-center items-start w-full">
                   <div 
                     className="rounded-[24px] p-[2px] shadow-2xl"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
                       width: '100%',
-                      maxWidth: '700px'
+                      maxWidth: '100%'
                     }}
                   >
-                    <div className="rounded-[22px] overflow-hidden bg-gray-900 w-full">
+                    <div className="rounded-[22px] overflow-hidden bg-gray-900 w-full aspect-video">
                       <iframe 
                         src="https://www.behance.net/embed/project/151280181?ilo0=1" 
                         width="100%"
-                        height="550"
+                        height="100%"
                         allowFullScreen 
                         loading="lazy" 
                         frameBorder="0" 
                         allow="clipboard-write" 
                         referrerPolicy="strict-origin-when-cross-origin"
+                        className="w-full h-full"
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* Instagram embed - right, smaller */}
-                <div className="hidden md:flex flex-shrink-0 justify-center items-start w-full md:w-auto">
+                {/* YouTube embed - right, equal size */}
+                <div className="hidden md:flex flex-1 justify-center items-start w-full">
                   <div 
                     className="rounded-[24px] p-[2px] shadow-2xl"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                      width: '100%',
+                      maxWidth: '100%'
                     }}
                   >
-                    <div className="rounded-[22px] overflow-hidden w-full md:w-[380px]">
+                    <div className="rounded-[22px] overflow-hidden w-full aspect-video">
                       <iframe
-                        src="https://www.instagram.com/p/CEzAI5JgMJZ/embed/"
-                        width="380"
-                        height="550"
+                        width="100%"
+                        height="100%"
+                        src="https://www.youtube.com/embed/Zt1szGX5XDE?si=-hHoYtolc5lh307p"
+                        title="YouTube video player"
                         frameBorder="0"
-                        scrolling="no"
-                        allowtransparency="true"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        className="w-full h-full"
                         style={{ 
                           border: 'none', 
-                          overflow: 'hidden',
-                          minHeight: '550px'
+                          overflow: 'hidden'
                         }}
-                        title="Instagram post by @amgdgn"
                       />
                     </div>
                   </div>
@@ -291,16 +309,26 @@ function HomePage() {
               onClick={() => trackExternalLink("https://uk.linkedin.com/in/alex-mcgovern-531a6576", "LinkedIn")}
               rel="noopener noreferrer"
               aria-label="LinkedIn"
+              className="group relative"
             >
-              <img src={linkedinLogo} alt="LinkedIn" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
+              <div className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] rounded-lg relative overflow-hidden">
+                <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+                <div className="absolute inset-0 bg-[#0077b5] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                <img src={linkedinLogo} alt="LinkedIn" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] relative z-10" />
+              </div>
             </a>
 
             {/* Email */}
             <a
               href="mailto:alex.mcgovern.contact@gmail.com"
               aria-label="Email"
+              className="group relative"
             >
-              <img src={emailLogo} alt="Email" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
+              <div className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] rounded-lg relative overflow-hidden">
+                <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+                <div className="absolute inset-0 bg-[#c73e3e] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                <img src={emailLogo} alt="Email" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] relative z-10" />
+              </div>
             </a>
 
             {/* GitHub */}
@@ -310,8 +338,13 @@ function HomePage() {
               onClick={() => trackExternalLink("https://github.com/alexmcgovern14", "GitHub")}
               rel="noopener noreferrer"
               aria-label="GitHub"
+              className="group relative"
             >
-              <img src={githubLogo} alt="GitHub" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
+              <div className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] rounded-lg relative overflow-hidden">
+                <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+                <div className="absolute inset-0 bg-[#333] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                <img src={githubLogo} alt="GitHub" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] relative z-10" />
+              </div>
             </a>
 
             {/* Substack */}
@@ -321,8 +354,13 @@ function HomePage() {
               onClick={() => trackExternalLink("https://substack.com/@alexmcgovern", "Substack")}
               rel="noopener noreferrer"
               aria-label="Substack"
+              className="group relative"
             >
-              <img src={substackLogo} alt="Substack" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
+              <div className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] rounded-lg relative overflow-hidden">
+                <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+                <div className="absolute inset-0 bg-[#ff6719] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                <img src={substackLogo} alt="Substack" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] relative z-10" />
+              </div>
             </a>
 
             {/* Etsy */}
@@ -332,8 +370,13 @@ function HomePage() {
               onClick={() => trackExternalLink("https://www.etsy.com/uk/shop/AlexMcGovernDesign", "Etsy Shop")}
               rel="noopener noreferrer"
               aria-label="Etsy"
+              className="group relative"
             >
-              <img src={etsyLogo} alt="Etsy" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
+              <div className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] rounded-lg relative overflow-hidden">
+                <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+                <div className="absolute inset-0 bg-[#F45800] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                <img src={etsyLogo} alt="Etsy" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] relative z-10" />
+              </div>
             </a>
 
             {/* Behance */}
@@ -342,8 +385,13 @@ function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Behance"
+              className="group relative"
             >
-              <img src={behanceLogo} alt="Behance" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
+              <div className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] rounded-lg relative overflow-hidden">
+                <div className="absolute inset-0 bg-[#8B8B8B] rounded-lg z-0" />
+                <div className="absolute inset-0 bg-[#1769FF] rounded-lg z-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                <img src={behanceLogo} alt="Behance" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px] relative z-10" />
+              </div>
             </a>
           </div>
           {/* Email Address with Copy */}

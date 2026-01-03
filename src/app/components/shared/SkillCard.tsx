@@ -20,7 +20,7 @@ export function SkillCard({
         <h3 className="text-2xl font-semibold text-white mb-3 skill-card-header" style={{ fontFamily: 'Inter, sans-serif', fontFeatureSettings: 'normal' }}>
           {title}
         </h3>
-        <div className="text-[#D6D6D6] text-sm md:text-[18px] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <div className="text-[#D6D6D6] text-sm md:text-[16px] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
           <ReactMarkdown
             components={{
               p: ({ children }) => <p className="mb-0">{children}</p>,
