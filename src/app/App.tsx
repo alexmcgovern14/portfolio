@@ -16,6 +16,7 @@ import beyondProductPhoto from '../assets/b82f3fe63941c182cb0917cb0aae4da5b7fb97
 import { projects } from './data/projects';
 import { aboutMeSkills } from './data/skills';
 import { trackExternalLink } from './utils/analytics';
+import packageJson from '../../package.json';
 
 // Import hero immediately (above the fold - no lazy loading)
 import MacBookAir from '../imports/MacBookAir15';
@@ -37,6 +38,11 @@ function getCurrentDateString() {
   const month = months[now.getMonth()];
   const year = now.getFullYear();
   return `${month} ${year}`;
+}
+
+// Get version from package.json
+function getVersion() {
+  return packageJson.version;
 }
 
 // Email Copy Component
@@ -405,7 +411,7 @@ function HomePage() {
           <EmailCopyLine />
           {/* Credit */}
           <p className="text-[#D6D6D6] text-center mt-6 md:mt-8 font-['Inter:Regular',sans-serif] text-sm md:text-base">
-            Updated: {getCurrentDateString()} | Designed and built by Alex McGovern
+            Updated: {getCurrentDateString()}, v{getVersion()} | Designed and built by Alex McGovern
           </p>
         </div>
       </footer>
