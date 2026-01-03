@@ -1,5 +1,5 @@
 import { SkillCard } from './shared/SkillCard';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import speakingPhoto from '../../assets/cd4d8a7e0af8ec1d891cf525a50981ef1d4a3940.png';
 
 interface AboutMeLayout2Props {
@@ -15,20 +15,54 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
   
   // Refs to match image height to job card height
   const jobCardRef = useRef<HTMLDivElement>(null);
+  const jobCardInnerRef = useRef<HTMLDivElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const [imageHeight, setImageHeight] = useState<number | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
 
+  // Check if we're on desktop (lg breakpoint = 1024px)
   useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  useLayoutEffect(() => {
     const updateImageHeight = () => {
-      if (jobCardRef.current && imageContainerRef.current) {
-        const jobCardHeight = jobCardRef.current.offsetHeight;
-        setImageHeight(jobCardHeight);
+      if (jobCardInnerRef.current) {
+        // Measure the inner content div height plus the 2px padding on each side (4px total)
+        const contentHeight = jobCardInnerRef.current.offsetHeight;
+        const padding = 4; // 2px top + 2px bottom
+        setImageHeight(contentHeight + padding);
+      } else if (jobCardRef.current) {
+        // Fallback to measuring the wrapper
+        setImageHeight(jobCardRef.current.offsetHeight);
       }
     };
 
-    updateImageHeight();
+    // Initial measurement with a small delay to ensure DOM is ready
+    const timeoutId = setTimeout(updateImageHeight, 0);
+    
+    // Use ResizeObserver for more reliable updates
+    const resizeObserver = new ResizeObserver(() => {
+      updateImageHeight();
+    });
+    
+    if (jobCardInnerRef.current) {
+      resizeObserver.observe(jobCardInnerRef.current);
+    }
+    
+    // Also listen to window resize
     window.addEventListener('resize', updateImageHeight);
-    return () => window.removeEventListener('resize', updateImageHeight);
+    
+    return () => {
+      clearTimeout(timeoutId);
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateImageHeight);
+    };
   }, []);
 
   return (
@@ -44,7 +78,7 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
         {/* New Layout: Job overview card + Speaking photo (row 1) → 4 skill cards (row 2) */}
         <div className="space-y-8">
           {/* Row 1: Job Overview Card + Speaking Photo */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Job Overview Card */}
             <div 
               ref={jobCardRef}
@@ -52,9 +86,11 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
               style={{
                 background: 'linear-gradient(to bottom right, rgba(122, 202, 255, 1), rgba(103, 255, 194, 0))',
                 padding: '2px',
+                alignSelf: 'start',
+                height: 'fit-content',
               }}
             >
-              <div className="bg-[#5a5452] rounded-[22px] p-8 relative z-10">
+              <div ref={jobCardInnerRef} className="bg-[#5a5452] rounded-[22px] p-8 relative z-10">
               <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl md:text-[40px] text-white mb-4">
                 Senior product manager, LiveScore
               </h3>
@@ -78,16 +114,16 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
             {/* Speaking Photo */}
             <div 
               ref={imageContainerRef}
-              className="rounded-[24px] shadow-xl overflow-hidden flex"
+              className="rounded-[24px] shadow-xl overflow-hidden"
               style={{
                 border: '2px solid rgba(255, 255, 255, 0.3)',
-                height: imageHeight ? `${imageHeight}px` : 'auto',
+                height: isDesktop && imageHeight ? `${imageHeight}px` : 'auto',
               }}
             >
               <img 
                 src={speakingPhoto}
                 alt="Speaking at an event"
-                className="w-full h-full object-cover rounded-[22px]"
+                className="w-full h-auto lg:h-full object-contain lg:object-cover rounded-[22px]"
               />
             </div>
           </div>

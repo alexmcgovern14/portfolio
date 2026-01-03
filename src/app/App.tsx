@@ -264,7 +264,7 @@ function HomePage() {
               <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px] px-3 md:px-0">
                 Beyond product
               </h2>
-              <div className="w-full md:w-[75%]">
+              <div className="w-full md:w-full lg:w-[75%]">
                 <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
                   Creative pursuits, history, politics, culture, football and music — from rock, country and blues to hip-hop and soul.
                 </p>
@@ -272,19 +272,26 @@ function HomePage() {
                   Currently listening to:
                 </p>
                 {/* Spotify Embed */}
-                <div className="w-full overflow-hidden mb-10 pt-0 md:pt-5">
+                <div className="w-full -mb-5 md:-mb-5 lg:mb-10" style={{ lineHeight: 0, fontSize: 0, margin: 0, padding: 0 }}>
                 <iframe 
                   src="https://open.spotify.com/embed/playlist/37i9dQZF1Epy0FHcD7AQ0o?utm_source=generator&theme=0" 
-                  className="w-full h-[150px] md:h-[300px]" 
+                  className="w-full h-[300px] md:h-[600px] lg:h-[300px] block border-0" 
                   frameBorder="0" 
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                   loading="lazy"
+                  style={{ 
+                    display: 'block',
+                    margin: 0,
+                    padding: 0,
+                    border: 'none',
+                    verticalAlign: 'top'
+                  }}
                 ></iframe>
                 </div>
               </div>
             </div>
             {/* Right side - Photo */}
-            <div className="flex-shrink-0 w-full lg:w-auto flex justify-center mb-10 md:mb-0">
+            <div className="flex-shrink-0 w-full lg:w-auto flex justify-center mb-10 md:mb-10 lg:mb-0">
               <img 
                 src={beyondProductPhoto} 
                 alt="Alex McGovern" 
@@ -301,7 +308,7 @@ function HomePage() {
       {/* Footer */}
       <footer className="bg-[#4a4442] py-8 md:py-16 px-4 md:px-8 lg:px-32">
         <div className="max-w-7xl mx-auto">
-                    <div className="flex justify-center items-center gap-4 md:gap-8">
+                    <div className="grid grid-cols-3 md:flex md:flex-nowrap place-items-center md:justify-center md:items-center gap-4 md:gap-8 max-w-[182px] md:max-w-none mx-auto md:mx-0">
             {/* LinkedIn */}
             <a
               href="https://uk.linkedin.com/in/alex-mcgovern-531a6576"

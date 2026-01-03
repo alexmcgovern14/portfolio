@@ -28,6 +28,7 @@ const carouselSettings = {
       settings: {
         centerMode: false,
         centerPadding: '0px',
+        infinite: false, // Disable infinite on mobile to prevent cloned slide issues
       }
     }
   ],
@@ -44,6 +45,22 @@ export function PaintingsCarousel() {
         .paintings-carousel .slick-track {
           display: flex !important;
           align-items: center;
+        }
+        /* Fix aria-hidden and focus issues with cloned slides */
+        /* Only hide cloned slides that have width: 0px (invisible clones) */
+        .paintings-carousel .slick-slide.slick-cloned[aria-hidden="true"] {
+          pointer-events: none !important;
+        }
+        .paintings-carousel .slick-slide.slick-cloned[aria-hidden="true"] * {
+          pointer-events: none !important;
+        }
+        .paintings-carousel .slick-slide.slick-cloned[aria-hidden="true"] img {
+          visibility: hidden !important;
+          pointer-events: none !important;
+        }
+        /* Prevent focus on hidden cloned slides */
+        .paintings-carousel .slick-slide.slick-cloned[aria-hidden="true"] *:focus {
+          outline: none !important;
         }
         .paintings-carousel .slick-slide {
           opacity: 0.5;
@@ -140,6 +157,14 @@ export function PaintingsCarousel() {
                         loading="lazy"
                         width="530"
                         height="585"
+                        tabIndex={-1}
+                        onFocus={(e) => {
+                          // Prevent focus on hidden slides
+                          const slide = e.currentTarget.closest('.slick-slide');
+                          if (slide && slide.getAttribute('aria-hidden') === 'true') {
+                            e.currentTarget.blur();
+                          }
+                        }}
                       />
                     </div>
                   </div>
