@@ -46,21 +46,22 @@ export function PaintingsCarousel() {
           display: flex !important;
           align-items: center;
         }
-        /* Fix aria-hidden and focus issues with cloned slides */
-        /* Only hide cloned slides that have width: 0px (invisible clones) */
-        .paintings-carousel .slick-slide.slick-cloned[aria-hidden="true"] {
+        /* Fix aria-hidden and focus issues - handle ALL hidden slides */
+        /* Make all elements in hidden slides non-interactive */
+        .paintings-carousel .slick-slide[aria-hidden="true"] * {
           pointer-events: none !important;
         }
-        .paintings-carousel .slick-slide.slick-cloned[aria-hidden="true"] * {
-          pointer-events: none !important;
+        /* Remove any tabindex from elements in hidden slides */
+        .paintings-carousel .slick-slide[aria-hidden="true"] *[tabindex] {
+          tabindex: -1 !important;
         }
-        .paintings-carousel .slick-slide.slick-cloned[aria-hidden="true"] img {
-          visibility: hidden !important;
-          pointer-events: none !important;
-        }
-        /* Prevent focus on hidden cloned slides */
-        .paintings-carousel .slick-slide.slick-cloned[aria-hidden="true"] *:focus {
+        /* Prevent focus on any element in hidden slides */
+        .paintings-carousel .slick-slide[aria-hidden="true"] *:focus {
           outline: none !important;
+        }
+        /* Make the slide container itself non-interactive */
+        .paintings-carousel .slick-slide[aria-hidden="true"] {
+          pointer-events: none !important;
         }
         .paintings-carousel .slick-slide {
           opacity: 0.5;
@@ -157,14 +158,6 @@ export function PaintingsCarousel() {
                         loading="lazy"
                         width="530"
                         height="585"
-                        tabIndex={-1}
-                        onFocus={(e) => {
-                          // Prevent focus on hidden slides
-                          const slide = e.currentTarget.closest('.slick-slide');
-                          if (slide && slide.getAttribute('aria-hidden') === 'true') {
-                            e.currentTarget.blur();
-                          }
-                        }}
                       />
                     </div>
                   </div>

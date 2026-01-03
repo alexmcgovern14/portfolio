@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Home } from 'lucide-react';
 
 export function NotFound() {
   return (
@@ -8,23 +7,16 @@ export function NotFound() {
         <h1 className="font-['Instrument_Serif:Regular',sans-serif] text-6xl md:text-8xl text-white mb-4">
           404
         </h1>
-        <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-2xl md:text-4xl text-white mb-4">
-          Page Not Found
-        </h2>
         <p className="text-[#D6D6D6] mb-8 font-['Inter:Regular',sans-serif] text-base md:text-lg leading-relaxed">
-          The page you're looking for doesn't exist or has been moved.
+          Page not found
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 bg-[#8b8b8b] hover:bg-[#00a1ff] text-white px-6 py-3 rounded-lg font-medium transition-colors"
+          className="inline-flex items-center gap-2 text-white hover:text-[#7ACAFF] transition-colors focus:outline-none focus:ring-2 focus:ring-[#7ACAFF] focus:ring-offset-2 focus:ring-offset-[#2a2628] rounded-lg px-4 py-2"
         >
-          <Home className="w-5 h-5" />
-          <span>Back to Home</span>
+          <span>Back to homepage</span>
         </Link>
       </div>
     </div>
   );
 }
-
-
-
