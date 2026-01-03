@@ -229,14 +229,8 @@ export function ProjectDetailContent({
   
   
   
-      <p className="text-[#D6D6D6] leading-relaxed mb-4">
-  
-  
-  
+      <p className="text-[#D6D6D6] leading-relaxed mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>
         {children}
-  
-  
-  
       </p>
   
   
@@ -249,14 +243,8 @@ export function ProjectDetailContent({
   
   
   
-      <ul className="my-4 space-y-2 list-disc pl-6 text-[#D6D6D6]">
-  
-  
-  
+      <ul className="my-4 space-y-2 list-disc pl-6 text-[#D6D6D6]" style={{ fontFamily: 'Inter, sans-serif' }}>
         {children}
-  
-  
-  
       </ul>
   
   
@@ -269,14 +257,8 @@ export function ProjectDetailContent({
   
   
   
-      <ol className="my-4 space-y-2 list-decimal pl-6 text-[#D6D6D6]">
-  
-  
-  
+      <ol className="my-4 space-y-2 list-decimal pl-6 text-[#D6D6D6]" style={{ fontFamily: 'Inter, sans-serif' }}>
         {children}
-  
-  
-  
       </ol>
   
   
@@ -289,14 +271,8 @@ export function ProjectDetailContent({
   
   
   
-      <li className="text-[#D6D6D6] leading-relaxed pl-2">
-  
-  
-  
+      <li className="text-[#D6D6D6] leading-relaxed pl-2" style={{ fontFamily: 'Inter, sans-serif' }}>
         {children}
-  
-  
-  
       </li>
   
   
@@ -309,14 +285,8 @@ export function ProjectDetailContent({
   
   
   
-      <blockquote className="border-l-4 border-[#00a1ff] pl-6 pr-4 italic my-6 bg-[#3a3638] py-5 rounded-r-lg text-[#D6D6D6] text-lg">
-  
-  
-  
+      <blockquote className="border-l-4 border-[#00a1ff] pl-6 pr-4 italic my-6 bg-[#3a3638] py-5 rounded-r-lg text-[#D6D6D6] text-lg" style={{ fontFamily: 'Inter, sans-serif' }}>
         {children}
-  
-  
-  
       </blockquote>
   
   
@@ -381,7 +351,7 @@ export function ProjectDetailContent({
   
   
   
-      <em className="italic text-[#D6D6D6]">{children}</em>
+      <em className="italic text-[#D6D6D6]" style={{ fontFamily: 'Inter, sans-serif' }}>{children}</em>
   
   
   
@@ -1191,7 +1161,7 @@ export function ProjectDetailContent({
 
 
 
-                    <em className="italic text-[#D6D6D6]">{children}</em>
+                    <em className="italic text-[#D6D6D6]" style={{ fontFamily: 'Inter, sans-serif' }}>{children}</em>
 
 
 

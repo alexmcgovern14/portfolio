@@ -136,11 +136,10 @@ export function PaintingsCarousel() {
                       <img
                         src={painting}
                         alt={`Digital painting ${index + 1}`}
-                        className="w-[90%] h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
+                        className="w-full h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
                         loading="lazy"
                         width="530"
                         height="585"
-                        style={{ maxWidth: "90vw" }}
                       />
                     </div>
                   </div>

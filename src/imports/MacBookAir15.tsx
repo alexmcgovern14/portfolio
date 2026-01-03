@@ -1,5 +1,5 @@
 import svgPaths from "./svg-quy64lmgte";
-import imgFrame80 from "../assets/6dd7e8a5e3b0c8a7d8144c4acf6fc7ad9189d006.png";
+import heroImg from "../assets/heroimg.png";
 
 function LinkedInIcon() {
   return <div className="absolute bg-[#8b8b8b] left-0 rounded-[5px] size-[40px] top-0" data-name="LinkedIn icon" />;
@@ -44,35 +44,20 @@ function Frame1() {
 
 function Frame() {
   return (
-    <div className="absolute left-[33px] size-[263px] top-0">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <img alt="" className="absolute h-[301.13%] left-[-46.38%] max-w-none top-[-50.45%] w-[200.75%]" src={imgFrame80} />
-      </div>
+    <div className="relative w-[534px]">
+      <img 
+        alt="Alex McGovern" 
+        className="w-full h-auto" 
+        src={heroImg}
+      />
     </div>
   );
 }
 
 function Frame3() {
   return (
-    <div className="h-[284.858px] relative shrink-0 w-[339.273px]">
+    <div className="relative shrink-0 w-[534px]" style={{ transform: 'translateY(-40px)' }}>
       <Frame />
-      <div className="absolute flex h-[42.858px] items-center justify-center left-0 top-[242px] w-[339.273px]" style={{ "--transform-inner-width": "0", "--transform-inner-height": "0" } as React.CSSProperties}>
-        <div className="flex-none rotate-[3.291deg]">
-          <div className="h-[23.463px] relative w-[338.484px]">
-            <div className="absolute inset-[-20.31%_-0.07%_-18.81%_-0.67%]">
-              <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 340.999 32.6415">
-                <path d={svgPaths.p27936900} fill="url(#paint0_linear_1_31)" id="Vector 6" />
-                <defs>
-                  <linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_1_31" x1="2.283" x2="340.767" y1="16.496" y2="16.496">
-                    <stop stopColor="#00A3FB" />
-                    <stop offset="1" stopColor="#00CBBD" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
@@ -99,15 +84,15 @@ function Frame4() {
     <div className="basis-0 grow h-[832px] min-h-px min-w-px relative shrink-0">
       <div className="flex flex-row items-center justify-center size-full">
         {/* Desktop layout - horizontal */}
-        <div className="hidden md:flex content-stretch gap-[85px] items-center px-[40px] py-0 relative">
+        <div className="hidden md:flex content-stretch gap-[50px] items-center px-[40px] py-0 relative">
           <Frame3 />
           <Frame2 />
         </div>
         
-        {/* Mobile layout - vertical */}
-        <div className="flex md:hidden flex-col items-center justify-center gap-8 px-6 py-12">
+        {/* Mobile layout - vertical (text above, image below) */}
+        <div className="flex md:hidden flex-col items-center justify-center gap-0 px-6 py-12">
           {/* Name */}
-          <div className="font-['Instrument_Serif:Regular',sans-serif] text-[64px] leading-[1.1] text-center text-white tracking-[-1px]">
+          <div className="font-['Instrument_Serif:Regular',sans-serif] text-[64px] leading-[1.1] text-center text-white tracking-[-1px] mb-10">
             <p className="mb-0">Alex</p>
             <p>McGovern</p>
           </div>
@@ -120,30 +105,13 @@ function Frame4() {
             <span className="text-[#c2c2c2] font-['Inter:Regular',sans-serif] font-normal">manager</span>.
           </p>
           
-          {/* Photo with stroke - using desktop structure */}
-          <div className="h-[262px] relative w-[280px]">
-            <div className="absolute left-[20px] size-[240px] top-0">
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <img alt="" className="absolute h-[301.13%] left-[-46.38%] max-w-none top-[-50.45%] w-[200.75%]" src={imgFrame80} />
-              </div>
-            </div>
-            <div className="absolute flex h-[42.858px] items-center justify-center left-0 top-[220px] w-[280px]" style={{ "--transform-inner-width": "0", "--transform-inner-height": "0" } as React.CSSProperties}>
-              <div className="flex-none rotate-[3.291deg]">
-                <div className="h-[23.463px] relative w-[280px]">
-                  <div className="absolute inset-[-20.31%_-0.07%_-18.81%_-0.67%]">
-                    <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 340.999 32.6415">
-                      <path d={svgPaths.p27936900} fill="url(#paint0_linear_mobile)" />
-                      <defs>
-                        <linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_mobile" x1="2.283" x2="340.767" y1="16.496" y2="16.496">
-                          <stop stopColor="#00A3FB" />
-                          <stop offset="1" stopColor="#00CBBD" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Photo with decorative line included - 25% bigger */}
+          <div className="relative w-[360px]" style={{ marginTop: '-40px' }}>
+            <img 
+              alt="Alex McGovern" 
+              className="w-full h-auto" 
+              src={heroImg}
+            />
           </div>
         </div>
       </div>

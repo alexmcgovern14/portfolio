@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Github, Mail } from 'lucide-react';
-import linkedinLogo from '../../../assets/5c61d28ae9cf4a84dc84ff7a5804e018486959ba.png';
-import substackLogo from '../../../assets/substack-logo.png';
+import linkedinLogo from '../../../assets/LinkedIn.svg';
+import emailLogo from '../../../assets/Email.svg';
+import githubLogo from '../../../assets/GitHub.svg';
+import substackLogo from '../../../assets/Substack.svg';
 
 export function Navigation() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -21,7 +22,7 @@ export function Navigation() {
   }, []);
 
   return (
-    <nav className="hidden lg:flex fixed left-0 top-0 h-screen z-50 flex-col items-center gap-[40px] bg-[rgba(0,0,0,0)] px-[20px] py-[20px]" role="navigation" aria-label="Main navigation">
+    <nav className="hidden lg:flex fixed left-0 top-0 h-screen z-50 flex-col items-center gap-[40px] bg-[rgba(0,0,0,0)] px-[20px] py-[40px]" role="navigation" aria-label="Main navigation">
       {/* Social Icons */}
       <div className="flex flex-col gap-[25px]">
                 {/* LinkedIn */}
@@ -29,58 +30,34 @@ export function Navigation() {
           href="https://uk.linkedin.com/in/alex-mcgovern-531a6576"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center size-[40px] p-[10px] bg-[#8b8b8b] hover:bg-[#0077b5] transition-colors rounded-lg group"
           aria-label="LinkedIn"
         >
-          <img 
-            src={linkedinLogo} 
-            alt="LinkedIn" 
-            className="w-full h-full"
-            style={{ filter: 'brightness(0) invert(1)' }}
-          />
+          <img src={linkedinLogo} alt="LinkedIn" className="w-[50px] h-[50px]" />
         </a>
                 {/* Email */}
         <a
           href="mailto:alex.mcgovern.contact@gmail.com"
-          className="flex items-center justify-center size-[40px] p-[10px] bg-[#8b8b8b] hover:bg-[#ea4335] transition-colors rounded-lg group"
           aria-label="Email"
         >
-          <Mail className="w-full h-full text-white" />
+          <img src={emailLogo} alt="Email" className="w-[50px] h-[50px]" />
         </a>
                 {/* GitHub */}
         <a
           href="https://github.com/alexmcgovern14"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center size-[40px] p-[10px] bg-[#8b8b8b] hover:bg-[#333] transition-colors rounded-lg group"
           aria-label="GitHub"
         >
-          <Github className="w-full h-full text-white" />
+          <img src={githubLogo} alt="GitHub" className="w-[50px] h-[50px]" />
         </a>
                 {/* Substack */}
         <a
           href="https://substack.com/@alexmcgovern"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center size-[40px] p-[5px] bg-[#8b8b8b] hover:bg-[#FF6719] transition-colors rounded-lg group"
           aria-label="Substack"
         >
-          <img 
-            src={substackLogo} 
-            alt="Substack" 
-            className="w-full h-full"
-            style={{ filter: 'brightness(0) invert(1)' }}
-          />
-        </a>
-                {/* Etsy */}
-        <a
-          href="https://www.etsy.com/uk/shop/AlexMcGovernDesign"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center size-[40px] p-[10px] bg-[#8b8b8b] hover:bg-[#f16521] transition-colors rounded-lg group"
-          aria-label="Etsy"
-        >
-          <span className="text-white text-2xl font-serif leading-none">E</span>
+          <img src={substackLogo} alt="Substack" className="w-[50px] h-[50px]" />
         </a>
       </div>
 

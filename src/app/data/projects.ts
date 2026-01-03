@@ -21,7 +21,7 @@ const projectsData: Record<string, Project> = {
       { text: 'Knowledge:', gradient: true },
       { text: ' RAG AI system', gradient: false },
     ],
-    description: 'LLM semantic search through vectorised data',
+    description: 'High-precision semantic retrieval over vectorised knowledge base, prioritising accuracy and control',
     category: 'Personal project',
     imageUrl: workflowChatImg,
     overview:
@@ -451,7 +451,7 @@ Evals ran through OpenAI platform, provided 0-10 guided scores and explanations,
     imageUrl: lineupChangesImg,
     productionImage: lineupInsightsImg,
     overview:
-      `*Line-up Insights* is one of several LLM-based features delivered for **LiveScore**in 2025, a sports product used by millions of users. 
+      `***Line-up Insights*** is one of several LLM-based features delivered for **LiveScore** in 2025, a sports product used by millions of users. 
 
 The feature **compares team line-ups before kick-off and generates insights** about what each manager has changed since their previous match — the key info our users are looking for at a **peak-traffic** moment. **Latency is critical** as users wait (and repeatedly refresh) in anticipation of the news.
 

@@ -16,11 +16,11 @@ export function SkillCard({
         background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
       }}
     >
-      <div className="bg-[#5a5452] rounded-[22px] p-6 h-full">
-        <h3 className="text-xl font-['Inter:Regular',sans-serif] font-semibold text-white mb-3">
+      <div className="bg-[#6d6765] rounded-[22px] p-6 h-full">
+        <h3 className="text-2xl font-semibold text-white mb-3 skill-card-header" style={{ fontFamily: 'Inter, sans-serif', fontFeatureSettings: 'normal' }}>
           {title}
         </h3>
-        <div className="text-[#D6D6D6] text-sm leading-relaxed">
+        <div className="text-[#D6D6D6] text-sm md:text-[18px] leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
           <ReactMarkdown
             components={{
               p: ({ children }) => <p className="mb-0">{children}</p>,

@@ -15,11 +15,11 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
   return (
     <section className="min-h-screen py-10 md:py-20 px-4 md:px-8 lg:px-32 bg-[#7a7573]">
       <div className="max-w-7xl mx-auto">
-        <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px]">
+        <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px] px-3 md:px-0">
           AI product management
         </h2>
-        <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
-          Leading AI product development from concept to shipping
+        <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
+          Leading AI product development at LiveScore, from <strong className="text-white">concept to production.</strong>
         </p>
         
         {/* New Layout: Job overview card + Speaking photo (row 1) → 4 skill cards (row 2) */}
@@ -34,13 +34,13 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
               }}
             >
               <div className="bg-[#5a5452] rounded-[22px] p-8 h-full">
-              <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white mb-2">
-                Senior Product Manager, LiveScore
+              <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white mb-4">
+                Senior product manager, LiveScore
               </h3>
-              <p className="text-[#D6D6D6] text-lg mb-6 italic">
+              <p className="text-[#D6D6D6] mb-6" style={{ fontFamily: 'Inter, sans-serif', fontSize: '20px' }}>
                 London, UK
               </p>
-              <div className="text-[#D6D6D6] text-base leading-relaxed space-y-4">
+              <div className="text-[#D6D6D6] text-base md:text-[18px] leading-relaxed space-y-4" style={{ fontFamily: 'Inter, sans-serif' }}>
                 <p>
                   Leading product strategy, delivery, and adoption of <strong className="text-white">Artificial Intelligence</strong> at LiveScore.
                 </p>

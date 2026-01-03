@@ -32,7 +32,19 @@ export function ProjectCard({ title, titleParts, description, category, imageUrl
             width="600"
             height="400"
           />
-          <div className="absolute inset-0 rounded-[22px]" style={{ backgroundImage: "linear-gradient(180.096deg, rgba(0, 0, 0, 0) 0.1354%, rgba(0, 0, 0, 0.5) 57.513%), linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%)" }} />
+          {/* Bottom gradient scrim for text readability */}
+          <div 
+            className="absolute inset-0 rounded-[22px]" 
+            style={{ 
+              background: "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.75) 100%)"
+            }} 
+          />
+          <div 
+            className="absolute inset-0 rounded-[22px]" 
+            style={{ 
+              background: "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.75) 100%)"
+            }} 
+          />
         </div>
         <div className="flex flex-col justify-end size-full">
           <div className="content-stretch flex flex-col gap-[24px] items-start justify-end overflow-clip p-[24px] relative size-full">

@@ -5,10 +5,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster, toast } from 'sonner';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
 import { NotFound } from './components/shared/NotFound';
-import { Github, Mail, Copy, Check } from 'lucide-react';
-import behanceLogo from '../assets/ab051b3dbc5f6e7836893dc943f2b4ba9e0379e6.png';
-import linkedinLogo from '../assets/5c61d28ae9cf4a84dc84ff7a5804e018486959ba.png';
-import substackLogo from '../assets/substack-logo.png';
+import { Copy, Check } from 'lucide-react';
+import linkedinLogo from '../assets/LinkedIn.svg';
+import emailLogo from '../assets/Email.svg';
+import githubLogo from '../assets/GitHub.svg';
+import substackLogo from '../assets/Substack.svg';
+import etsyLogo from '../assets/Etsy.svg';
+import behanceLogo from '../assets/Behance.svg';
 import beyondProductPhoto from '../assets/b82f3fe63941c182cb0917cb0aae4da5b7fb9718.png';
 import { projects } from './data/projects';
 import { aboutMeSkills } from './data/skills';
@@ -110,11 +113,11 @@ function HomePage() {
       {/* Projects Section */}
       <section id="main-content" className="min-h-screen py-10 md:py-20 px-4 md:px-8 lg:px-32 bg-[#5a5452]">
         <div className="max-w-7xl mx-auto">
-          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px]">
+          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px] px-3 md:px-0">
             Featured products
           </h2>
-          <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
-            Selection of features in production at LiveScore and personal projects. Mostly featuring LLMs in product or built in AI-native process.
+          <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
+            Selected <strong className="text-white">production features</strong> and <strong className="text-white">personal projects</strong> demonstrating practical, production-grade use of LLMs to deliver real user value, built with <strong className="text-white">AI-native approaches.</strong>
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project, index) => (
@@ -131,10 +134,10 @@ function HomePage() {
       <section className="min-h-screen w-full bg-[#6d6765] py-10 md:py-20 px-4 md:px-8 lg:px-32" aria-label="Digital art">
         <div className="max-w-7xl mx-auto">
           {/* Main Heading */}
-          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px]">
+          <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px] px-3 md:px-0">
             Digital art
           </h2>
-          <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
+          <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
             <><strong className="text-white">Design</strong> and <strong className="text-white">creative</strong> background influence product thinking.</>
           </p>
 
@@ -211,7 +214,7 @@ function HomePage() {
                 </div>
 
                 {/* Instagram embed - right, smaller */}
-                <div className="flex-shrink-0 flex justify-center items-start w-full md:w-auto">
+                <div className="hidden md:flex flex-shrink-0 justify-center items-start w-full md:w-auto">
                   <div 
                     className="rounded-[24px] p-[2px] shadow-2xl"
                     style={{
@@ -244,26 +247,25 @@ function HomePage() {
       </section>
 
       {/* Beyond Product Section */}
-      <section className="min-h-screen w-full bg-[#5a5452] py-10 md:py-20 px-4 md:px-8 lg:px-32" aria-label="Beyond product">
+      <section className="min-h-screen w-full bg-[#5a5452] pt-10 md:pt-20 pb-4 md:pb-8 px-4 md:px-8 lg:px-32" aria-label="Beyond product">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-16 items-start">
             {/* Left side - Text and Spotify */}
             <div className="flex-1 w-full">
-              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px]">
+              <h2 className="font-['Instrument_Serif:Regular',sans-serif] text-4xl md:text-6xl text-white mb-[31px] px-3 md:px-0">
                 Beyond product
               </h2>
-              <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed">
+              <p className="text-[#D6D6D6] mb-8 md:mb-16 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
                 Creative pursuits, history, politics, culture, football and music — from rock, country and blues to hip-hop and soul.
               </p>
-              <p className="text-[#c2c2c2] mb-4 md:mb-6 font-[ABeeZee] text-base md:text-xl leading-relaxed">
+              <p className="text-[#c2c2c2] mb-4 md:mb-6 font-['Inter:Regular',sans-serif] text-base md:text-xl leading-relaxed px-3 md:px-0">
                 Currently listening to:
               </p>
               {/* Spotify Embed */}
-              <div className="rounded-2xl overflow-hidden shadow-2xl border-2 border-white/30">
+              <div className="w-full md:w-[65%] overflow-hidden mb-10">
                 <iframe 
                   src="https://open.spotify.com/embed/playlist/37i9dQZF1Epy0FHcD7AQ0o?utm_source=generator&theme=0" 
-                  width="100%" 
-                  height="152" 
+                  className="w-full h-[150px] md:h-[300px]" 
                   frameBorder="0" 
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                   loading="lazy"
@@ -271,7 +273,7 @@ function HomePage() {
               </div>
             </div>
             {/* Right side - Photo */}
-            <div className="flex-shrink-0 w-full lg:w-auto flex justify-center">
+            <div className="flex-shrink-0 w-full lg:w-auto flex justify-center mb-10 md:mb-0">
               <img 
                 src={beyondProductPhoto} 
                 alt="Alex McGovern" 
@@ -288,6 +290,8 @@ function HomePage() {
       {/* Footer */}
       <footer className="bg-[#4a4442] py-8 md:py-16 px-4 md:px-8 lg:px-32">
         <div className="max-w-7xl mx-auto">
+          {/* Email Address with Copy */}
+          <EmailCopyLine />
                     <div className="flex justify-center items-center gap-4 md:gap-8">
             {/* LinkedIn */}
             <a
@@ -295,24 +299,17 @@ function HomePage() {
               target="_blank"
               onClick={() => trackExternalLink("https://uk.linkedin.com/in/alex-mcgovern-531a6576", "LinkedIn")}
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#0077b5] transition-colors rounded-lg group"
               aria-label="LinkedIn"
             >
-              <img 
-                src={linkedinLogo} 
-                alt="LinkedIn"
-                className="w-full h-full"
-                style={{ filter: 'brightness(0) invert(1)' }}
-              />
+              <img src={linkedinLogo} alt="LinkedIn" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
             </a>
 
             {/* Email */}
             <a
               href="mailto:alex.mcgovern.contact@gmail.com"
-              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#ea4335] transition-colors rounded-lg group"
               aria-label="Email"
             >
-              <Mail className="w-full h-full text-white" />
+              <img src={emailLogo} alt="Email" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
             </a>
 
             {/* GitHub */}
@@ -321,10 +318,9 @@ function HomePage() {
               target="_blank"
               onClick={() => trackExternalLink("https://github.com/alexmcgovern14", "GitHub")}
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#333] transition-colors rounded-lg group"
               aria-label="GitHub"
             >
-              <Github className="w-full h-full text-white" />
+              <img src={githubLogo} alt="GitHub" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
             </a>
 
             {/* Substack */}
@@ -333,15 +329,9 @@ function HomePage() {
               target="_blank"
               onClick={() => trackExternalLink("https://substack.com/@alexmcgovern", "Substack")}
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#FF6719] transition-colors rounded-lg group"
               aria-label="Substack"
             >
-                            <img 
-                src={substackLogo} 
-                alt="Substack"
-                className="w-full h-full"
-                style={{ filter: 'brightness(0) invert(1)' }}
-              />
+              <img src={substackLogo} alt="Substack" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
             </a>
 
             {/* Etsy */}
@@ -350,10 +340,9 @@ function HomePage() {
               target="_blank"
               onClick={() => trackExternalLink("https://www.etsy.com/uk/shop/AlexMcGovernDesign", "Etsy Shop")}
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#f16521] transition-colors rounded-lg group"
               aria-label="Etsy"
             >
-              <span className="text-white text-2xl md:text-3xl font-serif leading-none">E</span>
+              <img src={etsyLogo} alt="Etsy" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
             </a>
 
             {/* Behance */}
@@ -361,19 +350,11 @@ function HomePage() {
               href="https://www.behance.net/alex-mcgovern"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center size-12 md:size-14 p-[15px] bg-[#8b8b8b] hover:bg-[#1769ff] transition-colors rounded-lg group"
               aria-label="Behance"
             >
-              <img 
-                src={behanceLogo} 
-                alt="Behance"
-                className="w-full h-full"
-                style={{ filter: 'brightness(0) invert(1)' }}
-              />
+              <img src={behanceLogo} alt="Behance" className="w-[50px] h-[50px] md:w-[56px] md:h-[56px]" />
             </a>
           </div>
-          {/* Email Address with Copy */}
-          <EmailCopyLine />
           {/* Credit */}
           <p className="text-[#D6D6D6] text-center mt-6 md:mt-8 font-['Inter:Regular',sans-serif] text-sm md:text-base">
             Updated: {getCurrentDateString()} | Designed and built by Alex McGovern
