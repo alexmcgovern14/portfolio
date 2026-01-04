@@ -50,21 +50,13 @@ export function extractProjectImages(project: Project, slug: string): string[] {
   } else if (slug === 'spotify-recommendation-engine') {
     // playlistImage appears in overview
     addImage(project.playlistImage);
-<<<<<<< HEAD
   } else if (slug === 'lineup-changes') {
-=======
-  } else if (slug === 'lineup-insights') {
->>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
     // productionImage appears at end of overview
     addImage(project.productionImage);
   }
 
   // Extract from PRD (for workflow images in rag-ai-system)
-<<<<<<< HEAD
   if ((slug === 'rag-ai-system' || slug === 'portfolio-website') && project.prd) {
-=======
-  if (slug === 'rag-ai-system' && project.prd) {
->>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
     const prdImages = extractFromMarkdown(project.prd);
     images.push(...prdImages);
   }
