@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+const SCROLL_POSITION_KEY = 'homepage-scroll-position';
 
 interface TitlePart {
   text: string;
@@ -16,7 +17,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ title, titleParts, description, category, imageUrl, slug }: ProjectCardProps) {
   return (
-    <Link to={`/project/${slug}`} className="block">
+    <Link to={`/project/${slug}`} onClick={() => { if (window.location.pathname === '/') { sessionStorage.setItem(SCROLL_POSITION_KEY, window.scrollY.toString()); } }} className="block">
       <div className="rounded-[24px] p-[2px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] h-[400px] transition-transform hover:scale-[1.02] cursor-pointer"
         style={{
           background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
