@@ -113,11 +113,12 @@ export function PaintingsCarousel() {
           }
           .paintings-carousel .slick-slide img {
             display: block !important;
-            width: 100% !important;
-            min-width: 100% !important;
-            max-width: 100% !important;
+            width: 90vw !important;
+            min-width: 90vw !important;
+            max-width: 90vw !important;
             height: auto !important;
             min-height: 396px !important;
+            aspect-ratio: unset !important;
             object-fit: cover !important;
           }
         }
@@ -192,18 +193,17 @@ export function PaintingsCarousel() {
                 <div className="flex justify-center w-full md:w-auto">
                   <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%] md:w-auto md:inline-block min-h-[400px] md:min-h-0" style={{
                     background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                    width: '90%',
+                    maxWidth: '100%',
                   }}
                   >
                     <div className="rounded-[22px] overflow-hidden w-full bg-[#2a2628]">
                       <img
                         src={painting}
                         alt={`Digital painting ${index + 1}`}
-                        className="w-full h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
+                        className="w-full h-auto md:aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
                         style={{
                           minHeight: '396px',
-                          width: '100%',
-                          minWidth: '100%',
-                          maxWidth: '100%',
                           height: 'auto',
                           display: 'block',
                         }}
