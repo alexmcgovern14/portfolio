@@ -13,6 +13,7 @@ import workflowChatImg from '../../assets/1ad9a175c9c9c9a0ec903e169c7782ddaf9378
 // Full project data including detail page content
 const projectsData: Record<string, Project> = {
 
+  'lineup-insights': {
     title: 'Feature: Line-up insights',
     titleParts: [
       { text: 'Feature: ', gradient: false },
