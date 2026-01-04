@@ -15,15 +15,6 @@
       ]
     },
     {
-      "source": "/(.*\\.(css|js|json|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot|pdf|xml|txt|webmanifest))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
       "source": "/(.*)",
       "headers": [
         {
@@ -50,14 +41,6 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
-    },
-    {
-      "source": "/(.*\\.(css|js|json|ico|png|jpg|jpeg|gif|svg|webp|woff|woff2|ttf|eot|pdf|xml|txt|webmanifest))",
-      "destination": "$1"
-    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
