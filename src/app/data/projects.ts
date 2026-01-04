@@ -287,11 +287,8 @@ if (processedProjectsData['rag-ai-system']?.prd) {
 
 // Simplified project list for homepage (without full detail data)
 export const projects: Project[] = [
-  processedProjectsData['portfolio-website'],
-  processedProjectsData['live-match-summary'],
-  processedProjectsData['lineup-changes'],
-  processedProjectsData['rag-ai-system'],
   processedProjectsData['spotify-recommendation-engine'],
+  processedProjectsData['portfolio-website']
 ];
 
 // Export the processed data
