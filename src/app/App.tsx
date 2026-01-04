@@ -16,8 +16,8 @@ import { trackExternalLink } from './utils/analytics';
 // Import hero immediately (above the fold - no lazy loading)
 import MacBookAir from '../imports/MacBookAir15';
 import { AboutMeLayout2 } from './components/AboutMeLayout2';
-import { PageViewTracker } from './components/shared/PageViewTracker';
 
+import { useScrollRestoration } from './hooks/useScrollRestoration';
 // Lazy load only heavy components that are below the fold or on separate routes
 const ProjectDetail = lazy(() => import('./components/ProjectDetailNew').then(m => ({ default: m.ProjectDetail })));
 const PaintingsCarousel = lazy(() => import('./components/sections/PaintingsCarousel').then(m => ({ default: m.PaintingsCarousel })));
@@ -91,6 +91,7 @@ function EmailCopyLine() {
 }
 
 function HomePage() {
+  useScrollRestoration();
   return (
     <div className="relative min-h-screen overflow-x-hidden">
       {/* Skip to main content link */}
@@ -371,6 +372,7 @@ export default function App() {
     <ErrorBoundary>
       <Router>
         <PageViewTracker />
+        <ScrollRestoration />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route 
