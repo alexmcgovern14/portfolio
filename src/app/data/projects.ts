@@ -14,6 +14,7 @@ import workflowChatImg from '../../assets/1ad9a175c9c9c9a0ec903e169c7782ddaf9378
 const projectsData: Record<string, Project> = {
 
   'lineup-insights': {
+    slug: 'lineup-insights',
     title: 'Feature: Line-up insights',
     titleParts: [
       { text: 'Feature: ', gradient: false },
@@ -287,8 +288,9 @@ if (processedProjectsData['rag-ai-system']?.prd) {
 
 // Simplified project list for homepage (without full detail data)
 export const projects: Project[] = [
+  processedProjectsData['portfolio-website'],
+  processedProjectsData['lineup-insights'],
   processedProjectsData['spotify-recommendation-engine'],
-  processedProjectsData['portfolio-website']
 ];
 
 // Export the processed data
