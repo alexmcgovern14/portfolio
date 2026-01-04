@@ -77,6 +77,19 @@ export function PaintingsCarousel() {
           opacity: 1;
           transform: scale(1);
         }
+        /* Mobile-specific fixes */
+        @media (max-width: 640px) {
+          .paintings-carousel .slick-slide {
+            opacity: 1;
+            transform: scale(1);
+          }
+          .paintings-carousel .slick-list {
+            min-height: 400px !important;
+          }
+          .paintings-carousel .slick-track {
+            min-height: 400px !important;
+          }
+        }
         /* Hide all default slick dots styling */
         .paintings-carousel .slick-dots,
         .paintings-carousel ul.slick-dots {
@@ -146,16 +159,15 @@ export function PaintingsCarousel() {
             {paintings.map((painting, index) => (
               <div key={index}>
                 <div className="flex justify-center w-full md:w-auto">
-                  <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%] md:w-auto md:inline-block" style={{
+                  <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%] md:w-auto md:inline-block min-h-[400px] md:min-h-0" style={{
                     background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-                    minHeight: '200px', // Prevent collapse while loading
                   }}
                   >
-                    <div className="rounded-[22px] overflow-hidden w-full bg-[#2a2628]">
+                    <div className="rounded-[22px] overflow-hidden w-full bg-[#2a2628] min-h-[396px] md:min-h-0">
                       <img
                         src={painting}
                         alt={`Digital painting ${index + 1}`}
-                        className="w-full h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
+                        className="w-full h-auto min-h-[396px] md:min-h-0 aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
                         loading="lazy"
                         onError={(e) => { const target = e.target as HTMLImageElement; target.style.display = 'none'; }}
                         onLoad={(e) => { const target = e.target as HTMLImageElement; target.style.display = 'block'; }}
