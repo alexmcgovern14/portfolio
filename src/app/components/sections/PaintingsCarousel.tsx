@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import { paintings } from '../../data/paintings';
 
 // Lazy load react-slick only when carousel is needed
@@ -35,7 +35,150 @@ const carouselSettings = {
   beforeChange: (current: number, next: number) => {},
 };
 
+// Hook to detect mobile screen size
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+    
+    // Check on mount
+    checkMobile();
+    
+    // Check on resize
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  return isMobile;
+}
+
+// Simple CSS-only carousel for mobile
+function SimpleMobileCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const scrollLeft = container.scrollLeft;
+    const slideWidth = container.clientWidth;
+    const newIndex = Math.round(scrollLeft / slideWidth);
+    setCurrentIndex(newIndex);
+  };
+
+  const goToSlide = (index: number) => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const slideWidth = container.clientWidth;
+    container.scrollTo({
+      left: index * slideWidth,
+      behavior: 'smooth',
+    });
+  };
+
+  return (
+    <div className="mobile-paintings-carousel pb-16">
+      <style>{`
+        .mobile-paintings-carousel-scroll {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          gap: 0;
+          padding: 0;
+        }
+        .mobile-paintings-carousel-scroll::-webkit-scrollbar {
+          display: none;
+        }
+        .mobile-paintings-carousel-slide {
+          flex: 0 0 90%;
+          scroll-snap-align: center;
+          scroll-snap-stop: always;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 5%;
+        }
+        .mobile-paintings-carousel-slide > div {
+          width: 100%;
+          max-width: 100%;
+        }
+        .mobile-paintings-carousel-dots {
+          display: flex;
+          gap: 8px;
+          justify-content: center;
+          margin-top: 20px;
+        }
+        .mobile-paintings-carousel-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          border: none;
+          background-color: rgba(255, 255, 255, 0.3);
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          padding: 0;
+        }
+        .mobile-paintings-carousel-dot.active {
+          background-color: #ffffff;
+        }
+      `}</style>
+      <div
+        ref={scrollContainerRef}
+        className="mobile-paintings-carousel-scroll"
+        onScroll={handleScroll}
+      >
+        {paintings.map((painting, index) => (
+          <div key={index} className="mobile-paintings-carousel-slide">
+            <div className="flex justify-center w-full">
+              <div className="rounded-[24px] p-[2px] shadow-2xl w-full" style={{
+                background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+              }}>
+                <div className="rounded-[22px] overflow-hidden w-full">
+                  <img
+                    src={painting}
+                    alt={`Digital painting ${index + 1}`}
+                    className="w-full h-auto aspect-[530/585] object-cover rounded-[22px] shadow-2xl"
+                    loading="lazy"
+                    width="530"
+                    height="585"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mobile-paintings-carousel-dots">
+        {paintings.map((_, index) => (
+          <button
+            key={index}
+            className={`mobile-paintings-carousel-dot ${index === currentIndex ? 'active' : ''}`}
+            onClick={() => goToSlide(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function PaintingsCarousel() {
+  const isMobile = useIsMobile();
+
+  // Render simple CSS carousel on mobile, react-slick on desktop
+  if (isMobile) {
+    return <SimpleMobileCarousel />;
+  }
+
   return (
     <div className="pb-16 overflow-visible">
       <style>{`
