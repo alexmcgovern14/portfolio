@@ -439,81 +439,61 @@ Playlist is visible in the Spotify app and tracks are playable immediately.
 
 Detailed below is a workflow across multiple tools which offered full control across **design → development → deployment**. 
 
-The setup allows rapid exploration early on, fast iteration through generative prototyping in **Figma Make**, in collaboration with pixel-perfect design freedom through **Figma**, before progressing to a maintainable and iterative production-quality codebase through **Cursor.**`,
+No single tool (yet!) offers the speed of GenAI prototyping, pixel-perfect designing of Figma and code quality desired for production. This process ties all of that together.`,
     githubUrl: 'https://github.com/alexmcgovern14/portfolio',
     substackUrl: 'https://open.substack.com/pub/alexmcgovern/p/ai-native-website-building-workflow?r=459yb5&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true',
     prd: `This portfolio was built as a **real product with AI-first thinking:** a space to clearly communicate my work, thinking, and approach to building.
 Setup offers full control across **design → development → deployment**. Allowing rapid exploration early on, while still converging on a maintainable, production-quality codebase.`,
-    challenge: `# Sketching
+    challenge: `# 1. ChatGPT
 
-Initial **low-fidelity ideation** of overall website structure, hierarchy and key page layouts. Inspiration collected on a moodboard to help **establish early direction.**
+Co-pilot at every stage. A single project (important!) holding all key context and objectives.
 
-Output: ideation, establish early preferences
+# 2. Sketching
 
+Lo-fi ideation to establish early direction
 
-# Hi-fi design: Figma ↔ Figma Make loop
+# 3. Hi-fi design: Figma ↔ Figma Make loop
 
-## UI design: Figma
+## 3.1 UI design: Figma
 
 High-fidelity design exploration; building towards a consistent visual language across colour schemes, page design, core components and key pages.
 
+## 3.2 Prototyping: Figma Make
 
-## Prototyping: Figma Make
+Chosen on this project over Lovable and others for integration with Figma. **Designs were converted to a working prototype**, which was used for **rapid iteration:** testing ideas and design treatments, site scaffolding, building out lower-priority components quickly and testing user journeys.
 
-Chosen on this project (over Lovable and others) for integration with Figma. **Designs were converted to a working prototype**, which was then used for **rapid iteration:** testing ideas and design treatments in context, building out lower-priority components quickly and testing user journeys. 
+This stage produced a fully working prototype, site scaffolding, and surfaced design and structural issues.
 
-This stage produced a fully working prototype, site scaffolding, and surfaced design and structural issues earlier than static designs alone.
+## 3.3 Figma ↔ Figma Make loop
 
+During prototyping there are many cases where prompting will not accurately build particular components as desired, especially when the vision is not clear, and diving back into pixels is a faster and more precise way of achieving design solution.
 
-## Figma ↔ Figma Make loop
-
-During prototyping there are many cases where prompting alone will not accurately build particular components as desired, especially when the vision is not clear, and diving back into pixels is a faster and more precise way of developing design solutions. 
-
-**Specific components were therefore designed directly in Figma and fed back into Figma Make mid-build**. 
-
-This allowed the workflow to combine the precision of manual, pixel-perfect design with the speed and scale of generative prototyping.
+**Specific components were therefore designed directly in Figma and fed back into Figma Make prototype mid-build** — this is very powerful and solves, in my view, the biggest issue of GenAI prototyping. It combines the speed and scale of generative prototyping with the precision of manual, pixel-perfect design.
 
 Output: **Fully working, pixel-perfect prototype**. A real product with code which is pushed to…
 
+# 4. GitHub
 
-# GitHub
+Source of truth for codebase
 
-Source of truth for the codebase, with all changes flowing through the repository.
+# 5. Cursor
 
+Prototype codebase pulled into Cursor to **refactor generated output into production-quality code** that can be owned, properly structured, trusted and iterated.
 
-# Cursor
+A few refactoring examples:
 
-Prototype codebase pulled into Cursor to **refactor generated output into production-quality code** that could be owned, iterated on and trusted. 
+- **Separation of concerns:** Large components broken down into focused, single-purpose components
+- **Structured codebase:** easier to navigate and safely make changes to
+- **Systematic styling and layout:** consolidated so that spacing, colour, and typography were applied consistently.
+- **Optimised loading behaviour**
+- **Accessibility**
+- **SEO metadata, site map etc.**
 
-The initial scaffold was useful for speed, but it wasn’t structured for long-term change. Large files mixed layout, data, and behaviour; patterns were inconsistent; and performance and accessibility concerns were largely accidental rather than deliberate.
+# 6. Vercel
 
-## Why refactoring was necessary
+Free hosting!
 
-The prototype code surfaced a few clear issues:
-
-- **Structure**: core pages were implemented as large, monolithic components that were hard to reason about or change safely  
-- **Consistency**: styling and layout decisions were repeated rather than enforced through shared patterns  
-- **Performance**: lazy loading and Suspense boundaries were applied indiscriminately, leading to visible loading artefacts  
-- **Accessibility**: semantic structure, focus management, and keyboard behaviour were incomplete  
-- **Ownership**: the code reflected how it was generated, not how it should be maintained
-
-## High-level examples of refactoring
-
-The refactor focused on a small number of deliberate improvements.
-
-- **Clear separation of concerns:**  Large components were broken down into focused, single-purpose components. Layout, content, navigation, and interaction logic were separated so that changes in one area didn’t create unintended side effects elsewhere.
-- **Intentional loading behaviour:**  Above-the-fold content was switched to load immediately, while lazy loading was kept only where it improved performance without harming user experience. Suspense fallbacks were designed to blend into the surrounding layout to avoid visible flashes.
-- **Systematic styling and layout:** Styling decisions were consolidated so that spacing, colour, and typography were applied consistently. This reduced duplication and made visual changes easier to reason about.
-- **Accessibility as a baseline:**  Semantic HTML, focus management, keyboard navigation, and ARIA labels were added where appropriate. These changes don’t alter how the site looks, but they significantly improve how it behaves.
-- **Codebase as a product asset:** The result is a codebase that’s easier to navigate, safer to change, and better aligned with how the site is intended to evolve over time.
-
-Output: **Refactoring shifted the site from a fast prototype to something production-ready that can be iterated on with confidence.**
-
- 
-
-# Vercel
-
-The site is hosted on Vercel with continuous deployment from the main branch, keeping it live and easy to evolve as the codebase changes.`,
+Combining the tools in this workflow facilitates rapid prototyping (Figma Make), detailed UI design (Figma) and production code quality.`,
   },
 };
 

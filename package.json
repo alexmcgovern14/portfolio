@@ -13,6 +13,7 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "dependencies": {
+    "embla-carousel-react": "^8.3.0",
     "lucide-react": "0.487.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.11.0",

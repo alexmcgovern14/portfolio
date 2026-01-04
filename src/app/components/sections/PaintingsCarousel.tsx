@@ -1,5 +1,6 @@
-import { lazy, Suspense, useState, useEffect, useRef } from 'react';
+import { lazy, Suspense, useState, useEffect, useCallback } from 'react';
 import { paintings } from '../../data/paintings';
+import useEmblaCarousel from 'embla-carousel-react';
 
 // Lazy load react-slick only when carousel is needed
 const Slider = lazy(() => import('react-slick').then(m => ({ default: m.default })));
@@ -21,14 +22,6 @@ const carouselSettings = {
       settings: {
         centerMode: true,
         centerPadding: '48px',
-      }
-    },
-    {
-      breakpoint: 640,
-      settings: {
-        centerMode: false,
-        centerPadding: '0px',
-        infinite: false, // Disable infinite on mobile to prevent cloned slide issues
       }
     }
   ],
@@ -58,103 +51,63 @@ function useIsMobile() {
   return isMobile;
 }
 
-// Simple CSS-only carousel for mobile
+// Mobile carousel component using embla-carousel
 function SimpleMobileCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    loop: true, 
+    align: 'center',
+    dragFree: false,
+    containScroll: 'trimSnaps',
+    skipSnaps: false
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // Initialize scroll position to first real slide (skip duplicate)
+  
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
   useEffect(() => {
-    if (scrollContainerRef.current) {
-      const slideWidth = scrollContainerRef.current.clientWidth;
-      // Start at index 1 (first real slide, after duplicate last)
-      scrollContainerRef.current.scrollLeft = slideWidth;
-    }
-  }, []);
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
 
-  const handleScroll = () => {
-    if (!scrollContainerRef.current) return;
-    const container = scrollContainerRef.current;
-    const scrollLeft = container.scrollLeft;
-    const slideWidth = container.clientWidth;
-    const totalSlides = paintings.length;
-    
-    // Calculate current index (accounting for duplicate slides)
-    let newIndex = Math.round(scrollLeft / slideWidth);
-    
-    // Handle infinite loop: if at duplicate first slide (index 0), jump to real last slide
-    if (newIndex === 0 && scrollLeft < slideWidth * 0.5) {
-      // At the very beginning (duplicate), jump to real last slide
-      setTimeout(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollTo({
-            left: slideWidth * totalSlides,
-            behavior: 'auto', // Instant jump
-          });
-        }
-      }, 0);
-      newIndex = totalSlides - 1;
-    }
-    // Handle infinite loop: if at duplicate last slide, jump to real first slide
-    else if (newIndex === totalSlides + 1 && scrollLeft > slideWidth * (totalSlides + 0.5)) {
-      // At the very end (duplicate), jump to real first slide
-      setTimeout(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollTo({
-            left: slideWidth,
-            behavior: 'auto', // Instant jump
-          });
-        }
-      }, 0);
-      newIndex = 0;
-    }
-    // Normal slides (1 to totalSlides)
-    else if (newIndex > 0 && newIndex <= totalSlides) {
-      newIndex = newIndex - 1; // Adjust for duplicate first slide
-    }
-    
-    setCurrentIndex(newIndex);
-  };
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('reInit', onSelect);
+    };
+  }, [emblaApi, onSelect]);
 
-  const goToSlide = (index: number) => {
-    if (!scrollContainerRef.current) return;
-    const container = scrollContainerRef.current;
-    const slideWidth = container.clientWidth;
-    // Add 1 to account for duplicate first slide
-    container.scrollTo({
-      left: (index + 1) * slideWidth,
-      behavior: 'smooth',
-    });
-  };
+  const scrollTo = useCallback(
+    (index: number) => emblaApi && emblaApi.scrollTo(index),
+    [emblaApi]
+  );
 
   return (
     <div className="mobile-paintings-carousel pb-16">
       <style>{`
-        .mobile-paintings-carousel-scroll {
+        .mobile-paintings-carousel .embla {
+          overflow: hidden;
+          width: 100%;
+        }
+        .mobile-paintings-carousel .embla__viewport {
+          overflow: hidden;
+          width: 100%;
+        }
+        .mobile-paintings-carousel .embla__container {
           display: flex;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          scroll-behavior: smooth;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
-          gap: 0;
-          padding: 0;
+          touch-action: pan-x;
         }
-        .mobile-paintings-carousel-scroll::-webkit-scrollbar {
-          display: none;
-        }
-        .mobile-paintings-carousel-slide {
-          flex: 0 0 90%;
-          scroll-snap-align: center;
-          scroll-snap-stop: always;
+        .mobile-paintings-carousel .embla__slide {
+          flex: 0 0 100%;
+          min-width: 0;
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: 0 5%;
-        }
-        .mobile-paintings-carousel-slide > div {
-          width: 100%;
-          max-width: 100%;
         }
         .mobile-paintings-carousel-dots {
           display: flex;
@@ -176,212 +129,20 @@ function SimpleMobileCarousel() {
           background-color: #ffffff;
         }
       `}</style>
-      <div
-        ref={scrollContainerRef}
-        className="mobile-paintings-carousel-scroll"
-        onScroll={handleScroll}
-      >
-        {/* Duplicate last slide at the beginning for infinite loop */}
-        <div key="duplicate-last" className="mobile-paintings-carousel-slide">
-          <div className="flex justify-center w-full">
-            <div className="rounded-[24px] p-[2px] shadow-2xl w-full" style={{
-              background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-            }}>
-              <div className="rounded-[22px] overflow-hidden w-full">
-                <img
-                  src={paintings[paintings.length - 1]}
-                  alt={`Digital painting ${paintings.length}`}
-                  className="w-full h-auto aspect-[530/585] object-cover rounded-[22px] shadow-2xl"
-                  loading="lazy"
-                  width="530"
-                  height="585"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Real slides */}
-        {paintings.map((painting, index) => (
-          <div key={index} className="mobile-paintings-carousel-slide">
-            <div className="flex justify-center w-full">
-              <div className="rounded-[24px] p-[2px] shadow-2xl w-full" style={{
-                background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-              }}>
-                <div className="rounded-[22px] overflow-hidden w-full">
-                  <img
-                    src={painting}
-                    alt={`Digital painting ${index + 1}`}
-                    className="w-full h-auto aspect-[530/585] object-cover rounded-[22px] shadow-2xl"
-                    loading="lazy"
-                    width="530"
-                    height="585"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-        {/* Duplicate first slide at the end for infinite loop */}
-        <div key="duplicate-first" className="mobile-paintings-carousel-slide">
-          <div className="flex justify-center w-full">
-            <div className="rounded-[24px] p-[2px] shadow-2xl w-full" style={{
-              background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-            }}>
-              <div className="rounded-[22px] overflow-hidden w-full">
-                <img
-                  src={paintings[0]}
-                  alt="Digital painting 1"
-                  className="w-full h-auto aspect-[530/585] object-cover rounded-[22px] shadow-2xl"
-                  loading="lazy"
-                  width="530"
-                  height="585"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mobile-paintings-carousel-dots">
-        {paintings.map((_, index) => (
-          <button
-            key={index}
-            className={`mobile-paintings-carousel-dot ${index === currentIndex ? 'active' : ''}`}
-            onClick={() => goToSlide(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-export function PaintingsCarousel() {
-  const isMobile = useIsMobile();
-
-  // Render simple CSS carousel on mobile, react-slick on desktop
-  if (isMobile) {
-    return <SimpleMobileCarousel />;
-  }
-
-  return (
-    <div className="pb-16 overflow-visible">
-      <style>{`
-        .paintings-carousel .slick-list {
-          overflow: visible !important;
-        }
-        .paintings-carousel .slick-track {
-          display: flex !important;
-          align-items: center;
-        }
-        /* Fix aria-hidden and focus issues - handle ALL hidden slides */
-        /* Make all elements in hidden slides non-interactive */
-        .paintings-carousel .slick-slide[aria-hidden="true"] * {
-          pointer-events: none !important;
-        }
-        /* Remove any tabindex from elements in hidden slides */
-        .paintings-carousel .slick-slide[aria-hidden="true"] *[tabindex] {
-          tabindex: -1 !important;
-        }
-        /* Prevent focus on any element in hidden slides */
-        .paintings-carousel .slick-slide[aria-hidden="true"] *:focus {
-          outline: none !important;
-        }
-        /* Make the slide container itself non-interactive */
-        .paintings-carousel .slick-slide[aria-hidden="true"] {
-          pointer-events: none !important;
-        }
-        .paintings-carousel .slick-slide {
-          opacity: 0.5;
-          transition: opacity 0.3s ease, transform 0.3s ease;
-          transform: scale(0.85);
-        }
-        @media (min-width: 1280px) {
-          .paintings-carousel .slick-slide:not(.slick-active) {
-            margin: 0 48px !important; /* 96px total gap between slides */
-          }
-        }
-        .paintings-carousel .slick-slide.slick-active {
-          opacity: 1;
-          transform: scale(1);
-        }
-        /* Hide all default slick dots styling */
-        .paintings-carousel .slick-dots,
-        .paintings-carousel ul.slick-dots {
-          display: flex !important;
-          gap: 8px;
-          justify-content: center;
-          list-style: none !important;
-          padding: 0 !important;
-          margin: 20px 0 0 0 !important;
-          position: relative !important;
-          bottom: 0 !important;
-          width: 100% !important;
-        }
-        .paintings-carousel .slick-dots li,
-        .paintings-carousel ul.slick-dots li {
-          margin: 0 !important;
-          padding: 0 !important;
-          width: auto !important;
-          height: auto !important;
-          position: relative !important;
-        }
-        .paintings-carousel .slick-dots li button,
-        .paintings-carousel ul.slick-dots li button {
-          background-color: rgba(255, 255, 255, 0.3) !important;
-          width: 8px !important;
-          height: 8px !important;
-          border-radius: 50% !important;
-          padding: 0 !important;
-          border: none !important;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          font-size: 0 !important;
-          line-height: 0 !important;
-          color: transparent !important;
-          text-indent: -9999px !important;
-          overflow: hidden !important;
-        }
-        .paintings-carousel .slick-dots li button:hover,
-        .paintings-carousel ul.slick-dots li button:hover {
-          background-color: rgba(255, 255, 255, 0.5) !important;
-        }
-        .paintings-carousel .slick-dots li.slick-active button,
-        .paintings-carousel ul.slick-dots li.slick-active button {
-          background-color: #ffffff !important;
-          width: 8px !important;
-          height: 8px !important;
-        }
-        /* Hide any duplicate dots from theme */
-        .paintings-carousel .slick-dots li button::before {
-          display: none !important;
-          content: none !important;
-        }
-        /* Ensure only one set of dots */
-        .paintings-carousel .slick-dots li button::after {
-          display: none !important;
-          content: none !important;
-        }
-        /* Override slick-theme.css completely */
-        .paintings-carousel .slick-dots li button:before {
-          display: none !important;
-          opacity: 0 !important;
-        }
-      `}</style>
-      <div className="paintings-carousel" role="region" aria-label="Digital paintings carousel">
-        <Suspense fallback={<div className="flex justify-center items-center h-[480px]"><div className="text-white">Loading carousel...</div></div>}>
-          <Slider key="paintings-carousel-desktop" {...carouselSettings} aria-label="Paintings carousel">
+      <div className="embla">
+        <div className="embla__viewport" ref={emblaRef}>
+          <div className="embla__container">
             {paintings.map((painting, index) => (
-              <div key={index}>
-                <div className="flex justify-center w-full md:w-auto">
-                  <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%] md:w-auto md:inline-block" style={{
+              <div key={index} className="embla__slide">
+                <div className="flex justify-center w-full">
+                  <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%]" style={{
                     background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
-                  }}
-                  >
+                  }}>
                     <div className="rounded-[22px] overflow-hidden w-full">
                       <img
                         src={painting}
                         alt={`Digital painting ${index + 1}`}
-                        className="w-full h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
+                        className="w-full h-auto aspect-[530/585] object-cover rounded-[22px] shadow-2xl"
                         loading="lazy"
                         width="530"
                         height="585"
@@ -391,10 +152,155 @@ export function PaintingsCarousel() {
                 </div>
               </div>
             ))}
-          </Slider>
-        </Suspense>
+          </div>
+        </div>
+      </div>
+      <div className="mobile-paintings-carousel-dots">
+        {paintings.map((_, index) => (
+          <button
+            key={index}
+            className={`mobile-paintings-carousel-dot ${index === selectedIndex ? 'active' : ''}`}
+            onClick={() => scrollTo(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
+export function PaintingsCarousel() {
+  
+  const isMobile = useIsMobile();
+
+  return (
+    <div className="pb-16 overflow-visible">
+      {isMobile ? (
+        <SimpleMobileCarousel />
+      ) : (
+        <>
+          <style>{`
+            .paintings-carousel .slick-list {
+              overflow: visible !important;
+            }
+            .paintings-carousel .slick-track {
+              display: flex !important;
+              align-items: center;
+            }
+            .paintings-carousel .slick-slide[aria-hidden="true"] * {
+              pointer-events: none !important;
+            }
+            .paintings-carousel .slick-slide[aria-hidden="true"] *[tabindex] {
+              tabindex: -1 !important;
+            }
+            .paintings-carousel .slick-slide[aria-hidden="true"] *:focus {
+              outline: none !important;
+            }
+            .paintings-carousel .slick-slide[aria-hidden="true"] {
+              pointer-events: none !important;
+            }
+            .paintings-carousel .slick-slide {
+              opacity: 0.5;
+              transition: opacity 0.3s ease, transform 0.3s ease;
+              transform: scale(0.85);
+            }
+            @media (min-width: 1280px) {
+              .paintings-carousel .slick-slide:not(.slick-active) {
+                margin: 0 48px !important;
+              }
+            }
+            .paintings-carousel .slick-slide.slick-active {
+              opacity: 1;
+              transform: scale(1);
+            }
+            .paintings-carousel .slick-dots,
+            .paintings-carousel ul.slick-dots {
+              display: flex !important;
+              gap: 8px;
+              justify-content: center;
+              list-style: none !important;
+              padding: 0 !important;
+              margin: 20px 0 0 0 !important;
+              position: relative !important;
+              bottom: 0 !important;
+              width: 100% !important;
+            }
+            .paintings-carousel .slick-dots li,
+            .paintings-carousel ul.slick-dots li {
+              margin: 0 !important;
+              padding: 0 !important;
+              width: auto !important;
+              height: auto !important;
+              position: relative !important;
+            }
+            .paintings-carousel .slick-dots li button,
+            .paintings-carousel ul.slick-dots li button {
+              background-color: rgba(255, 255, 255, 0.3) !important;
+              width: 8px !important;
+              height: 8px !important;
+              border-radius: 50% !important;
+              padding: 0 !important;
+              border: none !important;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              font-size: 0 !important;
+              line-height: 0 !important;
+              color: transparent !important;
+              text-indent: -9999px !important;
+              overflow: hidden !important;
+            }
+            .paintings-carousel .slick-dots li button:hover,
+            .paintings-carousel ul.slick-dots li button:hover {
+              background-color: rgba(255, 255, 255, 0.5) !important;
+            }
+            .paintings-carousel .slick-dots li.slick-active button,
+            .paintings-carousel ul.slick-dots li.slick-active button {
+              background-color: #ffffff !important;
+              width: 8px !important;
+              height: 8px !important;
+            }
+            .paintings-carousel .slick-dots li button::before {
+              display: none !important;
+              content: none !important;
+            }
+            .paintings-carousel .slick-dots li button::after {
+              display: none !important;
+              content: none !important;
+            }
+            .paintings-carousel .slick-dots li button:before {
+              display: none !important;
+              opacity: 0 !important;
+            }
+          `}</style>
+          <div className="paintings-carousel" role="region" aria-label="Digital paintings carousel">
+            <Suspense fallback={<div className="flex justify-center items-center h-[480px]"><div className="text-white">Loading carousel...</div></div>}>
+                    <Slider key="paintings-carousel-desktop" {...carouselSettings} aria-label="Paintings carousel">
+                {paintings.map((painting, index) => (
+                  <div key={index}>
+                    <div className="flex justify-center w-full md:w-auto">
+                      <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%] md:w-auto md:inline-block" style={{
+                        background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                      }}
+                      >
+                        <div className="rounded-[22px] overflow-hidden w-full">
+                          <img
+                            src={painting}
+                            alt={`Digital painting ${index + 1}`}
+                            className="w-full h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
+                            loading="lazy"
+                            width="530"
+                            height="585"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </Slider>
+            </Suspense>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}

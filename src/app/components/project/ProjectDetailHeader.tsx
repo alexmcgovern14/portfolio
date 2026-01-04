@@ -109,7 +109,7 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
           )}
           
           {/* Category pill and GitHub button */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap md:flex-nowrap">
             <div 
               className="backdrop-blur-[2px] rounded-[100px] inline-block shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]"
               style={{
