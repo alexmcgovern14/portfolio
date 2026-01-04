@@ -53,22 +53,39 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
           <div className="flex items-center gap-2">
             {prevProject ? (
               <Link
+<<<<<<< HEAD
                 to={`/featured/${prevProject.slug}`}
                 className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
                 title={`Previous: ${prevProject.title}`}
               >
                 <ChevronLeft className="w-5 h-5" />
                 <span className="hidden sm:inline text-sm font-medium"><strong>Previous:</strong> {prevProject.title}</span>
+=======
+                to={`/project/${prevProject.slug}`}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-[#D6D6D6] hover:text-white hover:bg-white/10 transition-colors"
+                title={`Previous: ${prevProject.title}`}
+              >
+                <ChevronLeft className="w-5 h-5" />
+                <span className="hidden sm:inline text-sm font-medium">Previous: {prevProject.title}</span>
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
               </Link>
             ) : null}
             
             {nextProject ? (
               <Link
+<<<<<<< HEAD
                 to={`/featured/${nextProject.slug}`}
                 className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
                 title={`Next: ${nextProject.title}`}
               >
                 <span className="hidden sm:inline text-sm font-medium"><strong>Next:</strong> {nextProject.title}</span>
+=======
+                to={`/project/${nextProject.slug}`}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-[#D6D6D6] hover:text-white hover:bg-white/10 transition-colors"
+                title={`Next: ${nextProject.title}`}
+              >
+                <span className="hidden sm:inline text-sm font-medium">Next: {nextProject.title}</span>
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
                 <ChevronRight className="w-5 h-5" />
               </Link>
             ) : null}

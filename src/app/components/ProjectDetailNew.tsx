@@ -11,6 +11,11 @@ import { ProjectDetailContent } from './project/ProjectDetailContent';
 import { FullScreenImageOverlay } from './project/FullScreenImageOverlay';
 import { extractProjectImages } from '../utils/extractProjectImages';
 import techStackWorkflow from '../../assets/website-tool-workflow.png';
+<<<<<<< HEAD
+=======
+import workflowIngestion from '../../assets/1dad7059420c1200f434ef05c34bb334b30cabd9.png';
+import workflowChat from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
 import { trackProjectView, trackCopy, trackSectionNavigation } from '../utils/analytics';
 
 export function ProjectDetail() {
@@ -55,6 +60,18 @@ export function ProjectDetail() {
     projectImages.push(techStackWorkflow);
   }
 
+<<<<<<< HEAD
+=======
+  // Add workflow images for rag-ai-system
+  if (slug === 'rag-ai-system') {
+    if (!projectImages.includes(workflowIngestion)) {
+      projectImages.push(workflowIngestion);
+    }
+    if (!projectImages.includes(workflowChat)) {
+      projectImages.push(workflowChat);
+    }
+  }
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
 
   const { activeSection, isScrolled } = useScrollSpy(
     ['overview', 'skills', 'workflows', 'user-needs', 'key-info', 'requirements', 'output-challenges', 'lineup-challenge', 'tech-stack']
@@ -152,6 +169,7 @@ export function ProjectDetail() {
   };
 
   const handleImageClick = (imageSrc: string) => {
+<<<<<<< HEAD
     // Extract filename from path (handle Vite-processed paths with query strings)
     const getFilename = (path: string) => {
       const url = new URL(path, window.location.origin);
@@ -176,6 +194,12 @@ export function ProjectDetail() {
         setCurrentImageIndex(exactIndex);
         setOverlayOpen(true);
       }
+=======
+    const index = projectImages.indexOf(imageSrc);
+    if (index !== -1) {
+      setCurrentImageIndex(index);
+      setOverlayOpen(true);
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
     }
   };
 
@@ -243,8 +267,13 @@ export function ProjectDetail() {
       />
 
       {/* Main Content Grid */}
+<<<<<<< HEAD
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 lg:py-12 overflow-visible">
         <div className="flex flex-col lg:flex-row gap-8 items-start overflow-visible project-detail-grid">
+=======
+      <div className="max-w-7xl mx-auto px-6 py-4 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
           <ProjectDetailNavigation
             project={project}
             slug={slug}

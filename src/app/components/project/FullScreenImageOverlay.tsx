@@ -68,6 +68,7 @@ export function FullScreenImageOverlay({
   const handleZoomOut = () => {
     setScale(prev => Math.max(prev - 0.25, 0.5));
   };
+<<<<<<< HEAD
   const handleImageClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent closing the overlay
     // Toggle zoom: if at 1x, zoom to 2x; if zoomed, reset to 1x
@@ -80,6 +81,8 @@ export function FullScreenImageOverlay({
     }
   };
 
+=======
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if (scale > 1) {
@@ -246,13 +249,19 @@ export function FullScreenImageOverlay({
 
       {/* Image container */}
       <div
+<<<<<<< HEAD
         className="relative flex items-center justify-center p-4"
         
+=======
+        className="relative w-full h-full flex items-center justify-center p-4"
+        onClick={(e) => e.stopPropagation()}
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
         onWheel={handleWheel}
       >
         <img
           src={images[currentIndex]}
           alt={`Image ${currentIndex + 1}`}
+<<<<<<< HEAD
           className="max-w-[90vw] max-h-[90vh] object-contain select-none"
           style={{
             transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
@@ -260,6 +269,14 @@ export function FullScreenImageOverlay({
             transition: isDragging ? 'none' : 'transform 0.2s',
           }}
           onClick={handleImageClick}
+=======
+          className="max-w-full max-h-full object-contain select-none"
+          style={{
+            transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
+            cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
+            transition: isDragging ? 'none' : 'transform 0.2s',
+          }}
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}

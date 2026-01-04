@@ -3,6 +3,7 @@ import type { Project } from '../../types/project';
 import { SECTION_CONTAINER, SECTION_PADDING } from './sectionStyles';
 
 
+
 interface ProjectDetailNavigationProps {
   project: Project;
   slug: string;
@@ -326,6 +327,7 @@ export function ProjectDetailNavigation({
   }, []);
   
   return (
+<<<<<<< HEAD
     <>
       <style>{`
         @media (min-width: 1024px) {
@@ -364,11 +366,21 @@ export function ProjectDetailNavigation({
       <aside ref={asideRef} className="contents-sticky pt-2 lg:pt-0 w-full">
         <div 
           className={`${SECTION_CONTAINER.outer}`}
+=======
+    <aside className="lg:col-span-1 pt-0 lg:pt-0">
+      <div className="lg:sticky lg:top-28 lg:self-start pt-2 lg:pt-0">
+        <div 
+          className="rounded-[24px] p-[2px] shadow-xl"
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
           style={{
             background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
           }}
         >
+<<<<<<< HEAD
           <div className={`rounded-[22px] shadow-xl ${SECTION_PADDING.nav}`}
+=======
+          <div className="rounded-[22px] p-8 pb-6 lg:pb-8 shadow-xl"
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
             style={{
               background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
             }}
@@ -382,7 +394,11 @@ export function ProjectDetailNavigation({
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
+<<<<<<< HEAD
                   className={`w-full text-left px-3 py-1 md:py-2 rounded-lg transition-colors ${
+=======
+                  className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
                     activeSection === item.id
                       ? 'bg-[#8a8686]/40 text-white font-medium border border-[#8a8686]'
                       : 'text-[#D6D6D6] font-normal hover:bg-gray-800/50 hover:text-gray-200'
@@ -424,8 +440,10 @@ export function ProjectDetailNavigation({
         </div>
       </aside>
       </div>
+<<<<<<< HEAD
     </>
+=======
+    </aside>
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
   );
 }
-
-

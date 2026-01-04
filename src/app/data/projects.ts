@@ -7,9 +7,12 @@ import thisWebsiteImg from '../../assets/website-tool-workflow.png';
 import liveMatchConcepts from '../../assets/3ecaddebe46e909d183a56db9afa1a1dbe33ff00.png';
 import liveMatchSummaryImg from '../../assets/Live match summary examples.png';
 import lineupInsightsImg from '../../assets/line-up insight examples.png';
+<<<<<<< HEAD
 import workflowIngestionImg from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
 import workflowChatImg from '../../assets/1ad9a175c9c9c9a0ec903e169c7782ddaf937831.png';
 
+=======
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
 
 
 // Full project data including detail page content
@@ -370,6 +373,7 @@ Retrieve broadly then re-order results using:
     category: 'LiveScore feature',
     imageUrl: liveMatchImg,
     conceptImage: liveMatchConcepts,
+    productionImage: liveMatchSummaryImg,
     overview:
       'Production GenAI feature that gives LiveScore users a live update on the state of play of a game, bringing them up to speed in a few sentences.\n\nA USP for LiveScore, built before any competitors, it offers a new solution to the oldest user need — _what\'s happening in this match?_ — unlocked by the possibilities of Generative AI.\n\nIt adds significant value at the *most important time for engagement* (live match) on *second most viewed page*, for *all users.*\n\nThe solution leverages natural language capabilities of GenAI to convert structured match data into a short narrative, telling the user what they need to know at speed.\n\n# Ownership\nOriginated concept, proved technical opportunity through prototyping and drove feature through to production:\n- Defined user value, where feature should live in experience and what good looks like\n- Prototyped to validate opportunity and explore output formats & discover potential limitations\n- Set system constraints: grounded in reliable data, speed, no speculation or reliance on historical knowledge, consistency across updates\n- Owned decisions on data inputs, guardrails, iteration through prompt engineering and evals loop',
     prd: `# Live match summary
@@ -438,13 +442,19 @@ Evals ran through OpenAI platform, provided 0-10 guided scores and explanations,
 - **Tone** scored against brand guidelines and British football fan voice`,
   },
 
+<<<<<<< HEAD
   'lineup-changes': {
     slug: 'lineup-changes',
+=======
+  'lineup-insights': {
+    slug: 'lineup-insights',
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
     title: 'Feature: Line-up insights',
     titleParts: [
       { text: 'Feature: ', gradient: false },
       { text: 'Line-up insights', gradient: true },
     ],
+<<<<<<< HEAD
     substackUrl: 'https://open.substack.com/pub/alexmcgovern/p/lesson-in-building-with-llms-recognising?r=459yb5&utm_campaign=post&utm_medium=web',
     description: 'Case study in building with LLMs, model limitations and designing effective systems.',
     category: 'LiveScore feature',
@@ -454,6 +464,14 @@ Evals ran through OpenAI platform, provided 0-10 guided scores and explanations,
       `***Line-up Insights*** is one of several LLM-based features delivered for **LiveScore** in 2025, a sports product used by millions of users. 
 
 The feature **compares team line-ups before kick-off and generates insights** about what each manager has changed since their previous match — the key info our users are looking for at a **peak-traffic** moment. **Latency is critical** as users wait (and repeatedly refresh) in anticipation of the news.
+=======
+    description:
+      'Case study in building with LLMs, model limitations and designing effective systems',
+    category: 'LiveScore feature',
+    imageUrl: lineupChangesImg,
+    productionImage: lineupInsightsImg,
+    overview: `LiveScore feature in production that **uses AI to generate insights** about what each team's manager has changed in team selection since last match — the key information users are looking for at a *peak-traffic moment*. 
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
 
 **Feature served as a strong AI product-building lesson on handling model limitations through system design; see 'Challenge' section below.**
 
@@ -611,9 +629,9 @@ Playlist is visible in the Spotify app and tracks are playable immediately.
 Detailed below is a workflow across multiple tools which offered full control across **design → development → deployment**. 
 
 The setup allows rapid exploration early on, fast iteration through generative prototyping in **Figma Make**, in collaboration with pixel-perfect design freedom through **Figma**, before progressing to a maintainable and iterative production-quality codebase through **Cursor.**`,
-    githubUrl: 'https://github.com/alexmcgovern14/Portfoliowebsite',
+    githubUrl: 'https://github.com/alexmcgovern14/portfolio',
+    substackUrl: 'https://open.substack.com/pub/alexmcgovern/p/ai-native-website-building-workflow?r=459yb5&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true',
     prd: `This portfolio was built as a **real product with AI-first thinking:** a space to clearly communicate my work, thinking, and approach to building.
-
 Setup offers full control across **design → development → deployment**. Allowing rapid exploration early on, while still converging on a maintainable, production-quality codebase.`,
     challenge: `# Sketching
 
@@ -713,11 +731,19 @@ if (processedProjectsData['rag-ai-system']?.prd) {
 
 // Simplified project list for homepage (without full detail data)
 export const projects: Project[] = [
+<<<<<<< HEAD
   processedProjectsData['portfolio-website'],
   processedProjectsData['live-match-summary'],
   processedProjectsData['lineup-changes'],
   processedProjectsData['rag-ai-system'],
   processedProjectsData['spotify-recommendation-engine'],
+=======
+  projectsData['portfolio-website'],
+  projectsData['live-match-summary'],
+  projectsData['rag-ai-system'],
+  projectsData['lineup-insights'],
+  projectsData['spotify-recommendation-engine'],
+>>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
 ];
 
 // Export the processed data
