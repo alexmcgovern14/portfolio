@@ -81,6 +81,18 @@ Example:
 - LLM generates narrative only from the diff object *(closed-world)*`,
 
   },
+    'live-match-summary': {
+    slug: 'live-match-summary',
+    title: 'Data-led live match updates',
+    titleParts: [
+      { text: 'Data-led ', gradient: false },
+
+  'rag-ai-system': {
+    slug: 'rag-ai-system',
+    title: 'Knowledge: RAG AI system',
+    titleParts: [
+      { text: 'Knowledge:', gradient: true },
+
   'spotify-recommendation-engine': {
     slug: 'spotify-recommendation-engine',
     title: 'Spotify recommendation engine',
@@ -289,7 +301,9 @@ if (processedProjectsData['rag-ai-system']?.prd) {
 // Simplified project list for homepage (without full detail data)
 export const projects: Project[] = [
   processedProjectsData['portfolio-website'],
+  processedProjectsData['live-match-summary'],
   processedProjectsData['lineup-insights'],
+  processedProjectsData['rag-ai-system'],
   processedProjectsData['spotify-recommendation-engine'],
 ];
 
