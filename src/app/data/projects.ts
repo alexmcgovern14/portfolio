@@ -87,7 +87,7 @@ Example:
     titleParts: [
       { text: 'Data-led ', gradient: false },
 
-   {
+  'rag-ai-system': {
     slug: 'rag-ai-system',
     title: 'Knowledge: RAG AI system',
     titleParts: [
