@@ -168,7 +168,173 @@ Evals ran through OpenAI platform, provided 0-10 guided scores and explanations,
     title: 'Knowledge: RAG AI system',
     titleParts: [
       { text: 'Knowledge:', gradient: true },
+      { text: ' RAG AI system', gradient: false },
+    ],
+    description: 'High-precision semantic retrieval over vectorised knowledge base, prioritising accuracy and control',
+    category: 'Personal project',
+    imageUrl: workflowChatImg,
+    overview:
+      '_Knowledge_ is an **AI-powered information retrieval system** designed to store **vectorised long-form text and metadata** to surface relevant insights through a **chat-based interface** using high-precision **semantic search.**\n\nThe system uses a **Retrieval-Augmented Generation (RAG) architecture** to enable connections across sources, domains, and concepts. RAG was selected over MCP-style approaches, which primarily support structured or exact lookups rather than semantic similarity.\n\nResponses are grounded in a controlled pair of **relational vector databases**, prioritising retrieval quality, traceability, and observability over latency and generative fluency.\n\n**Product Requirements Document (PRD)** below describes all facets of system design, RAG architecture, database structure, model choice and more. PRD is available in markdown format optimised for LLMs.',
+    skills:
+      'AI system design · Retrieval-Augmented Generation (RAG) · semantic search & retrieval design · data modelling & information architecture · data transformation (Notion → Supabase) · vector embeddings · relational joins & provenance reconstruction · workflow automation (n8n) · prompt & guardrail design · observability & debugging · deterministic pipeline design · model selection',
+    // githubUrl: 'https://github.com/yourusername/knowledge-rag', // Private repo
+    n8nJson: `{
+  "name": "knowledge-RAG Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "database",
+        "operation": "getAll",
+        "databaseId": "{{ $json.sourcesDbId }}",
+        "returnAll": true,
+        "options": {}
+      },
+      "name": "Notion - Get Sources",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "database",
+        "operation": "getAll",
+        "databaseId": "{{ $json.excerptsDbId }}",
+        "returnAll": true,
+        "options": {}
+      },
+      "name": "Notion - Get Excerpts",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2,
+      "position": [250, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalize and combine excerpt with source metadata\nconst excerpts = $input.all();\nconst output = [];\n\nfor (const excerpt of excerpts) {\n  const sourceId = excerpt.json.sourceRelation?.[0]?.id;\n  \n  if (!sourceId) {\n    continue; // Skip excerpts without valid source\n  }\n  \n  output.push({\n    json: {\n      excerptId: excerpt.json.id,\n      excerptText: excerpt.json.passage,\n      excerptNotes: excerpt.json.notes,\n      sourceId: sourceId,\n      timestamp: new Date().toISOString()\n    }\n  });\n}\n\nreturn output;"
+      },
+      "name": "Normalize Excerpt Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 500]
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "name": "Generate Embeddings",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [650, 500]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "excerpts",
+        "columns": "excerpt_id, excerpt_text, excerpt_notes, source_id, embedding, created_at",
+        "options": {}
+      },
+      "name": "Supabase - Insert Excerpts",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [850, 500]
+    }
+  ],
+  "connections": {
+    "Notion - Get Excerpts": {
+      "main": [[{
+        "node": "Normalize Excerpt Data",
+        "type": "main",
+        "index": 0
+      }]]
+    },
+    "Normalize Excerpt Data": {
+      "main": [[{
+        "node": "Generate Embeddings",
+        "type": "main",
+        "index": 0
+      }]]
+    },
+    "Generate Embeddings": {
+      "main": [[{
+        "node": "Supabase - Insert Excerpts",
+        "type": "main",
+        "index": 0
+      }]]
+    }
+  }
+}`,
+    prd: `# Knowledge: RAG AI System
 
+# Overview
+
+_Knowledge_ is an **AI-powered information retrieval system** designed to store **vectorised long-form text and metadata** to surface relevant insights through a **chat-based interface** using high-precision **semantic search.**
+
+The system uses a **Retrieval-Augmented Generation (RAG) architecture** to enable connections across sources, domains, and concepts. RAG was selected over MCP-style approaches, which primarily support structured or exact lookups rather than semantic similarity.
+
+Responses are grounded in a controlled pair of **relational vector databases**, prioritising retrieval quality, traceability, and observability over latency and generative fluency.
+
+# System Architecture
+
+## Data Sources
+
+The system ingests long-form text from **Notion databases**, transforming structured content (sources and excerpts) into vectorised embeddings stored in **Supabase** (PostgreSQL with pgvector extension).
+
+## RAG Pipeline
+
+1. **Data Ingestion**: Notion databases (sources and excerpts) are synced via n8n workflows
+2. **Normalisation**: Excerpt data is combined with source metadata, maintaining relational integrity
+3. **Embedding Generation**: OpenAI's \`text-embedding-3-small\` model creates vector embeddings
+4. **Vector Storage**: Embeddings stored in Supabase with metadata (excerpt_id, source_id, timestamps)
+5. **Retrieval**: Semantic search queries return top-k similar excerpts with source context
+6. **Generation**: Retrieved context is passed to LLM for grounded response generation
+
+## Database Structure
+
+- **Sources Table**: Metadata about source documents (title, type, date, etc.)
+- **Excerpts Table**: Vectorised text passages with embeddings, linked to sources via foreign keys
+- **Relational Joins**: Queries reconstruct full context by joining excerpts with source metadata
+
+# Design Decisions
+
+## Why RAG over MCP?
+
+MCP (Model Context Protocol) approaches excel at structured data lookups and exact matches, but struggle with semantic similarity across domains. RAG enables:
+- Cross-domain concept connections
+- Semantic similarity beyond keyword matching
+- Flexible query interpretation
+- Provenance tracking through relational joins
+
+## Model Selection
+
+- **Embeddings**: \`text-embedding-3-small\` for cost-effective, high-quality vector generation
+- **Generation**: Configurable LLM selection based on use case (quality vs. latency trade-offs)
+
+## Observability
+
+The system prioritises:
+- **Traceability**: Every response can be traced back to source excerpts
+- **Retrieval Quality**: Top-k results are logged for evaluation
+- **Pipeline Debugging**: n8n workflows provide visibility into data transformation steps
+
+# Workflow Automation
+
+n8n workflows handle:
+- Periodic syncing of Notion databases
+- Data normalisation and validation
+- Embedding generation and batch insertion
+- Error handling and retry logic
+
+# Future Enhancements
+
+- Multi-modal support (images, documents)
+- Advanced re-ranking for retrieval quality
+- User feedback loops for continuous improvement
+- Integration with additional data sources`,
+  },
+
+  
   'spotify-recommendation-engine': {
     slug: 'spotify-recommendation-engine',
     title: 'Spotify recommendation engine',
