@@ -54,7 +54,6 @@ html, body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
 }
-<<<<<<< HEAD
 
 
 /* Desktop-only sticky positioning for Contents section - JavaScript handles positioning */
@@ -74,5 +73,3 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-=======
->>>>>>> 847c8dbdef008556879c83d42b578bf98a10eb3e
