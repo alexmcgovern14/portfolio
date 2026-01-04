@@ -43,6 +43,72 @@ export function PaintingsCarousel() {
     setIsMounted(true);
   }, []);
 
+  // Force explicit widths on mobile after react-slick initializes
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const enforceWidths = () => {
+      if (window.innerWidth > 640) return; // Only on mobile
+      
+      const carousel = document.querySelector('.paintings-carousel');
+      if (!carousel) return;
+      
+      const track = carousel.querySelector('.slick-track') as HTMLElement;
+      const slides = carousel.querySelectorAll('.slick-slide') as NodeListOf<HTMLElement>;
+      
+      if (track) {
+        track.style.width = '100%';
+        track.style.minWidth = '100%';
+      }
+      
+      slides.forEach((slide) => {
+        slide.style.width = '100%';
+        slide.style.minWidth = '100%';
+        
+        // Also fix nested divs
+        const nestedDivs = slide.querySelectorAll('div') as NodeListOf<HTMLElement>;
+        nestedDivs.forEach((div, index) => {
+          if (index === 0) {
+            div.style.width = '100%';
+            div.style.minWidth = '100%';
+          } else if (index === 1) {
+            div.style.width = '100%';
+            div.style.minWidth = '100%';
+          } else if (index === 2) {
+            div.style.width = '90%';
+            div.style.minWidth = '90%';
+            div.style.maxWidth = '90%';
+          }
+        });
+      });
+    };
+    
+    // Run immediately
+    enforceWidths();
+    
+    // Run after a short delay to catch react-slick initialization
+    const timeout1 = setTimeout(enforceWidths, 100);
+    const timeout2 = setTimeout(enforceWidths, 500);
+    
+    // Run on window resize
+    window.addEventListener('resize', enforceWidths);
+    
+    // Run when images load
+    const images = document.querySelectorAll('.paintings-carousel img');
+    images.forEach((img) => {
+      img.addEventListener('load', enforceWidths);
+    });
+    
+    return () => {
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+      window.removeEventListener('resize', enforceWidths);
+      images.forEach((img) => {
+        img.removeEventListener('load', enforceWidths);
+      });
+    };
+  }, [isMounted, imagesLoaded]);
+
   const handleImageLoad = () => {
     setImagesLoaded(prev => prev + 1);
   };
@@ -88,34 +154,42 @@ export function PaintingsCarousel() {
           opacity: 1;
           transform: scale(1);
         }
-        /* Mobile-specific fixes */
+        /* Mobile-specific fixes - Force explicit widths to override react-slick's 0px */
         @media (max-width: 640px) {
-          .paintings-carousel .slick-slide {
-            opacity: 1;
-            transform: scale(1);
+          .paintings-carousel .slick-track {
             width: 100% !important;
+            min-width: 100% !important;
+            transform: none !important;
           }
           .paintings-carousel .slick-list {
             min-height: 400px !important;
             width: 100% !important;
           }
-          .paintings-carousel .slick-track {
-            min-height: 400px !important;
+          .paintings-carousel .slick-slide {
+            opacity: 1 !important;
+            transform: scale(1) !important;
             width: 100% !important;
+            min-width: 100% !important;
           }
           .paintings-carousel .slick-slide > div {
             width: 100% !important;
+            min-width: 100% !important;
           }
           .paintings-carousel .slick-slide > div > div {
+            width: 100% !important;
+            min-width: 100% !important;
+          }
+          .paintings-carousel .slick-slide > div > div > div {
             width: 90% !important;
-            max-width: 100% !important;
+            min-width: 90% !important;
+            max-width: 90% !important;
             margin: 0 auto !important;
           }
           .paintings-carousel .slick-slide img {
             display: block !important;
-            width: 90vw !important;
-            min-width: 90vw !important;
-            max-width: 90vw !important;
+            width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
             height: auto !important;
             min-height: 396px !important;
             aspect-ratio: unset !important;
@@ -194,10 +268,14 @@ export function PaintingsCarousel() {
                   <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%] md:w-auto md:inline-block min-h-[400px] md:min-h-0" style={{
                     background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
                     width: '90%',
-                    maxWidth: '100%',
+                    minWidth: '90%',
+                    maxWidth: '90%',
                   }}
                   >
-                    <div className="rounded-[22px] overflow-hidden w-full bg-[#2a2628]">
+                    <div className="rounded-[22px] overflow-hidden w-full bg-[#2a2628]" style={{
+                          width: '100%',
+                          minWidth: '100%',
+                        }}>
                       <img
                         src={painting}
                         alt={`Digital painting ${index + 1}`}
