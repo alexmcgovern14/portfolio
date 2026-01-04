@@ -63,12 +63,56 @@ function SimpleMobileCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  // Initialize scroll position to first real slide (skip duplicate)
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      const slideWidth = scrollContainerRef.current.clientWidth;
+      // Start at index 1 (first real slide, after duplicate last)
+      scrollContainerRef.current.scrollLeft = slideWidth;
+    }
+  }, []);
+
   const handleScroll = () => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
     const scrollLeft = container.scrollLeft;
     const slideWidth = container.clientWidth;
-    const newIndex = Math.round(scrollLeft / slideWidth);
+    const totalSlides = paintings.length;
+    
+    // Calculate current index (accounting for duplicate slides)
+    let newIndex = Math.round(scrollLeft / slideWidth);
+    
+    // Handle infinite loop: if at duplicate first slide (index 0), jump to real last slide
+    if (newIndex === 0 && scrollLeft < slideWidth * 0.5) {
+      // At the very beginning (duplicate), jump to real last slide
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollTo({
+            left: slideWidth * totalSlides,
+            behavior: 'auto', // Instant jump
+          });
+        }
+      }, 0);
+      newIndex = totalSlides - 1;
+    }
+    // Handle infinite loop: if at duplicate last slide, jump to real first slide
+    else if (newIndex === totalSlides + 1 && scrollLeft > slideWidth * (totalSlides + 0.5)) {
+      // At the very end (duplicate), jump to real first slide
+      setTimeout(() => {
+        if (scrollContainerRef.current) {
+          scrollContainerRef.current.scrollTo({
+            left: slideWidth,
+            behavior: 'auto', // Instant jump
+          });
+        }
+      }, 0);
+      newIndex = 0;
+    }
+    // Normal slides (1 to totalSlides)
+    else if (newIndex > 0 && newIndex <= totalSlides) {
+      newIndex = newIndex - 1; // Adjust for duplicate first slide
+    }
+    
     setCurrentIndex(newIndex);
   };
 
@@ -76,8 +120,9 @@ function SimpleMobileCarousel() {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
     const slideWidth = container.clientWidth;
+    // Add 1 to account for duplicate first slide
     container.scrollTo({
-      left: index * slideWidth,
+      left: (index + 1) * slideWidth,
       behavior: 'smooth',
     });
   };
@@ -136,6 +181,26 @@ function SimpleMobileCarousel() {
         className="mobile-paintings-carousel-scroll"
         onScroll={handleScroll}
       >
+        {/* Duplicate last slide at the beginning for infinite loop */}
+        <div key="duplicate-last" className="mobile-paintings-carousel-slide">
+          <div className="flex justify-center w-full">
+            <div className="rounded-[24px] p-[2px] shadow-2xl w-full" style={{
+              background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+            }}>
+              <div className="rounded-[22px] overflow-hidden w-full">
+                <img
+                  src={paintings[paintings.length - 1]}
+                  alt={`Digital painting ${paintings.length}`}
+                  className="w-full h-auto aspect-[530/585] object-cover rounded-[22px] shadow-2xl"
+                  loading="lazy"
+                  width="530"
+                  height="585"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Real slides */}
         {paintings.map((painting, index) => (
           <div key={index} className="mobile-paintings-carousel-slide">
             <div className="flex justify-center w-full">
@@ -156,6 +221,25 @@ function SimpleMobileCarousel() {
             </div>
           </div>
         ))}
+        {/* Duplicate first slide at the end for infinite loop */}
+        <div key="duplicate-first" className="mobile-paintings-carousel-slide">
+          <div className="flex justify-center w-full">
+            <div className="rounded-[24px] p-[2px] shadow-2xl w-full" style={{
+              background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+            }}>
+              <div className="rounded-[22px] overflow-hidden w-full">
+                <img
+                  src={paintings[0]}
+                  alt="Digital painting 1"
+                  className="w-full h-auto aspect-[530/585] object-cover rounded-[22px] shadow-2xl"
+                  loading="lazy"
+                  width="530"
+                  height="585"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="mobile-paintings-carousel-dots">
         {paintings.map((_, index) => (
