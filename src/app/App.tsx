@@ -16,6 +16,8 @@ import { trackExternalLink } from './utils/analytics';
 // Import hero immediately (above the fold - no lazy loading)
 import MacBookAir from '../imports/MacBookAir15';
 import { AboutMeLayout2 } from './components/AboutMeLayout2';
+import { PageViewTracker } from './components/shared/PageViewTracker';
+import { ScrollRestoration } from './components/shared/ScrollRestoration';
 
 import { useScrollRestoration } from './hooks/useScrollRestoration';
 // Lazy load only heavy components that are below the fold or on separate routes
