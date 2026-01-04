@@ -3,6 +3,7 @@ import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
+import packageJson from './package.json'
 
 export default defineConfig({
   plugins: [
@@ -15,6 +16,9 @@ export default defineConfig({
       brotliSize: true,
     })
   ],
+  define: {
+    'import.meta.env.APP_VERSION': JSON.stringify(packageJson.version),
+  },
   resolve: {
     alias: {
       // Alias @ to the src directory

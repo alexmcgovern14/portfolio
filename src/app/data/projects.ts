@@ -649,7 +649,6 @@ The setup allows rapid exploration early on, fast iteration through generative p
     githubUrl: 'https://github.com/alexmcgovern14/portfolio',
     substackUrl: 'https://open.substack.com/pub/alexmcgovern/p/ai-native-website-building-workflow?r=459yb5&utm_campaign=post&utm_medium=web&showWelcomeOnShare=true',
     prd: `This portfolio was built as a **real product with AI-first thinking:** a space to clearly communicate my work, thinking, and approach to building.
-
 Setup offers full control across **design → development → deployment**. Allowing rapid exploration early on, while still converging on a maintainable, production-quality codebase.`,
     challenge: `# Sketching
 
