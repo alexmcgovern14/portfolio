@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { paintings } from '../../data/paintings';
 
 // Lazy load react-slick only when carousel is needed
@@ -36,6 +36,17 @@ const carouselSettings = {
 };
 
 export function PaintingsCarousel() {
+  const [isMounted, setIsMounted] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleImageLoad = () => {
+    setImagesLoaded(prev => prev + 1);
+  };
+
   return (
     <div className="pb-16 overflow-visible">
       <style>{`
@@ -82,23 +93,32 @@ export function PaintingsCarousel() {
           .paintings-carousel .slick-slide {
             opacity: 1;
             transform: scale(1);
+            width: 100% !important;
           }
           .paintings-carousel .slick-list {
             min-height: 400px !important;
+            width: 100% !important;
           }
           .paintings-carousel .slick-track {
             min-height: 400px !important;
+            width: 100% !important;
+          }
+          .paintings-carousel .slick-slide > div {
+            width: 100% !important;
+          }
+          .paintings-carousel .slick-slide > div > div {
+            width: 90% !important;
+            max-width: 100% !important;
+            margin: 0 auto !important;
           }
           .paintings-carousel .slick-slide img {
             display: block !important;
             width: 100% !important;
+            min-width: 100% !important;
+            max-width: 100% !important;
             height: auto !important;
             min-height: 396px !important;
             object-fit: cover !important;
-          }
-          .paintings-carousel .slick-slide > div > div {
-            width: 90% !important;
-            margin: 0 auto !important;
           }
         }
         /* Hide all default slick dots styling */
@@ -166,7 +186,7 @@ export function PaintingsCarousel() {
       `}</style>
       <div className="paintings-carousel" role="region" aria-label="Digital paintings carousel">
         <Suspense fallback={<div className="flex justify-center items-center h-[480px]"><div className="text-white">Loading carousel...</div></div>}>
-          <Slider key="paintings-carousel-desktop" {...carouselSettings} aria-label="Paintings carousel" aria-live="polite">
+          <Slider key={`paintings-carousel-${isMounted ? 'ready' : 'loading'}-${imagesLoaded}`} {...carouselSettings} aria-label="Paintings carousel" aria-live="polite">
             {paintings.map((painting, index) => (
               <div key={index}>
                 <div className="flex justify-center w-full md:w-auto">
@@ -182,11 +202,18 @@ export function PaintingsCarousel() {
                         style={{
                           minHeight: '396px',
                           width: '100%',
+                          minWidth: '100%',
+                          maxWidth: '100%',
                           height: 'auto',
+                          display: 'block',
                         }}
                         loading="lazy"
                         onError={(e) => { const target = e.target as HTMLImageElement; target.style.display = 'none'; }}
-                        onLoad={(e) => { const target = e.target as HTMLImageElement; target.style.display = 'block'; }}
+                        onLoad={(e) => { 
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'block';
+                          handleImageLoad();
+                        }}
                         width="530"
                         height="585"
                       />
