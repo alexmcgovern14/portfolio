@@ -10,6 +10,9 @@ import lineupInsightsImg from '../../assets/line-up insight examples.png';
 import workflowIngestionImg from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
 import workflowChatImg from '../../assets/1ad9a175c9c9c9a0ec903e169c7782ddaf937831.png';
 
+// Full project data including detail page content
+const projectsData: Record<string, Project> = {
+
     title: 'Feature: Line-up insights',
     titleParts: [
       { text: 'Feature: ', gradient: false },
