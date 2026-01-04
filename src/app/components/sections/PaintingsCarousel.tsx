@@ -89,6 +89,17 @@ export function PaintingsCarousel() {
           .paintings-carousel .slick-track {
             min-height: 400px !important;
           }
+          .paintings-carousel .slick-slide img {
+            display: block !important;
+            width: 100% !important;
+            height: auto !important;
+            min-height: 396px !important;
+            object-fit: cover !important;
+          }
+          .paintings-carousel .slick-slide > div > div {
+            width: 90% !important;
+            margin: 0 auto !important;
+          }
         }
         /* Hide all default slick dots styling */
         .paintings-carousel .slick-dots,
@@ -163,11 +174,16 @@ export function PaintingsCarousel() {
                     background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
                   }}
                   >
-                    <div className="rounded-[22px] overflow-hidden w-full bg-[#2a2628] min-h-[396px] md:min-h-0">
+                    <div className="rounded-[22px] overflow-hidden w-full bg-[#2a2628]">
                       <img
                         src={painting}
                         alt={`Digital painting ${index + 1}`}
-                        className="w-full h-auto min-h-[396px] md:min-h-0 aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
+                        className="w-full h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
+                        style={{
+                          minHeight: '396px',
+                          width: '100%',
+                          height: 'auto',
+                        }}
                         loading="lazy"
                         onError={(e) => { const target = e.target as HTMLImageElement; target.style.display = 'none'; }}
                         onLoad={(e) => { const target = e.target as HTMLImageElement; target.style.display = 'block'; }}
