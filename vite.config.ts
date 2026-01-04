@@ -6,6 +6,8 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import packageJson from './package.json'
 
 export default defineConfig({
+  base: '/',
+
   plugins: [
     react(), 
     tailwindcss(),
