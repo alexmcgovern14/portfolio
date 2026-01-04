@@ -142,20 +142,23 @@ export function PaintingsCarousel() {
       `}</style>
       <div className="paintings-carousel" role="region" aria-label="Digital paintings carousel">
         <Suspense fallback={<div className="flex justify-center items-center h-[480px]"><div className="text-white">Loading carousel...</div></div>}>
-          <Slider key="paintings-carousel-desktop" {...carouselSettings} aria-label="Paintings carousel">
+          <Slider key="paintings-carousel-desktop" {...carouselSettings} aria-label="Paintings carousel" aria-live="polite">
             {paintings.map((painting, index) => (
               <div key={index}>
                 <div className="flex justify-center w-full md:w-auto">
                   <div className="rounded-[24px] p-[2px] shadow-2xl w-[90%] md:w-auto md:inline-block" style={{
                     background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+                    minHeight: '200px', // Prevent collapse while loading
                   }}
                   >
-                    <div className="rounded-[22px] overflow-hidden w-full">
+                    <div className="rounded-[22px] overflow-hidden w-full bg-[#2a2628]">
                       <img
                         src={painting}
                         alt={`Digital painting ${index + 1}`}
                         className="w-full h-auto aspect-[530/585] md:w-[520px] md:h-[562px] md:aspect-auto object-cover rounded-[22px] shadow-2xl"
                         loading="lazy"
+                        onError={(e) => { const target = e.target as HTMLImageElement; target.style.display = 'none'; }}
+                        onLoad={(e) => { const target = e.target as HTMLImageElement; target.style.display = 'block'; }}
                         width="530"
                         height="585"
                       />
