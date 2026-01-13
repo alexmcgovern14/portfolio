@@ -9,6 +9,9 @@ import liveMatchSummaryImg from '../../assets/Live match summary examples.png';
 import lineupInsightsImg from '../../assets/line-up insight examples.png';
 import workflowIngestionImg from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
 import workflowChatImg from '../../assets/1ad9a175c9c9c9a0ec903e169c7782ddaf937831.png';
+import workflowImage1 from '../../assets/1dad7059420c1200f434ef05c34bb334b30cabd9.png';
+import workflowImage2 from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
+import escapeTheRainImg from '../../assets/Escape-the-rain.png';
 
 // Full project data including detail page content
 const projectsData: Record<string, Project> = {
@@ -173,6 +176,8 @@ Evals ran through OpenAI platform, provided 0-10 guided scores and explanations,
     description: 'High-precision semantic retrieval over vectorised knowledge base, prioritising accuracy and control',
     category: 'Personal project',
     imageUrl: workflowChatImg,
+    workflowImage1: workflowImage1,
+    workflowImage2: workflowImage2,
     overview:
       '_Knowledge_ is an **AI-powered information retrieval system** designed to store **vectorised long-form text and metadata** to surface relevant insights through a **chat-based interface** using high-precision **semantic search.**\n\nThe system uses a **Retrieval-Augmented Generation (RAG) architecture** to enable connections across sources, domains, and concepts. RAG was selected over MCP-style approaches, which primarily support structured or exact lookups rather than semantic similarity.\n\nResponses are grounded in a controlled pair of **relational vector databases**, prioritising retrieval quality, traceability, and observability over latency and generative fluency.\n\n**Product Requirements Document (PRD)** below describes all facets of system design, RAG architecture, database structure, model choice and more. PRD is available in markdown format optimised for LLMs.',
     skills:
@@ -332,6 +337,20 @@ n8n workflows handle:
 - Advanced re-ranking for retrieval quality
 - User feedback loops for continuous improvement
 - Integration with additional data sources`,
+  },
+  'escape-the-rain': {
+    slug: 'escape-the-rain',
+    title: 'Escape the Rain',
+    titleParts: [
+      { text: 'Escape the Rain', gradient: true },
+    ],
+    description: 'Combines real-time weather forecasts with spatial search to identify nearest dry locations',
+    category: 'Personal project',
+    imageUrl: escapeTheRainImg,
+    productionImage: escapeTheRainImg,
+    overview: 'PRD coming soon.',
+    skills: '',
+    prd: '',
   },
 
   
@@ -527,6 +546,7 @@ export const projects: Project[] = [
   processedProjectsData['lineup-insights'],
   processedProjectsData['rag-ai-system'],
   processedProjectsData['spotify-recommendation-engine'],
+  processedProjectsData['escape-the-rain'],
 ];
 
 // Export the processed data

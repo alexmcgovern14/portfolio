@@ -19,6 +19,8 @@ export interface Project {
   conceptImage?: string;
   playlistImage?: string;
   productionImage?: string;
+  workflowImage1?: string;
+  workflowImage2?: string;
   keyInfo?: string;
   challenge?: string;
   constraints?: string;

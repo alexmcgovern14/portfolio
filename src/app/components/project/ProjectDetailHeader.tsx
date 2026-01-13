@@ -24,7 +24,9 @@ export function ProjectDetailHeader({ project, slug, isScrolled, nextProject, pr
         return 'Design, development and deployment of portfolio website in AI-native workflow';
       case 'spotify-recommendation-engine':
         return 'Solving my own need for better recommendations on Spotify';
-      default:
+            case 'escape-the-rain':
+        return 'Combines real-time weather forecasts with spatial search to identify nearest dry locations';
+default:
         return null;
     }
   };

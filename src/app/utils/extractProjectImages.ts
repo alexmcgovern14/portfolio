@@ -53,6 +53,9 @@ export function extractProjectImages(project: Project, slug: string): string[] {
   } else if (slug === 'lineup-changes') {
     // productionImage appears at end of overview
     addImage(project.productionImage);
+  } else if (slug === 'escape-the-rain') {
+    // productionImage appears in Product Overview section
+    addImage(project.productionImage);
   }
 
   // Extract from PRD (for workflow images in rag-ai-system)
@@ -61,8 +64,11 @@ export function extractProjectImages(project: Project, slug: string): string[] {
     images.push(...prdImages);
   }
 
-  // Add workflow images for rag-ai-system (these are hardcoded in ProjectDetailContent)
-  // They will be added in ProjectDetailNew.tsx after extraction
+  // Add workflow images for rag-ai-system
+  if (slug === 'rag-ai-system') {
+    addImage(project.workflowImage1);
+    addImage(project.workflowImage2);
+  }
 
   // Extract from other text fields (these typically don't have images, but just in case)
   extractFromMarkdown(project.skills).forEach(addImage);
