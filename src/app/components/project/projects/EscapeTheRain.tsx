@@ -47,25 +47,40 @@ export const EscapeTheRain: React.FC<ProjectContentProps> = (props) => {
                 </ReactMarkdown>
               </div>
               
-              {/* Project Image */}
-              {props.project.productionImage && (
-                <div className="my-8">
+              {/* Product Screenshots - Mobile and Desktop */}
+              <div className="my-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Mobile Screenshot */}
+                <div>
                   <button
-                    onClick={() => props.onImageClick(props.project.productionImage!)}
-                    className="block rounded-[24px] overflow-hidden border-2 border-white/30 hover:border-white/60 transition-colors cursor-pointer"
+                    onClick={() => props.onImageClick('/src/assets/Escape the rain mobile.png')}
+                    className="block rounded-[24px] overflow-hidden border-2 border-white/30 hover:border-white/60 transition-colors cursor-pointer w-full"
                   >
                     <img
-                      src={props.project.productionImage}
-                      alt="Escape the Rain"
-                      className="h-auto block rounded-[22px]"
+                      src="/src/assets/Escape the rain mobile.png"
+                      alt="Escape the Rain - Mobile View"
+                      className="w-full h-auto block rounded-[22px]"
                       loading="lazy"
-                      width="1200"
-                      height="800"
                     />
                   </button>
-                  <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Escape the Rain</p>
+                  <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Mobile View</p>
                 </div>
-              )}
+                
+                {/* Desktop Screenshot */}
+                <div>
+                  <button
+                    onClick={() => props.onImageClick('/src/assets/Escape the rain desktop.png')}
+                    className="block rounded-[24px] overflow-hidden border-2 border-white/30 hover:border-white/60 transition-colors cursor-pointer w-full"
+                  >
+                    <img
+                      src="/src/assets/Escape the rain desktop.png"
+                      alt="Escape the Rain - Desktop View"
+                      className="w-full h-auto block rounded-[22px]"
+                      loading="lazy"
+                    />
+                  </button>
+                  <p className="text-[#D6D6D6] text-sm italic text-center mt-2">Desktop View</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
