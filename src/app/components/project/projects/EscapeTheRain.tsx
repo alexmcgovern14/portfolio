@@ -8,6 +8,8 @@ import { escapeTheRainContent } from '../../../data/escapeTheRainContent';
 import { getMarkdownComponents } from '../markdownComponents';
 import { SECTION_CONTAINER } from '../sectionStyles';
 import { FileText } from 'lucide-react';
+import escapeTheRainMobileImg from '../../../../assets/Escape the rain mobile.png';
+import escapeTheRainDesktopImg from '../../../../assets/Escape the rain desktop.png';
 
 export const EscapeTheRain: React.FC<ProjectContentProps> = (props) => {
   // Create a modified project object with the new content
@@ -52,11 +54,11 @@ export const EscapeTheRain: React.FC<ProjectContentProps> = (props) => {
                 {/* Mobile Screenshot */}
                 <div>
                   <button
-                    onClick={() => props.onImageClick('/src/assets/Escape the rain mobile.png')}
+                    onClick={() => props.onImageClick(escapeTheRainMobileImg)}
                     className="block rounded-[24px] overflow-hidden border-2 border-white/30 hover:border-white/60 transition-colors cursor-pointer w-full"
                   >
                     <img
-                      src="/src/assets/Escape the rain mobile.png"
+                      src={escapeTheRainMobileImg}
                       alt="Escape the Rain - Mobile View"
                       className="w-full h-auto block rounded-[22px]"
                       loading="lazy"
@@ -68,11 +70,11 @@ export const EscapeTheRain: React.FC<ProjectContentProps> = (props) => {
                 {/* Desktop Screenshot */}
                 <div>
                   <button
-                    onClick={() => props.onImageClick('/src/assets/Escape the rain desktop.png')}
+                    onClick={() => props.onImageClick(escapeTheRainDesktopImg)}
                     className="block rounded-[24px] overflow-hidden border-2 border-white/30 hover:border-white/60 transition-colors cursor-pointer w-full"
                   >
                     <img
-                      src="/src/assets/Escape the rain desktop.png"
+                      src={escapeTheRainDesktopImg}
                       alt="Escape the Rain - Desktop View"
                       className="w-full h-auto block rounded-[22px]"
                       loading="lazy"
