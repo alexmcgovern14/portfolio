@@ -16,6 +16,9 @@ export function FullScreenImageOverlay({
   onClose,
   onNavigate,
 }: FullScreenImageOverlayProps) {
+  // Early return MUST come before any hooks
+  if (!isOpen || images.length === 0) return null;
+
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -29,8 +32,6 @@ export function FullScreenImageOverlay({
 
   // Keyboard navigation
   useEffect(() => {
-    if (!isOpen) return;
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
@@ -45,21 +46,15 @@ export function FullScreenImageOverlay({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, currentIndex, images.length, onClose, onNavigate]);
+  }, [currentIndex, images.length, onClose, onNavigate]);
 
   // Prevent body scroll when overlay is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isOpen]);
-
-  if (!isOpen || images.length === 0) return null;
+  }, []);
 
   const handleZoomIn = () => {
     setScale(prev => Math.min(prev + 0.25, 3));
