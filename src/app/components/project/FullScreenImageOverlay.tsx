@@ -228,8 +228,7 @@ export function FullScreenImageOverlay({
       )}
 
       <div
-        className="flex items-center justify-center w-full h-full"
-        onClick={(e) => e.stopPropagation()}
+        className="relative"
         onWheel={handleWheel}
       >
         <img
@@ -241,7 +240,10 @@ export function FullScreenImageOverlay({
             cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in',
             transition: isDragging ? 'none' : 'transform 0.2s',
           }}
-          onClick={handleImageClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleImageClick(e);
+          }}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
