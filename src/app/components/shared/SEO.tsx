@@ -11,8 +11,8 @@ interface SEOProps {
 export function SEO({ 
   title = 'Alex McGovern - Portfolio',
   description = 'Product Manager specializing in AI systems and delivery. Showcasing LiveScore case studies and personal projects featuring LLMs in product and AI-native processes.',
-  image = 'https://alexmcgovern.com/og-image.png',
-  url = typeof window !== 'undefined' ? window.location.href : 'https://alexmcgovern.com/',
+  image = 'https://alex-mcgovern-portfolio.vercel.app/og-image.png',
+  url = typeof window !== 'undefined' ? window.location.href : 'https://alex-mcgovern-portfolio.vercel.app/',
   type = 'website'
 }: SEOProps) {
   useEffect(() => {

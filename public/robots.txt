@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://alexmcgovern.com/sitemap.xml
+Sitemap: https://alex-mcgovern-portfolio.vercel.app/sitemap.xml
