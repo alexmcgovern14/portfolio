@@ -92,20 +92,20 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
             >
               <div ref={jobCardInnerRef} className="bg-[#5a5452] rounded-[22px] p-8 relative z-10">
               <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl md:text-[40px] text-white mb-4">
-                Senior product manager, LiveScore
+                Senior AI Product Manager, LiveScore
               </h3>
               <p className="text-[#D6D6D6] mb-6" style={{ fontFamily: 'Inter, sans-serif', fontSize: '20px' }}>
                 London, UK
               </p>
               <div className="text-[#D6D6D6] text-base md:text-[16px] leading-relaxed space-y-4" style={{ fontFamily: 'Inter, sans-serif' }}>
                 <p>
-                  Leading product strategy, delivery, and adoption of <strong className="text-white">Artificial Intelligence</strong> at LiveScore.
+                  Leading <strong className="text-white">AI product strategy</strong>, delivery, and adoption at LiveScore. Specializing in <strong className="text-white">LLM-powered features</strong>, <strong className="text-white">RAG systems</strong>, and <strong className="text-white">AI-native workflows</strong>.
                 </p>
                 <p>
-                  I focus on building <strong className="text-white">engaging user experiences</strong> and have led the development of some of LiveScore's <strong className="text-white">most innovative</strong> and <strong className="text-white">high-retention</strong> features.
+                  I focus on building <strong className="text-white">engaging user experiences</strong> and have led the development of some of LiveScore's <strong className="text-white">most innovative</strong> and <strong className="text-white">high-retention</strong> AI features.
                 </p>
                 <p>
-                  Passionate about emerging technologies, industry trends and multidisciplinary design, with a belief in <strong className="text-white">continuous learning.</strong>
+                  Passionate about emerging AI technologies, industry trends and multidisciplinary design, with a belief in <strong className="text-white">continuous learning.</strong>
                 </p>
               </div>
               </div>

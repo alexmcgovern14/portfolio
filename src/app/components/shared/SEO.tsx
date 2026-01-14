@@ -9,8 +9,8 @@ interface SEOProps {
 }
 
 export function SEO({ 
-  title = 'Alex McGovern - Portfolio',
-  description = 'Product Manager specializing in AI systems and delivery. Showcasing LiveScore case studies and personal projects featuring LLMs in product and AI-native processes.',
+  title = 'Alex McGovern - Senior AI Product Manager | London, UK',
+  description = 'Senior AI Product Manager based in London, UK. Leading production-grade AI features at LiveScore. Expertise in LLM, RAG systems, and AI-native product development. Available for Head of AI Product roles.',
   image = 'https://alex-mcgovern-portfolio.vercel.app/og-image.png',
   url = typeof window !== 'undefined' ? window.location.href : 'https://alex-mcgovern-portfolio.vercel.app/',
   type = 'website'

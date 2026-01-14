@@ -1,0 +1,64 @@
+import { useState, useEffect, useRef } from 'react';
+
+/**
+ * Hook to track which section is currently in view (scroll spy)
+ * @param sectionIds Array of section IDs to track
+ * @param offsetTop Offset from top of viewport to consider section active (default: 150)
+ * @returns Object with activeSection and isScrolled state
+ */
+export function useScrollSpy(
+  sectionIds: string[],
+  offsetTop: number = 150
+): { activeSection: string; isScrolled: boolean } {
+  const [activeSection, setActiveSection] = useState(sectionIds[0] || '');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const rafIdRef = useRef<number | null>(null);
+  const lastScrollYRef = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Cancel any pending animation frame
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+
+      // Use requestAnimationFrame for smooth, throttled updates
+      rafIdRef.current = requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        
+        // Header collapse logic with hysteresis to prevent jitter
+        // Only update if scroll position meaningfully changed
+        if (Math.abs(currentScrollY - lastScrollYRef.current) > 5) {
+          setIsScrolled(currentScrollY > 20);
+          lastScrollYRef.current = currentScrollY;
+        }
+
+        // Scroll spy logic
+        const currentSection = sectionIds.find((section) => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top <= offsetTop && rect.bottom >= offsetTop;
+          }
+          return false;
+        });
+        if (currentSection) {
+          setActiveSection(currentSection);
+        }
+      });
+    };
+
+    // Initial check
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
+  }, [sectionIds, offsetTop]);
+
+  return { activeSection, isScrolled };
+}

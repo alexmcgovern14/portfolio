@@ -1,0 +1,430 @@
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import type { Project } from '../../types/project';
+import { SECTION_CONTAINER, SECTION_PADDING } from './sectionStyles';
+
+
+
+interface ProjectDetailNavigationProps {
+ project: Project;
+ slug: string;
+ activeSection: string;
+ scrollToSection: (sectionId: string) => void;
+ images: string[];
+ onImageClick: (index: number) => void;
+}
+
+export function ProjectDetailNavigation({ 
+ project, 
+ slug, 
+ activeSection, 
+ scrollToSection,
+ images,
+ onImageClick
+}: ProjectDetailNavigationProps) {
+ const navItems = [
+  { id: 'overview', label: 'Overview', show: true },
+  { id: 'skills', label: 'Skills used', show: project && 'skills' in project },
+  { id: 'user-needs', label: 'User need', show: slug === 'live-match-summary' },
+  { id: 'constraints-and-evals', label: 'Constraints and evals', show: slug === 'live-match-summary' && project && 'constraints' in project },
+  { id: 'output-challenges', label: 'Challenges', show: slug === 'live-match-summary' },
+  { id: 'key-info', label: 'Key info', show: slug === 'lineup-changes' },
+  { id: 'lineup-challenge', label: 'Challenge', show: slug === 'lineup-changes' },
+  { id: 'tech-stack', label: 'Tech stack', show: slug === 'portfolio-website' },
+  { id: 'prd', label: 'PRD', show: project && 'prd' in project && slug !== 'live-match-summary' && slug !== 'lineup-changes' && slug !== 'portfolio-website' },
+ ].filter(item => item.show);
+
+ // Desktop-only sticky positioning with JavaScript fallback
+ const asideRef = useRef<HTMLElement>(null);
+ const spacerRef = useRef<HTMLDivElement>(null);
+ const previousScrollTopRef = useRef<number>(0); // Track previous scroll position
+ const previousHeaderHeightRef = useRef<number>(0); // Track previous header height
+ const [isDesktop, setIsDesktop] = useState(false);
+ 
+ useLayoutEffect(() => {
+  const checkDesktop = () => {
+   setIsDesktop(window.innerWidth >= 1024);
+  };
+  
+  checkDesktop();
+  window.addEventListener('resize', checkDesktop);
+  
+  // Initialize data attributes for aside position tracking
+  // Use a small timeout to ensure DOM is ready (useLayoutEffect runs synchronously but ref might not be set yet)
+  const initDataAttributes = () => {
+   if (asideRef.current && window.innerWidth >= 1024) {
+    const aside = asideRef.current;
+    const rect = aside.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    aside.dataset.initialTop = (rect.top + scrollTop).toString();
+    aside.dataset.originalWidth = aside.offsetWidth.toString();
+    const asideRect = aside.getBoundingClientRect();
+    aside.dataset.originalLeft = asideRect.left.toString();
+    if (process.env.NODE_ENV === 'development') {
+     console.log('[Sticky] Initialized data attributes', {
+      initialTop: aside.dataset.initialTop,
+      originalWidth: aside.dataset.originalWidth
+     });
+    }
+   } else if (process.env.NODE_ENV === 'development') {
+    console.warn('[Sticky] Could not initialize - ref not ready or not desktop');
+   }
+  };
+  
+  // Try immediately, then again after a brief delay to ensure DOM is ready
+  initDataAttributes();
+  const timeoutId = setTimeout(initDataAttributes, 0);
+  
+  // JavaScript-based sticky positioning for desktop only
+  const handleSticky = () => {
+   // Ensure element exists and is in DOM
+   if (!asideRef.current) {
+    if (process.env.NODE_ENV === 'development') {
+     console.warn('[Sticky] asideRef.current is null');
+    }
+    return;
+   }
+   
+   const aside = asideRef.current;
+   
+   // Verify element is in DOM
+   if (!aside.isConnected) {
+    if (process.env.NODE_ENV === 'development') {
+     console.warn('[Sticky] aside element is not connected to DOM');
+    }
+    return;
+   }
+   
+   // Debug logging (remove in production)
+   if (process.env.NODE_ENV === 'development') {
+    console.log('[Sticky] handleSticky called', {
+     hasRef: true,
+     width: window.innerWidth,
+     isDesktop: window.innerWidth >= 1024,
+     currentPosition: window.getComputedStyle(aside).position
+    });
+   }
+   
+   if (window.innerWidth < 1024) {
+    // Reset styles on mobile
+    if (asideRef.current) {
+     asideRef.current.style.removeProperty('position');
+     asideRef.current.style.removeProperty('top');
+     asideRef.current.style.removeProperty('left');
+     asideRef.current.style.removeProperty('width');
+     asideRef.current.style.removeProperty('bottom');
+    }
+    return;
+   }
+   
+   const STICKY_TOP = 48; // Contents should stick at 48px from viewport top
+   const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+   
+   // Find the parent container (project-detail-grid)
+   const gridContainer = aside.closest('.project-detail-grid');
+   if (!gridContainer) return;
+   
+   const gridRect = gridContainer.getBoundingClientRect();
+   const gridBottom = gridRect.bottom + currentScrollTop;
+   const asideHeight = aside.offsetHeight;
+   
+   // Get aside's initial position from data attribute (set on mount)
+   // If not set, calculate it now (only when in normal flow)
+   let asideInitialTop = parseFloat(aside.dataset.initialTop || '0');
+   if (!asideInitialTop) {
+    // Only calculate if we're in normal flow (not fixed)
+    if (aside.style.position !== 'fixed' && aside.style.position !== 'absolute') {
+     const asideRect = aside.getBoundingClientRect();
+     asideInitialTop = asideRect.top + currentScrollTop;
+     aside.dataset.initialTop = asideInitialTop.toString();
+    } else {
+     // If already fixed/absolute, we can't calculate - use a fallback
+     // This shouldn't happen on first run, but handle it gracefully
+     return;
+    }
+   }
+   
+   // Store original width before making it fixed (get it while in normal flow)
+   let originalWidth = parseFloat(aside.dataset.originalWidth || '0');
+   if (!originalWidth || aside.style.position === 'fixed') {
+    originalWidth = aside.offsetWidth;
+    aside.dataset.originalWidth = originalWidth.toString();
+   }
+   
+   // Check header state FIRST - if header is entering viewport or STARTING to expand, Contents should never stick
+   // This handles both slow and fast scrolling
+   const header = document.querySelector('header');
+   if (!header) return;
+   
+   const headerRect = header.getBoundingClientRect();
+   const headerTop = headerRect.top;
+   const headerHeight = headerRect.height;
+   
+   // Track header height changes to detect when header STARTS expanding
+   const previousHeaderHeight = previousHeaderHeightRef.current;
+   const isHeaderExpanding = headerHeight > previousHeaderHeight; // Header height is increasing
+   const isHeaderExpanded = headerHeight > 90; // Header is fully expanded
+   previousHeaderHeightRef.current = headerHeight; // Update for next check
+   
+   // Header is entering viewport when headerTop is near 0 (sticky header at top)
+   // Threshold: headerTop <= 20px means header is entering/entered viewport
+   const headerEnteringViewport = headerTop <= 20;
+   
+   const isNearTop = currentScrollTop < 200; // Near top of page (increased threshold for fast scrolling)
+   
+   // If header is entering viewport OR starting to expand OR already expanded, Contents should NOT stick
+   // This catches the expansion early, not just when fully expanded
+   if ((headerEnteringViewport || isHeaderExpanding || isHeaderExpanded) && isNearTop) {
+    // Header is expanded near top - Contents must return to normal flow
+    // This works for both slow and fast scrolling
+    aside.style.setProperty('position', 'static', 'important');
+    aside.style.setProperty('top', '', 'important');
+    aside.style.setProperty('left', '', 'important');
+    aside.style.setProperty('width', '', 'important');
+    aside.style.setProperty('bottom', '', 'important');
+    if (spacerRef.current) {
+     spacerRef.current.style.minHeight = '';
+    }
+    // Reset data attributes so Contents can recalculate its natural position
+    delete aside.dataset.initialTop;
+    delete aside.dataset.originalLeft;
+    return; // Exit early - Contents should not stick when header is expanded near top
+   }
+   
+   // Track scroll direction for debug logging
+   const previousScrollTop = previousScrollTopRef.current;
+   const isScrollingUp = currentScrollTop < previousScrollTop;
+   const isScrollingDown = currentScrollTop > previousScrollTop;
+   previousScrollTopRef.current = currentScrollTop;
+   
+   // Note: previousHeaderHeight and isHeaderExpanding are already declared in header check section above
+   
+   // Debug logging (remove in production)
+   // Note: previousHeaderHeight and isHeaderExpanding are declared in header check section above
+   if (process.env.NODE_ENV === 'development') {
+    console.log('[Sticky] Scroll check', {
+     currentScrollTop: Math.round(currentScrollTop),
+     previousScrollTop: Math.round(previousScrollTop),
+     isScrollingUp,
+     isScrollingDown,
+     headerTop: Math.round(headerTop),
+     headerHeight: Math.round(headerHeight),
+     previousHeaderHeight: Math.round(previousHeaderHeight),
+     isHeaderExpanding,
+     isHeaderExpanded,
+     headerEnteringViewport,
+     isNearTop,
+     currentPosition: window.getComputedStyle(aside).position
+    });
+   }
+   
+   // Get current position of Contents from viewport
+   const asideRect = aside.getBoundingClientRect();
+   const asideTopFromViewport = asideRect.top;
+   
+   // Calculate when to stop sticking (when container ends)
+   const stickEnd = gridBottom - asideHeight - STICKY_TOP;
+   
+   // Contents should stick when its top reaches 48px from viewport
+   // Calculate left position BEFORE setting position:fixed to prevent jumping
+   let leftPosition;
+   if (spacerRef.current) {
+    const wrapperRect = spacerRef.current.getBoundingClientRect();
+    leftPosition = wrapperRect.left;
+    aside.dataset.originalLeft = leftPosition.toString();
+   } else {
+    // Fallback: get left position from current aside position
+    leftPosition = asideRect.left;
+    aside.dataset.originalLeft = leftPosition.toString();
+   }
+   
+   // Now check if Contents should stick
+   const shouldStick = asideTopFromViewport <= STICKY_TOP && currentScrollTop <= stickEnd;
+   
+   if (shouldStick) {
+    // Should be sticky - set all properties together to prevent jumping
+    aside.style.setProperty('position', 'fixed', 'important');
+    aside.style.setProperty('top', `${STICKY_TOP}px`, 'important');
+    aside.style.setProperty('left', `${leftPosition}px`, 'important');
+    // Verify the style was applied
+    const computedPosition = window.getComputedStyle(aside).position;
+    if (process.env.NODE_ENV === 'development') {
+     console.log('[Sticky] Setting position: fixed', { 
+      currentScrollTop, 
+      asideTopFromViewport,
+      stickEnd,
+      computedPosition,
+      stylePosition: aside.style.position,
+      success: computedPosition === 'fixed'
+     });
+     if (computedPosition !== 'fixed') {
+      console.error('[Sticky] FAILED to set position: fixed! Computed:', computedPosition);
+     }
+    }
+    // Maintain original width
+    aside.style.setProperty('width', `${originalWidth}px`, 'important');
+   } else if (asideTopFromViewport > STICKY_TOP) {
+    // Before sticky zone - normal flow (Contents is above 48px from viewport)
+    aside.style.setProperty('position', '', 'important');
+    aside.style.setProperty('top', '', 'important');
+    aside.style.setProperty('left', '', 'important');
+    aside.style.setProperty('width', '', 'important');
+    aside.style.setProperty('bottom', '', 'important');
+    
+    // Remove min-height when not fixed
+    if (spacerRef.current) {
+     spacerRef.current.style.minHeight = '';
+    }
+   } else {
+    // Past sticky zone - stick to bottom of container
+    // For absolute positioning at bottom, position relative to grid container
+    aside.style.setProperty('position', 'absolute', 'important');
+    aside.style.removeProperty('top');
+    aside.style.setProperty('bottom', '0', 'important');
+    aside.style.setProperty('left', '0', 'important'); // Relative to grid container
+    aside.style.setProperty('width', `${originalWidth}px`, 'important');
+    
+    // Maintain wrapper height to preserve flex space
+    if (spacerRef.current) {
+     spacerRef.current.style.minHeight = `${asideHeight}px`;
+    }
+   }
+  };
+  
+  // Initial check
+  handleSticky();
+  
+  // Listen to scroll with throttling for performance
+  let ticking = false;
+  const onScroll = () => {
+   if (!ticking) {
+    window.requestAnimationFrame(() => {
+     handleSticky();
+     ticking = false;
+    });
+    ticking = true;
+   }
+  };
+  
+  const handleResize = () => {
+   // Reset data attributes on resize to recalculate
+   if (asideRef.current) {
+    delete asideRef.current.dataset.initialTop;
+    delete asideRef.current.dataset.originalWidth;
+    delete asideRef.current.dataset.originalLeft;
+   }
+   handleSticky();
+  };
+  
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', handleResize);
+  
+  return () => {
+   clearTimeout(timeoutId);
+   window.removeEventListener('resize', checkDesktop);
+   window.removeEventListener('scroll', onScroll);
+   window.removeEventListener('resize', handleResize);
+  };
+ }, []);
+ 
+ return (
+  <div>
+   <style>{`
+    @media (min-width: 1024px) {
+     /* Reset any potential interfering properties on grid */
+     .project-detail-grid {
+      align-items: start !important;
+      position: static !important; /* Explicitly set to static to prevent containing block */
+      overflow: hidden !important;
+     }
+     
+     /* Ensure parent containers don't interfere */
+     .project-detail-grid > * {
+      overflow: hidden !important;
+     }
+     
+     /* Make aside ready for JavaScript positioning - NO position rule here */
+     aside.contents-sticky {
+      display: block !important;
+      align-self: flex-start !important;
+      z-index: 10 !important;
+      height: fit-content !important;
+      overflow: hidden !important;
+      will-change: auto !important;
+      transform: none !important; /* Ensure no transform */
+      transition: top 0.2s ease-out, transform 0.2s ease-out;
+     }
+     
+     /* Ensure wrapper div doesn't interfere */
+     aside.contents-sticky > div:first-child {
+      position: relative !important;
+      transform: none !important;
+     }
+    }
+   `}</style>
+   <div className="" ref={spacerRef}>
+   <aside ref={asideRef} className="contents-sticky pt-2 lg:pt-0">
+    <div 
+     className={`${SECTION_CONTAINER.outer}`}
+     style={{
+      background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
+     }}
+    >
+     <div className={`rounded-[22px] shadow-xl ${SECTION_PADDING.nav}`}
+      style={{
+       background: 'linear-gradient(to bottom, #6C696A, #4B4744)',
+      }}
+     >
+      {/* Contents Section */}
+      <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white mb-4">
+       Contents
+      </h3>
+      <nav className="space-y-2 mb-4 lg:mb-6" role="navigation" aria-label="Project sections">
+       {navItems.map((item) => (
+        <button
+         key={item.id}
+         onClick={() => scrollToSection(item.id)}
+         className={`w-full text-left px-3 py-1 md:py-2 rounded-lg transition-colors ${
+          activeSection === item.id
+           ? 'bg-[#8a8686]/40 text-white font-medium border border-[#8a8686]'
+           : 'text-[#D6D6D6] font-normal hover:bg-gray-800/50 hover:text-gray-200'
+         }`}
+         aria-current={activeSection === item.id ? 'page' : undefined}
+        >
+         {item.label}
+        </button>
+       ))}
+      </nav>
+
+      {/* Images Section */}
+      {images.length > 0 && (
+        <div>
+        <h3 className="font-['Instrument_Serif:Regular',sans-serif] text-3xl text-white mb-4 mt-6 hidden lg:block">
+         Images
+        </h3>
+        <div className="relative">
+         <div className="flex gap-2 overflow-x-auto snap-x snap-mandatory scrollbar-hide lg:grid lg:grid-cols-2 lg:max-h-[300px] lg:overflow-y-auto lg:overflow-x-hidden">
+         {images.map((src, index) => (
+          <button
+           key={index}
+           onClick={() => onImageClick(index)}
+           className="relative rounded-lg overflow-hidden border-2 border-white/30 hover:border-white/60 transition-colors group w-[calc((50vw-24px)*9/16)] h-[calc((50vw-24px)*9/16)] lg:aspect-video lg:w-full lg:h-auto flex-shrink-0 snap-start lg:snap-none"
+          >
+           <img
+            src={src}
+            alt={`Preview ${index + 1}`}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+            loading="lazy"
+           />
+          </button>
+         ))}
+         </div>
+        </div>
+        </div>
+      )}
+     </div>
+    </div>
+   </aside>
+   </div>
+  </div>
+ );
+}
