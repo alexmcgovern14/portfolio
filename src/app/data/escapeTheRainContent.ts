@@ -11,32 +11,7 @@ Escape the Rain is not a general-purpose weather app. It is a focused example of
 
 User provides location (Browser Geolocation API or manual search) → geocoding returns lat/lon (Open-Meteo Geocoding API, with fallback) → system fetches 12-hour weather for origin (Open-Meteo Forecast API) → spatial search queries nearby candidates (10/25/50km) via Geoapify, Nominatim, OpenTripMap) → near-term weather evaluation filters candidates (Open-Meteo bulk forecasts) → results ranked by distance → top 5 locations returned → POI enrichment (Geoapify Places API) → client renders cards and map (Mapbox GL JS).`,
 
-  skills: `### Product & Decision Design
-- Translating a real-world problem into a narrowly scoped, high-value product
-- Defining a single core user decision and explicitly excluding non-goals
-- Designing deterministic decision logic on top of probabilistic data
-- Making deliberate trade-offs between accuracy, speed, and simplicity
-- Reducing cognitive load by converting noisy inputs into clear outcomes
-
-### Systems & Architecture Thinking
-- Designing a decision-support system rather than a data-display interface
-- Orchestrating multiple third-party APIs with fallbacks and failure handling
-- Separating client concerns (interaction, rendering) from server concerns (logic, orchestration)
-- Handling real-world constraints such as rate limits, timeouts, and partial failures
-- Building observability into the system to understand why decisions were made
-
-### Technical Product Execution
-- Full-stack implementation using Next.js, React, and TypeScript
-- Server-side API design for weather evaluation, spatial search, and enrichment
-- Bulk data processing and batching strategies for performance
-- Asynchronous enrichment to balance responsiveness and completeness
-- Practical application of geospatial logic (distance calculation, deduplication, ranking)
-
-### Working With Imperfect Data
-- Designing around uncertainty in weather forecasts
-- Establishing clear thresholds and rules to avoid ambiguous states
-- Applying data quality controls (exclusions, baselines, prioritisation heuristics)
-- Graceful degradation when data is missing or external APIs fail`,
+  skills: `Product & system design · scope definition & trade-offs · deterministic decision logic · full-stack web development (Next.js, TypeScript, React) · UI/UX design · external API orchestration · multi-source data integration · uncertain data handling · error handling & fallbacks · rate-limit–aware system design · client/server separation · observability & debugging · data quality controls · hosting & deployment · vibe coding`,
 
   prd: `# 1. Overview
 
