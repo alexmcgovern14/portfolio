@@ -16,9 +16,6 @@ export function FullScreenImageOverlay({
   onClose,
   onNavigate,
 }: FullScreenImageOverlayProps) {
-  // Early return MUST come before any hooks
-  if (!isOpen || images.length === 0) return null;
-
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -32,6 +29,8 @@ export function FullScreenImageOverlay({
 
   // Keyboard navigation
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
@@ -46,15 +45,48 @@ export function FullScreenImageOverlay({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, images.length, onClose, onNavigate]);
+  }, [isOpen, currentIndex, images.length, onClose, onNavigate]);
 
   // Prevent body scroll when overlay is open
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
     return () => {
       document.body.style.overflow = '';
     };
-  }, []);
+  }, [isOpen]);
+
+  // Mouse drag handlers
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isDragging && scale > 1) {
+        setPosition({
+          x: e.clientX - dragStart.x,
+          y: e.clientY - dragStart.y,
+        });
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+    
+    // Always return a cleanup function
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, dragStart, scale]);
+
+  if (!isOpen || images.length === 0) return null;
 
   const handleZoomIn = () => {
     setScale(prev => Math.min(prev + 0.25, 3));
