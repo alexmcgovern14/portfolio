@@ -223,6 +223,11 @@ function HomePage() {
                         allow="clipboard-write" 
                         referrerPolicy="strict-origin-when-cross-origin"
                         className="w-full h-full"
+                        style={{
+                          overflow: 'hidden',
+                          border: 'none'
+                        }}
+                        scrolling="no"
                       />
                     </div>
                   </div>
