@@ -14,6 +14,7 @@ export interface Project {
   skills?: string;
   githubUrl?: string;
   substackUrl?: string;
+  websiteUrl?: string;
   prd?: string;
   n8nJson?: string;
   conceptImage?: string;
@@ -21,6 +22,8 @@ export interface Project {
   productionImage?: string;
   workflowImage1?: string;
   workflowImage2?: string;
+  escapeTheRainMobileImg?: string;
+  escapeTheRainDesktopImg?: string;
   keyInfo?: string;
   challenge?: string;
   constraints?: string;

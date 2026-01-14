@@ -12,6 +12,8 @@ import workflowChatImg from '../../assets/1ad9a175c9c9c9a0ec903e169c7782ddaf9378
 import workflowImage1 from '../../assets/1dad7059420c1200f434ef05c34bb334b30cabd9.png';
 import workflowImage2 from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.png';
 import escapeTheRainImg from '../../assets/Escape-the-rain.png';
+import escapeTheRainMobileImg from '../../assets/Escape the rain mobile.png';
+import escapeTheRainDesktopImg from '../../assets/Escape the rain desktop.png';
 
 // Full project data including detail page content
 const projectsData: Record<string, Project> = {
@@ -348,6 +350,8 @@ n8n workflows handle:
     category: 'Personal project',
     imageUrl: escapeTheRainImg,
     productionImage: escapeTheRainImg,
+    escapeTheRainMobileImg: escapeTheRainMobileImg,
+    escapeTheRainDesktopImg: escapeTheRainDesktopImg,
     githubUrl: 'https://github.com/alexmcgovern14/escape-the-rain',
     websiteUrl: 'https://escape-the-rain.vercel.app/',
     overview: 'PRD coming soon.',
