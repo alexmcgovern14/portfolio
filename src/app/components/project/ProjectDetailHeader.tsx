@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Github, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Github, ChevronLeft, ChevronRight, Globe } from 'lucide-react';
 import type { Project } from '../../types/project';
 import substackLogo from '../../../assets/substack-logo.png';
 
@@ -140,6 +140,17 @@ default:
               >
                 <img src={substackLogo} alt="Substack" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
                 <span>Substack</span>
+              </a>
+            )}
+            {project && 'websiteUrl' in project && project.websiteUrl && (
+              <a
+                href={project.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#7ACAFF] to-[#67FFC2] text-black hover:opacity-90 transition-opacity px-4 py-2 rounded-lg font-medium text-sm"
+              >
+                <Globe className="w-4 h-4" />
+                <span>Website</span>
               </a>
             )}
           </div>

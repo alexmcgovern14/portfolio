@@ -349,6 +349,7 @@ n8n workflows handle:
     imageUrl: escapeTheRainImg,
     productionImage: escapeTheRainImg,
     githubUrl: 'https://github.com/alexmcgovern14/escape-the-rain',
+    websiteUrl: 'https://escape-the-rain.vercel.app/',
     overview: 'PRD coming soon.',
     skills: '',
     prd: '',
