@@ -176,8 +176,8 @@ Evals ran through OpenAI platform, provided 0-10 guided scores and explanations,
     description: 'High-precision semantic retrieval over vectorised knowledge base, prioritising accuracy and control',
     category: 'Personal project',
     imageUrl: workflowChatImg,
-    workflowImage1: workflowImage1,
-    workflowImage2: workflowImage2,
+    workflowImage1: workflowIngestionImg,
+    workflowImage2: workflowChatImg,
     overview:
       '_Knowledge_ is an **AI-powered information retrieval system** designed to store **vectorised long-form text and metadata** to surface relevant insights through a **chat-based interface** using high-precision **semantic search.**\n\nThe system uses a **Retrieval-Augmented Generation (RAG) architecture** to enable connections across sources, domains, and concepts. RAG was selected over MCP-style approaches, which primarily support structured or exact lookups rather than semantic similarity.\n\nResponses are grounded in a controlled pair of **relational vector databases**, prioritising retrieval quality, traceability, and observability over latency and generative fluency.\n\n**Product Requirements Document (PRD)** below describes all facets of system design, RAG architecture, database structure, model choice and more. PRD is available in markdown format optimised for LLMs.',
     skills:
