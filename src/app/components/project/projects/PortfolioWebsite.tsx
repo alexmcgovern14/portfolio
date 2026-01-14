@@ -73,6 +73,24 @@ export const PortfolioWebsite: React.FC<ProjectContentProps> = (props) => {
                   Workflow
                 </h2>
               </div>
+              
+              {/* Cover Image */}
+              {props.project.imageUrl && (
+                <div className="mb-8">
+                  <button
+                    onClick={() => props.onImageClick?.(props.project.imageUrl!)}
+                    className="block w-full rounded-[24px] overflow-hidden border-2 border-white/30 hover:border-white/60 transition-colors cursor-pointer"
+                  >
+                    <img 
+                      src={props.project.imageUrl} 
+                      alt="Portfolio website workflow" 
+                      className="w-full h-auto block" 
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+              )}
+              
               <div className="prose prose-lg max-w-none prose-invert">
                 <ReactMarkdown components={getMarkdownComponents(props.onImageClick)}>
                   {portfolioWebsiteContent.challenge}
