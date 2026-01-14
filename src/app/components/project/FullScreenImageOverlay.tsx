@@ -260,7 +260,7 @@ export function FullScreenImageOverlay({
         <img
           src={images[currentIndex]}
           alt={`Image ${currentIndex + 1}`}
-          className="max-w-[90vw] max-h-[90vh] object-contain select-none"
+          className="max-w-[90vw] max-h-[90vh] object-contain select-none rounded-2xl"
           style={{
             transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
             cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in',
