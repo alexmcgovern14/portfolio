@@ -173,8 +173,11 @@ export function FullScreenImageOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center backdrop-blur-sm"
+      className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center backdrop-blur-sm overflow-hidden"
       onClick={onClose}
+      onTouchMove={(e) => e.preventDefault()}
+      onWheel={(e) => e.preventDefault()}
+      style={{ touchAction: 'none' }}
     >
       <div className="absolute top-4 right-4 flex gap-2 z-10">
         <button
