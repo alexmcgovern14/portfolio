@@ -53,12 +53,36 @@ export function FullScreenImageOverlay({
   // Prevent body scroll when overlay is open
   useEffect(() => {
     if (isOpen) {
+      // Prevent scrolling on body
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+      
+      // Prevent wheel events globally
+      const preventScroll = (e: WheelEvent) => {
+        e.preventDefault();
+      };
+      
+      window.addEventListener('wheel', preventScroll, { passive: false });
+      window.addEventListener('touchmove', preventScroll, { passive: false });
+      
+      return () => {
+        window.removeEventListener('wheel', preventScroll);
+        window.removeEventListener('touchmove', preventScroll);
+      };
     } else {
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
     }
+    
     return () => {
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
     };
   }, [isOpen]);
 
@@ -176,8 +200,7 @@ export function FullScreenImageOverlay({
       className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center backdrop-blur-sm overflow-hidden"
       onClick={onClose}
       onTouchMove={(e) => e.preventDefault()}
-      onWheel={(e) => e.preventDefault()}
-      style={{ touchAction: 'none' }}
+      style={{ touchAction: 'none', overscrollBehavior: 'none' }}
     >
       <div className="absolute top-4 right-4 flex gap-2 z-10">
         <button
