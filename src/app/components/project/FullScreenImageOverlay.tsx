@@ -20,6 +20,9 @@ export function FullScreenImageOverlay({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  
+  // useRef for double-tap detection
+  const lastTapRef = useRef(0);
 
   // Reset zoom/pan when image changes
   useEffect(() => {
@@ -109,7 +112,6 @@ export function FullScreenImageOverlay({
   };
 
   // Handle double tap to zoom on mobile
-  const lastTapRef = useRef(0);
   const handleImageTouchEnd = (e: React.TouchEvent) => {
     const now = Date.now();
     const DOUBLE_TAP_DELAY = 300;
