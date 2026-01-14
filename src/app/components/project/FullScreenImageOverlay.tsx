@@ -98,6 +98,7 @@ export function FullScreenImageOverlay({
 
   const handleImageClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    // Toggle zoom on click (desktop)
     if (scale === 1) {
       setScale(2);
       setPosition({ x: 0, y: 0 });
@@ -105,6 +106,26 @@ export function FullScreenImageOverlay({
       setScale(1);
       setPosition({ x: 0, y: 0 });
     }
+  };
+
+  // Handle double tap to zoom on mobile
+  const lastTapRef = useRef(0);
+  const handleImageTouchEnd = (e: React.TouchEvent) => {
+    const now = Date.now();
+    const DOUBLE_TAP_DELAY = 300;
+    
+    if (now - lastTapRef.current < DOUBLE_TAP_DELAY) {
+      // Double tap detected
+      e.preventDefault();
+      if (scale === 1) {
+        setScale(2);
+        setPosition({ x: 0, y: 0 });
+      } else {
+        setScale(1);
+        setPosition({ x: 0, y: 0 });
+      }
+    }
+    lastTapRef.current = now;
   };
 
   const handleWheel = (e: React.WheelEvent) => {
@@ -150,7 +171,7 @@ export function FullScreenImageOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+      className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center backdrop-blur-sm"
       onClick={onClose}
     >
       <div className="absolute top-4 right-4 flex gap-2 z-10">
@@ -222,7 +243,10 @@ export function FullScreenImageOverlay({
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
+          onTouchEnd={(e) => {
+            handleTouchEnd();
+            handleImageTouchEnd(e);
+          }}
           draggable={false}
         />
       </div>
