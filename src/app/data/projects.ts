@@ -348,6 +348,7 @@ n8n workflows handle:
     category: 'Personal project',
     imageUrl: escapeTheRainImg,
     productionImage: escapeTheRainImg,
+    githubUrl: 'https://github.com/alexmcgovern14/escape-the-rain',
     overview: 'PRD coming soon.',
     skills: '',
     prd: '',
@@ -543,10 +544,10 @@ if (processedProjectsData['rag-ai-system']?.prd) {
 export const projects: Project[] = [
   processedProjectsData['portfolio-website'],
   processedProjectsData['live-match-summary'],
+  processedProjectsData['escape-the-rain'],
   processedProjectsData['lineup-insights'],
   processedProjectsData['rag-ai-system'],
   processedProjectsData['spotify-recommendation-engine'],
-  processedProjectsData['escape-the-rain'],
 ];
 
 // Export the processed data

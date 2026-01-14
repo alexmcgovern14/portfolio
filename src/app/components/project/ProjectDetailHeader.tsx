@@ -37,10 +37,10 @@ default:
 
   return (
     <header 
-      className={`sticky top-0 z-50 bg-[#2a2628]/95 backdrop-blur-sm transition-all duration-500 ease-in-out ${isScrolled ? 'shadow-lg' : ''}`} 
+      className="w-full bg-[#2a2628]/95 backdrop-blur-sm " 
       style={{ borderBottom: '1px solid rgba(108, 105, 106, 0.3)' }}
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-[1920px] mx-auto px-4 lg:px-[54px]">
         {/* Top Navigation */}
         <div className="py-4 flex items-center justify-between">
           <Link
@@ -48,7 +48,7 @@ default:
             className="inline-flex items-center gap-2 text-white hover:text-[#7ACAFF] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="font-medium">Back</span>
+            <span className="font-semibold">Back</span>
           </Link>
           
           {/* Project Navigation Arrows */}
@@ -60,7 +60,7 @@ default:
                 title={`Previous: ${prevProject.title}`}
               >
                 <ChevronLeft className="w-5 h-5" />
-                <span className="hidden sm:inline text-sm font-medium"><strong>Previous:</strong> {prevProject.title}</span>
+                <span className="hidden sm:inline text-sm"><span className="font-semibold">Previous:</span> <span className="font-normal">{prevProject.title}</span></span>
               </Link>
             ) : null}
             
@@ -70,24 +70,15 @@ default:
                 className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-white hover:bg-white/10 transition-colors"
                 title={`Next: ${nextProject.title}`}
               >
-                <span className="hidden sm:inline text-sm font-medium"><strong>Next:</strong> {nextProject.title}</span>
+                <span className="hidden sm:inline text-sm"><span className="font-semibold">Next:</span> <span className="font-normal">{nextProject.title}</span></span>
                 <ChevronRight className="w-5 h-5" />
               </Link>
             ) : null}
           </div>
         </div>
 
-        {/* Title and Metadata - Collapses on scroll */}
-        <div 
-          className={`transition-all duration-500 ease-in-out ${
-            isScrolled 
-              ? 'max-h-0 opacity-0 -translate-y-2' 
-              : 'max-h-[500px] opacity-100 translate-y-0 pb-6'
-          }`}
-          style={{
-            overflow: 'hidden',
-          }}
-        >
+        {/* Title and Metadata - No longer collapses, just scrolls away */}
+        <div className="pb-6">
           <h1 className="font-['Instrument_Serif:Regular',sans-serif] text-5xl text-[rgb(255,255,255)] mb-4 leading-tight">
             {project.titleParts ? (
               project.titleParts.map((part, index) => (
@@ -111,7 +102,7 @@ default:
           )}
           
           {/* Category pill and GitHub button */}
-          <div className="flex items-center gap-4 flex-wrap md:flex-nowrap">
+          <div className="flex items-center gap-4 flex-wrap">
             <div 
               className="backdrop-blur-[2px] rounded-[100px] inline-block shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)]"
               style={{
@@ -121,7 +112,7 @@ default:
             >
               <div className="flex flex-row items-center justify-center">
                 <div className="content-stretch flex items-center justify-center px-[12px] py-[8px] relative">
-                  <p className="font-['DM_Mono:Regular',sans-serif] leading-[normal] not-italic relative shrink-0 text-[14px] text-nowrap text-white">
+                  <p className="font-['Inter',sans-serif] leading-[normal] not-italic relative shrink-0 text-[14px] text-nowrap text-white">
                     {category}
                   </p>
                 </div>

@@ -82,7 +82,7 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
             {/* Job Overview Card */}
             <div 
               ref={jobCardRef}
-              className="rounded-[24px] shadow-xl relative flex flex-col"
+              className="rounded-[24px] shadow-xl relative flex flex-col hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 ease-out"
               style={{
                 background: 'linear-gradient(to bottom right, rgba(122, 202, 255, 1), rgba(103, 255, 194, 0))',
                 padding: '2px',
@@ -114,7 +114,7 @@ export function AboutMeLayout2({ skills }: AboutMeLayout2Props) {
             {/* Speaking Photo */}
             <div 
               ref={imageContainerRef}
-              className="rounded-[24px] shadow-xl overflow-hidden"
+              className="rounded-[24px] shadow-xl overflow-hidden hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 ease-out"
               style={{
                 border: '2px solid rgba(255, 255, 255, 0.3)',
                 height: isDesktop && imageHeight ? `${imageHeight}px` : 'auto',

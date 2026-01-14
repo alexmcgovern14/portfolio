@@ -16,6 +16,7 @@ import workflowChat from '../../assets/f69fa785f0984779afcf647e0664899405374bcc.
 import { trackProjectView, trackCopy, trackSectionNavigation } from '../utils/analytics';
 
 export function ProjectDetail() {
+// 🔴🔴🔴 TEST BANNER - FILE IS BEING UPDATED 🔴🔴🔴
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
   
@@ -58,11 +59,25 @@ export function ProjectDetail() {
   }
 
 
+
   const { activeSection, isScrolled } = useScrollSpy(
-    ['overview', 'skills', 'workflows', 'user-needs', 'key-info', 'requirements', 'output-challenges', 'lineup-challenge', 'tech-stack']
+    ['overview', 'skills', 'workflows', 'user-needs', 'challenges', 'constraints', 'evaluations', 'challenge', 'key-info', 'workflow', 'prd'],
+    48 // Offset matches Contents sticky position (48px from viewport top)
   );
 
-  // Early return if slug is undefined
+  // Track manually selected section to override scroll spy during smooth scroll
+  const [manuallySelectedSection, setManuallySelectedSection] = useState<string | null>(null);
+
+  // Use manually selected section if set, otherwise use scroll spy
+  const displayedActiveSection = manuallySelectedSection || activeSection;
+
+  // Clear manual selection when scroll spy detects the target section
+  useEffect(() => {
+    if (manuallySelectedSection && activeSection === manuallySelectedSection) {
+      // Scroll spy has detected the target section, clear manual override
+      setManuallySelectedSection(null);
+    }
+  }, [activeSection, manuallySelectedSection]);
   if (!slug) {
     return (
       <div className="min-h-screen bg-[#f0eae1] flex items-center justify-center px-4">
@@ -94,50 +109,16 @@ export function ProjectDetail() {
 
     const scrollToSection = (sectionId: string) => {
     trackSectionNavigation(sectionId, slug);
+    
+    // Set manual selection - will be cleared when scroll spy detects this section
+    setManuallySelectedSection(sectionId);
+    
     const element = document.getElementById(sectionId);
     if (element) {
-      // Calculate element position first
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
       
-      // Account for sticky header height (expanded ~200px, collapsed ~80px)
-      const header = document.querySelector('header');
-      const headerHeight = header ? header.getBoundingClientRect().height : 80;
-      
-      // On desktop, align section with top of Contents (48px from viewport top)
-      let contentsTopOffset = 0;
-      if (window.innerWidth >= 1024) {
-        // Contents sticks at 48px from viewport top
-        // When header is expanded (height > 100px), it affects the initial layout
-        // We need to account for the header expansion to ensure proper alignment
-        const isHeaderExpanded = headerHeight > 100;
-        if (isHeaderExpanded) {
-          // Header is expanded: the extra header height pushes content down initially
-          // When we scroll, header will collapse, but we want section at 48px
-          // Fine-tune: reduce by ~10px to account for padding/spacing
-          const headerExpansion = headerHeight - 80; // Extra height when expanded (base is ~80px)
-          contentsTopOffset = 48 + headerExpansion - 10; // Reduce by 10px for better alignment
-        } else {
-          // Header is collapsed: Contents is at 48px, section should be at 48px
-          contentsTopOffset = 48;
-        }
-      }
-      
-      // Offset: Contents top position (desktop) or header + padding (mobile)
-      const offset = window.innerWidth >= 1024 
-        ? contentsTopOffset  // Desktop: 48px to align with Contents
-        : headerHeight + 40; // Mobile: header + padding
-      
-      // Debug logging (remove in production)
-      if (process.env.NODE_ENV === 'development' && window.innerWidth >= 1024) {
-        console.log('[ScrollToSection] Calculation', {
-          sectionId,
-          headerHeight,
-          contentsTopOffset,
-          totalOffset: offset,
-          elementTop: elementPosition,
-          scrollTo: elementPosition - offset
-        });
-      }
+      // Responsive offset: mobile uses margin size (16px), desktop uses Contents position (48px)
+      const offset = window.innerWidth < 1024 ? 16 : 48;
       
       window.scrollTo({
         top: elementPosition - offset,
@@ -227,7 +208,7 @@ export function ProjectDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-[#2a2628] overflow-visible">
+    <div className="min-h-screen bg-[#2a2628] w-full overflow-x-hidden">
       <SEO 
         title={seoTitle}
         description={seoDescription}
@@ -244,30 +225,35 @@ export function ProjectDetail() {
         prevProject={prevProject}
       />
 
-      {/* Main Content Grid */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 lg:py-12 overflow-visible">
-        <div className="flex flex-col lg:flex-row gap-8 items-start overflow-visible project-detail-grid">
-          <ProjectDetailNavigation
-            project={project}
-            slug={slug}
-            activeSection={activeSection}
-            scrollToSection={scrollToSection}
-            images={projectImages}
-            onImageClick={handleImageIndexClick}
-          />
+      {/* Main Content Grid - 4 Column Layout */}
+      <div className="max-w-[1920px] mx-auto px-4 lg:px-[54px] py-4 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 project-detail-grid" style={{ alignItems: 'flex-start' }}>
+          {/* Contents - Spans 1 column */}
+          <div className="col-span-1 lg:col-span-1">
+            <ProjectDetailNavigation
+              project={project}
+              slug={slug}
+              activeSection={displayedActiveSection}
+              scrollToSection={scrollToSection}
+              images={projectImages}
+              onImageClick={handleImageIndexClick}
+            />
+          </div>
 
-          <ProjectDetailContent
-            project={project}
-            slug={slug}
-            viewMode={viewMode}
-            copied={copied}
-            copiedJson={copiedJson}
-            onCopyPRD={handleCopyPRD}
-            onCopyN8nJson={handleCopyN8nJson}
-            onViewModeChange={setViewMode}
-            onImageClick={handleImageClick}
-          />
-
+          {/* Product Overview - Spans 3 columns */}
+          <main className="col-span-1 lg:col-span-2">
+            <ProjectDetailContent
+              project={project}
+              slug={slug}
+              viewMode={viewMode}
+              copied={copied}
+              copiedJson={copiedJson}
+              onCopyPRD={handleCopyPRD}
+              onCopyN8nJson={handleCopyN8nJson}
+              onViewModeChange={setViewMode}
+              onImageClick={handleImageClick}
+            />
+          </main>
         </div>
       </div>
 

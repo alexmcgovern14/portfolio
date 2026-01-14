@@ -175,14 +175,14 @@ export function FullScreenImageOverlay({
       </div>
 
       {images.length > 1 && (
-        <>
+        <div className="absolute inset-0 pointer-events-none">
           <button
             onClick={(e) => {
               e.stopPropagation();
               const prevIndex = currentIndex > 0 ? currentIndex - 1 : images.length - 1;
               onNavigate(prevIndex);
             }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors z-10"
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors z-10 pointer-events-auto"
             aria-label="Previous image"
           >
             <ChevronLeft size={24} />
@@ -193,12 +193,12 @@ export function FullScreenImageOverlay({
               const nextIndex = currentIndex < images.length - 1 ? currentIndex + 1 : 0;
               onNavigate(nextIndex);
             }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors z-10"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition-colors z-10 pointer-events-auto"
             aria-label="Next image"
           >
             <ChevronRight size={24} />
           </button>
-        </>
+        </div>
       )}
 
       <div

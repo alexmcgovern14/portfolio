@@ -146,13 +146,9 @@ export function PRDSection({ project, viewMode, copied, onCopyPRD, onViewModeCha
                   }`}                  style={!copied ? { border: '1px solid #8a8686' } : {}}
                 >
                   {copied ? (
-                    <>
-                      <Check className="w-4 h-4" />
-                    </>
+                    <Check className="w-4 h-4" />
                   ) : (
-                    <>
-                      <Copy className="w-4 h-4" />
-                    </>
+                    <Copy className="w-4 h-4" />
                   )}
                 </button>
               </div>

@@ -11,7 +11,7 @@ export function SkillCard({
 }: SkillCardProps) {
   return (
     <div 
-      className="rounded-[24px] p-[2px] shadow-xl hover:opacity-90 transition-opacity duration-300"
+      className="rounded-[24px] p-[2px] shadow-xl hover:scale-[1.02] hover:shadow-2xl transition-all duration-300 ease-out"
       style={{
         background: 'linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3))',
       }}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 /**
  * Hook to track which section is currently in view (scroll spy)
@@ -12,33 +12,73 @@ export function useScrollSpy(
 ): { activeSection: string; isScrolled: boolean } {
   const [activeSection, setActiveSection] = useState(sectionIds[0] || '');
   const [isScrolled, setIsScrolled] = useState(false);
+  const rafIdRef = useRef<number | null>(null);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Header collapse logic - collapse when user scrolls down even slightly
-      setIsScrolled(window.scrollY > 20);
-
-      // Scroll spy logic
-      const currentSection = sectionIds.find((section) => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= offsetTop && rect.bottom >= offsetTop;
-        }
-        return false;
-      });
-      if (currentSection) {
-        setActiveSection(currentSection);
+      // Cancel any pending animation frame
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
       }
+
+      // Use requestAnimationFrame for smooth, throttled updates
+      rafIdRef.current = requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        
+        // Header collapse logic with hysteresis to prevent jitter
+        // Only update if scroll position meaningfully changed
+        if (Math.abs(currentScrollY - lastScrollYRef.current) > 5) {
+          setIsScrolled(currentScrollY > 20);
+          lastScrollYRef.current = currentScrollY;
+        }
+
+        // Scroll spy logic
+        // Improved scroll spy logic:
+        // Find the section whose top edge is closest to (but still above) the offset point
+        // This ensures we select the section that is most prominently in view
+        let bestSection: string | null = null;
+        let bestDistance = Infinity;
+
+        for (const sectionId of sectionIds) {
+          const element = document.getElementById(sectionId);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            
+            // Section is visible if its top is above or at the offset point
+            // and its bottom is below the offset point
+            if (rect.top <= offsetTop && rect.bottom >= offsetTop) {
+              // Calculate how close this section's top is to the offset
+              const distance = offsetTop - rect.top;
+              
+              // Pick the section with the smallest distance (closest to offset)
+              // This will be the section whose top just passed the offset line
+              if (distance >= 0 && distance < bestDistance) {
+                bestDistance = distance;
+                bestSection = sectionId;
+              }
+            }
+          }
+        }
+
+        // Update active section if we found one
+        if (bestSection) {
+          setActiveSection(bestSection);
+        }
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Initial check
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
   }, [sectionIds, offsetTop]);
 
   return { activeSection, isScrolled };
 }
-
-
-
-

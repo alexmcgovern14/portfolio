@@ -7,7 +7,7 @@ interface ImagePreviewProps {
 
 export function ImagePreview({ images, onImageClick }: ImagePreviewProps) {
   return (
-    <>
+    <div>
       {/* Desktop: Sticky grid below contents */}
       <div className="hidden lg:block lg:mt-6">
         <div 
@@ -81,6 +81,6 @@ export function ImagePreview({ images, onImageClick }: ImagePreviewProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

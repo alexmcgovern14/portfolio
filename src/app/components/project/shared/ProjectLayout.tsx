@@ -1,0 +1,13 @@
+import React from 'react';
+
+interface ProjectLayoutProps {
+ children: React.ReactNode;
+}
+
+export function ProjectLayout({ children }: ProjectLayoutProps) {
+ return (
+ <div className="min-w-0 space-y-12">
+  {children}
+ </div>
+ );
+}

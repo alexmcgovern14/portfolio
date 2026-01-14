@@ -8,11 +8,25 @@ export function extractProjectImages(project: Project, slug: string): string[] {
   const images: string[] = [];
   const seen = new Set<string>();
 
-  // Helper to add image if not seen
+  // Helper to normalize image path (remove query strings from Vite)
+  const normalizePath = (src: string): string => {
+    try {
+      const url = new URL(src, window.location.origin);
+      // Use pathname without query string for comparison
+      return url.pathname;
+    } catch {
+      // If not a valid URL, just remove query string
+      return src.split('?')[0];
+    }
+  };
+
+  // Helper to add image if not seen (using normalized path for deduplication)
   const addImage = (src: string | undefined) => {
-    if (src && !seen.has(src)) {
+    if (!src) return;
+    const normalizedSrc = normalizePath(src);
+    if (!seen.has(normalizedSrc)) {
       images.push(src);
-      seen.add(src);
+      seen.add(normalizedSrc);
     }
   };
 
@@ -29,9 +43,12 @@ export function extractProjectImages(project: Project, slug: string): string[] {
     let match;
     while ((match = markdownImageRegex.exec(content)) !== null) {
       const src = match[1];
-      if (src && !seen.has(src)) {
-        found.push(src);
-        seen.add(src);
+      if (src) {
+        const normalizedSrc = normalizePath(src);
+        if (!seen.has(normalizedSrc)) {
+          found.push(src);
+          seen.add(normalizedSrc);
+        }
       }
     }
     return found;
