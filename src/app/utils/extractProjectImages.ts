@@ -71,8 +71,9 @@ export function extractProjectImages(project: Project, slug: string): string[] {
     // productionImage appears at end of overview
     addImage(project.productionImage);
   } else if (slug === 'escape-the-rain') {
-    // productionImage appears in Product Overview section
-    addImage(project.productionImage);
+    // Mobile and desktop screenshots appear in Product Overview section
+    addImage('/src/assets/Escape the rain mobile.png');
+    addImage('/src/assets/Escape the rain desktop.png');
   }
 
   // Extract from PRD (for workflow images in rag-ai-system)

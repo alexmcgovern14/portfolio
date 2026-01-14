@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Github, ChevronLeft, ChevronRight, Globe } from 'lucide-react';
 import type { Project } from '../../types/project';
 import substackLogo from '../../../assets/substack-logo.png';
-import escapeTheRainIcon from '../../../assets/escape the rain icon.png';
+import escapeTheRainIcon from '../../../assets/escape the rain icon.svg';
 
 interface ProjectDetailHeaderProps {
   project: Project;
@@ -155,7 +155,6 @@ default:
                     src={escapeTheRainIcon} 
                     alt="Escape the Rain" 
                     className="w-5 h-5" 
-                    style={{ filter: 'brightness(0)' }} 
                   />
                 ) : (
                   <Globe className="w-4 h-4" />

@@ -41,7 +41,7 @@ export function ProjectDetailNavigation({
   useEffect(() => {
     const element = contentsRef.current;
     const placeholder = placeholderRef.current;
-    if (!element || !placeholder || window.innerWidth < 1024) return;
+    if (!element || !placeholder) return;
 
     const STICKY_TOP = 48;
     let rafId: number;
@@ -50,6 +50,9 @@ export function ProjectDetailNavigation({
 
     const calculateDimensions = () => {
       if (!element) return;
+      // Only calculate on desktop
+      if (window.innerWidth < 1024) return;
+      
       // Get the width from the parent container when in normal position
       element.style.position = 'relative';
       element.style.width = '';
@@ -59,6 +62,18 @@ export function ProjectDetailNavigation({
     };
 
     const handleScroll = () => {
+      // Skip on mobile
+      if (window.innerWidth < 1024) {
+        // Reset styles on mobile
+        if (element.style.position === 'fixed') {
+          element.style.position = 'relative';
+          element.style.top = '0';
+          element.style.width = '';
+          placeholder.style.display = 'none';
+        }
+        return;
+      }
+      
       if (rafId) return;
       
       rafId = requestAnimationFrame(() => {
